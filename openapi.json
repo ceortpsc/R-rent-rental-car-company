@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "R-Rent API",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "Provider-gated rental APIs; public quote active, transactional routes closed until evidence gates pass."
   },
   "servers": [
@@ -191,6 +191,27 @@
         "responses": {
           "503": {
             "description": "Release locked"
+          }
+        }
+      }
+    },
+    "/api/v1/envelopes": {
+      "get": {
+        "summary": "R-Rent Sign template registry and operational readiness",
+        "responses": {
+          "200": {
+            "description": "Unsigned signing templates"
+          }
+        }
+      },
+      "post": {
+        "summary": "MFA-only server-side envelope draft preparation or securely blocked issue",
+        "responses": {
+          "201": {
+            "description": "Draft created; not delivered or signed"
+          },
+          "503": {
+            "description": "Signing integration unavailable"
           }
         }
       }

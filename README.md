@@ -104,3 +104,7 @@ This release adds functional server-side public API endpoints, security gates fo
 - Test: `npm run check && npm test`.
 
 No real renter identity records, addresses, card numbers, policy identifiers, signed documents or credentials belong in this public repository.
+
+## R-Rent Sign v0.3
+
+A proprietary signed-document experience now includes a browser-local electronic-signature/initials pad and draft envelope designer at `/sign`, plus a guarded API and database migration. [Architecture](docs/ESIGN_PLATFORM.md) · [API contract](docs/ESIGN_API_CONTRACT.md). Signature collection, send, authentication and legal execution are **not enabled** until external services, review and auditable persistence are complete.
