@@ -1,0 +1,2 @@
+# RR-008 Roadside & Incident Terms — DRAFT
+Provide verified, staffed service contact and insurer claim process BEFORE rental release. In emergencies prioritize safety and local services. Document breakdown, collision and reasonable cooperation procedures. Do not advertise unavailable 24/7 support or promise benefits not in a real service contract.

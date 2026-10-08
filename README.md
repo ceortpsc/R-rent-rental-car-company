@@ -87,3 +87,20 @@ Detailed contracts: [ARCHITECTURE](docs/ARCHITECTURE.md), [API_CONTRACTS](docs/A
 - AI can flag inconsistencies and recommend next steps but must not autonomously approve driver eligibility, coverage, card risk, or legal contracts.
 - This product is independent from Turo. Treat Turo-hosted reservations as a separate channel subject to its own policies.
 - All policies and the final rental contract require qualified Texas legal/insurance review before customer signature or vehicle release.
+
+
+## API & enterprise extension v0.2.0
+This release adds functional server-side public API endpoints, security gates for protected operations, payment signature-verification scaffolds, SQL model and a contract/policy documentation library. Protected insurance, identity, e-sign, settlement and release operations remain **UNAVAILABLE** until activated with valid production dependencies and independent verification.
+
+- [Complete blueprint](docs/MASTER_IMPLEMENTATION.md)
+- [API reference](docs/API_REFERENCE.md) · [OpenAPI file](openapi.json)
+- [Operating and security runbook](docs/OPERATIONS_RUNBOOK.md)
+- [Provider and add-on inventory](docs/PROVIDER_AND_ADDONS.md)
+- [Texas statutes and tax guidance](docs/LEGAL_TEXAS_REVIEW.md)
+- [Company policies — DRAFT](docs/POLICIES_DRAFT.md)
+- [AI Agent governance](docs/AI_AGENTS.md)
+- [Contracts and addenda — DRAFT ONLY](contracts/README.md)
+- [SQL migration — NOT APPLIED](supabase/migrations/20261008_001_rentals.sql)
+- Test: \`npm run check && npm test\`.
+
+No real renter identity records, addresses, card numbers, policy identifiers, signed documents or credentials belong in this public repository.

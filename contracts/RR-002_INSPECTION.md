@@ -1,0 +1,2 @@
+# RR-002 Vehicle Pickup/Return Condition — DRAFT
+Reference {{agreement_id}}; vehicle token {{fleet_private_id}}. Photos and cryptographic hashes of current panels, tires, lights, glass, fuel/charge level, odometer, interior, existing damage and keys. Pickup staff/renter acknowledgments and timestamps. Return location, inspection, documented charges with referenced fee schedule and renter dispute opportunity. No prefilled 'pass' state.

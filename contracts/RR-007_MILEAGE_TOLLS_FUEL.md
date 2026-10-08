@@ -1,0 +1,2 @@
+# RR-007 Mileage, Fuel, Tolls & Extensions — DRAFT
+Initial/return odometer and fuel/charge recorded; approved mileage and per-mile price, actual fuel replacement method, toll receipts and administration charge if lawful and displayed, late-return method and extension approval. Charges require itemized evidence and an opportunity to dispute. Extensions also require insurance period validation.

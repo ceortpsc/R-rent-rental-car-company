@@ -1,0 +1,2 @@
+# RR-006 Fees, Deposit & Card Authorization — DRAFT
+Disclose day count, base price, all mandatory fees in the offer and agreement, optional opt-ins, tax jurisdictions, refundable hold, cancellation and release timeline, terms for actual damage/loss/tolls and invoice. Hosted/tokenized provider checkout only; no card number/CVV on document. Renter accepts precise verified final total, not a provisional quote.

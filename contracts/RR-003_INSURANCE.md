@@ -1,0 +1,2 @@
+# RR-003 Insurance Election — DRAFT
+Renter either submits existing auto policy card and declarations page for verified evaluation of rental applicability or affirmatively selects licensed carrier-approved R-Rent policy terms after receiving insurer name, actual effective dates, exclusions, limits, deductible, premium and claim number. Insurance isn't presumed valid from upload. If no approved valid option exists: HOLD vehicle release. Reviewer/evidence signature {{verification_id}}.

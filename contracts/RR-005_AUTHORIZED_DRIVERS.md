@@ -1,0 +1,2 @@
+# RR-005 Additional Driver — DRAFT
+For each proposed driver capture restricted record reference, proper driving class, insurer-eligibility verification and separately disclosed, preauthorized fee (if any). Driver is NOT authorized until approved by company. Never expose license number or DOB in a publicly accessible document link.

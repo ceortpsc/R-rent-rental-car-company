@@ -1,0 +1,2 @@
+# RR-009 Electronic Records and Signing Consent — DRAFT
+Apply applicable E-SIGN Act and Texas UETA disclosures and informed consent to electronic records/signatures, ability to download/retain, relevant technical requirements, paper alternatives and withdrawal procedures where required. [ ] Affirmative consent captured separately from insurance and damage waiver elections. Verify signer identity, preserve PDF version hash, signature timestamps, certificate and customer/company copies. No form is considered signed by displaying this draft.
