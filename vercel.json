@@ -35,6 +35,18 @@
   ],
   "rewrites": [
     {
+      "source": "/api/v1/readiness",
+      "destination": "/api/v1/health?mode=readiness"
+    },
+    {
+      "source": "/api/v1/payments/stripe",
+      "destination": "/api/v1/payments?provider=stripe"
+    },
+    {
+      "source": "/api/v1/payments/paypal",
+      "destination": "/api/v1/payments?provider=paypal"
+    },
+    {
       "source": "/((?!api/|assets/|styles\\.css|app\\.js|api-ui\\.js|robots\\.txt|sitemap\\.xml|openapi\\.json).*)",
       "destination": "/index.html"
     }

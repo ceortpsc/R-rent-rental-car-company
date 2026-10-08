@@ -1,15 +1,15 @@
 {
   "name": "r-rent-rental-cars",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "type": "module",
-  "description": "R-Rent independent fleet public application and securely gated serverless APIs",
+  "description": "R-Rent rental platform and safely gated serverless APIs",
   "engines": {
-    "node": ">=20"
+    "node": "22.x"
   },
   "scripts": {
-    "test": "node --test tests/*.test.js",
-    "check": "node --check app.js && node --check api-ui.js && node --check lib/*.js && node --check api/v1/*.js && node --check api/v1/payments/*.js && node --check api/v1/webhooks/*.js"
+    "check": "node --check app.js && node --check api-ui.js && node --check lib/*.js && node --check api/v1/*.js && node --check api/v1/webhooks/*.js && node --check api/v1/admin/*.js",
+    "test": "node --test tests/*.test.js"
   },
   "license": "UNLICENSED"
 }
