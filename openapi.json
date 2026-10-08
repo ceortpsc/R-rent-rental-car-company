@@ -1,0 +1,199 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "R-Rent API",
+    "version": "0.2.0",
+    "description": "Provider-gated rental APIs; public quote active, transactional routes closed until evidence gates pass."
+  },
+  "servers": [
+    {
+      "url": "https://rtpscrentalcars.com"
+    }
+  ],
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "summary": "Health and safety-gate status",
+        "responses": {
+          "200": {
+            "description": "Function online"
+          }
+        }
+      }
+    },
+    "/api/v1/readiness": {
+      "get": {
+        "summary": "Configured features without verifying providers",
+        "responses": {
+          "200": {
+            "description": "Capabilities and blockers"
+          }
+        }
+      }
+    },
+    "/api/v1/vehicles": {
+      "get": {
+        "summary": "Redacted public vehicle catalog",
+        "responses": {
+          "200": {
+            "description": "Vehicles"
+          }
+        }
+      }
+    },
+    "/api/v1/quote": {
+      "post": {
+        "summary": "Provisional non-binding quote",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "vehicle_id",
+                  "pickup_at",
+                  "return_at"
+                ],
+                "properties": {
+                  "vehicle_id": {
+                    "type": "string"
+                  },
+                  "pickup_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "return_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Provisional quote"
+          },
+          "422": {
+            "description": "Validation error"
+          }
+        }
+      }
+    },
+    "/api/v1/applications": {
+      "post": {
+        "summary": "Authenticated DRAFT application, gated",
+        "responses": {
+          "201": {
+            "description": "Draft record"
+          },
+          "503": {
+            "description": "Not configured"
+          }
+        }
+      }
+    },
+    "/api/v1/documents": {
+      "post": {
+        "summary": "Document intent metadata only, no unsafe upload URLs",
+        "responses": {
+          "202": {
+            "description": "Pending secure storage"
+          },
+          "503": {
+            "description": "Not enabled"
+          }
+        }
+      }
+    },
+    "/api/v1/agreements": {
+      "get": {
+        "summary": "Agreement template registry",
+        "responses": {
+          "200": {
+            "description": "Drafts"
+          }
+        }
+      },
+      "post": {
+        "summary": "Execution blocked until e-sign validated",
+        "responses": {
+          "503": {
+            "description": "Not enabled"
+          }
+        }
+      }
+    },
+    "/api/v1/ai-assist": {
+      "post": {
+        "summary": "Auth-scoped rule engine, no autonomous approval",
+        "responses": {
+          "200": {
+            "description": "Review flags"
+          },
+          "503": {
+            "description": "Not ready"
+          }
+        }
+      }
+    },
+    "/api/v1/payments/stripe": {
+      "post": {
+        "summary": "Stripe checkout only after final invoice adapter",
+        "responses": {
+          "503": {
+            "description": "Not ready"
+          }
+        }
+      }
+    },
+    "/api/v1/payments/paypal": {
+      "post": {
+        "summary": "PayPal checkout only after final invoice adapter",
+        "responses": {
+          "503": {
+            "description": "Not ready"
+          }
+        }
+      }
+    },
+    "/api/v1/webhooks/stripe": {
+      "post": {
+        "summary": "Signature check, durable ledger required",
+        "responses": {
+          "401": {
+            "description": "Invalid signature"
+          },
+          "503": {
+            "description": "Durable webhook inbox not ready"
+          }
+        }
+      }
+    },
+    "/api/v1/webhooks/paypal": {
+      "post": {
+        "summary": "Provider verification, durable ledger required",
+        "responses": {
+          "401": {
+            "description": "Invalid signature"
+          },
+          "503": {
+            "description": "Durable webhook inbox not ready"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/release": {
+      "post": {
+        "summary": "Vehicle handoff requires approved gates",
+        "responses": {
+          "503": {
+            "description": "Release locked"
+          }
+        }
+      }
+    }
+  }
+}
