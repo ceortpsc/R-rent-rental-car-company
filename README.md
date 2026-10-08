@@ -2,11 +2,11 @@
 
 Independent vehicle-rental application for **Ross Tax Pro Software Company**.
 
-- Production domain (requested): \`rtpscrentalcars.com\`
-- Website alias: \`www.rtpscrentalcars.com\`
-- Hosting: Vercel (project: \`r-rent-rental-cars\`)
+- Production domain (requested): `rtpscrentalcars.com`
+- Website alias: `www.rtpscrentalcars.com`
+- Hosting: Vercel (project: `r-rent-rental-cars`)
 - DNS authority: Cloudflare (existing zone retained)
-- Brand: navy \`#0c1d34\`, burgundy \`#631e27\`, gold \`#bf9b56\`, cream \`#f5f0e8\`, silver \`#d9d9d9\`
+- Brand: navy `#0c1d34`, burgundy `#631e27`, gold `#bf9b56`, cream `#f5f0e8`, silver `#d9d9d9`
 
 ## Scope
 
@@ -25,15 +25,15 @@ Vehicles shown with **concept illustrations**, never presented as verified photo
 
 ## Information architecture
 
-- \`/\` — marketing and quote CTA
-- \`/fleet\` — fleet catalog
-- \`/book\` — real local estimate, no binding reservation
-- \`/requirements\` — driver and insurance requirements
-- \`/agreements\` — agreement/addendum index
-- \`/fees\` — pricing/tax/optional fees
-- \`/security\` — security posture and integration gates
-- \`/portal\` and \`/admin\` — **closed until verified server-side authentication**
-- \`/privacy\`, \`/terms\`, \`/contact\` — disclosure and support surfaces
+- `/` — marketing and quote CTA
+- `/fleet` — fleet catalog
+- `/book` — real local estimate, no binding reservation
+- `/requirements` — driver and insurance requirements
+- `/agreements` — agreement/addendum index
+- `/fees` — pricing/tax/optional fees
+- `/security` — security posture and integration gates
+- `/portal` and `/admin` — **closed until verified server-side authentication**
+- `/privacy`, `/terms`, `/contact` — disclosure and support surfaces
 
 Vercel rewrites page paths to the SPA entrypoint while leaving static assets intact.
 
@@ -41,22 +41,22 @@ Vercel rewrites page paths to the SPA entrypoint while leaving static assets int
 
 There are no runtime dependencies. The application uses plain, inspectable HTML, CSS, and browser JavaScript.
 
-\`\`\`sh
+```sh
 python3 -m http.server 8080
 # Browse http://localhost:8080/
-\`\`\`
+```
 
-Deep links work on Vercel via \`vercel.json\`. Locally, start at \`/\` and use client navigation.
+Deep links work on Vercel via `vercel.json`. Locally, start at `/` and use client navigation.
 
 ## Deployment
 
-1. Create Vercel project linked to \`ceortpsc/R-rent-rental-car-company\`.
-2. Configure static build; no build command and output root \`.\`.
-3. Attach \`rtpscrentalcars.com\` and \`www.rtpscrentalcars.com\`.
+1. Create Vercel project linked to `ceortpsc/R-rent-rental-car-company`.
+2. Configure static build; no build command and output root `.`.
+3. Attach `rtpscrentalcars.com` and `www.rtpscrentalcars.com`.
 4. In Cloudflare DNS, create only the exact records prescribed by **Vercel project domain configuration** (do not change existing MX/TXT/email or nameservers).
 5. Set Cloudflare proxy **DNS only** while verifying HTTPS and ownership; enable proxy only after SSL mode and routing tests support it.
 6. Verify HTTPS, cert issuance, redirects, security headers, page navigation, estimation logic, and no sensitive PII collection.
-7. Before activating transactional actions, complete gates in \`docs/SECURITY_AND_RELEASE.md\`.
+7. Before activating transactional actions, complete gates in `docs/SECURITY_AND_RELEASE.md`.
 
 ## Pricing calculation
 
@@ -64,7 +64,7 @@ The public estimate uses a configurable reference rate of $59/day for the Trailb
 
 ## Architecture
 
-\`\`\`text
+```text
 Browser (public UI)
    |-- static public assets and page routing
    |-- local-only quote calculator (no sensitive uploads)
@@ -76,7 +76,7 @@ Browser (public UI)
          |-- Stripe/PayPal secure checkout/webhooks (future)
          |-- AI-assist rules / human approval (future)
          +-- Audit ledger / queues / encryption (future)
-\`\`\`
+```
 
 Detailed contracts: [ARCHITECTURE](docs/ARCHITECTURE.md), [API_CONTRACTS](docs/API_CONTRACTS.md), [SECURITY_AND_RELEASE](docs/SECURITY_AND_RELEASE.md), [CLOUDFLARE_DNS](docs/CLOUDFLARE_DNS.md).
 
@@ -101,6 +101,6 @@ This release adds functional server-side public API endpoints, security gates fo
 - [AI Agent governance](docs/AI_AGENTS.md)
 - [Contracts and addenda — DRAFT ONLY](contracts/README.md)
 - [SQL migration — NOT APPLIED](supabase/migrations/20261008_001_rentals.sql)
-- Test: \`npm run check && npm test\`.
+- Test: `npm run check && npm test`.
 
 No real renter identity records, addresses, card numbers, policy identifiers, signed documents or credentials belong in this public repository.
