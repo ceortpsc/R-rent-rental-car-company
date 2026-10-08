@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0c1d34">
+<meta name="description" content="R-Rent Sign secure-document product overview and local nonbinding signing workspace.">
+<title>R-Rent Sign | Envelope Workspace</title>
+<link rel="icon" href="/assets/r-rent-symbol.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/sign.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <a href="/" class="brand"><span class="mark">R</span><span><strong>R-RENT<span class="gold"> SIGN</span></strong><small>ROSS TAX PRO SOFTWARE COMPANY</small></span></a>
+  <nav aria-label="Top navigation">
+    <a href="/">Website</a><a href="/agreements">Document library</a><a href="/security">Security</a><span class="pill">WORKSPACE PREVIEW</span>
+  </nav>
+</header>
+<main id="main">
+<section class="mast">
+ <div class="mast-inner">
+  <div class="eyebrow">RTPSC DIGITAL AGREEMENTS DIVISION</div>
+  <h1>Every agreement.<br><em>One controlled workflow.</em></h1>
+  <p>Prepare internal-to-external rental envelopes, assign reviewers and signers, place initials, and rehearse an electronic signature with R-Rent’s branded signing pad.</p>
+  <div class="mast-row"><span>✧ Multi-recipient routing</span><span>✧ Initials and signature fields</span><span>✧ Consent-aware design</span><span>✧ Audit-ready architecture</span></div>
+ </div>
+</section>
+<div class="warning" role="status"><strong>Unsigned workspace preview.</strong> This page is interactive but it does not issue legal signature envelopes, send invitations, store identities, or execute documents. Drawn/typed signatures remain in this browser session only. Never upload an ID here.</div>
+<section class="work">
+ <div class="workhead">
+  <div><div class="eyebrow dark">SIGNING WORKSPACE</div><h2>Prepare &amp; review an envelope</h2><p>Internal drafting and external signer experience, separated from live execution.</p></div>
+  <div class="status-stack"><span id="api-state" class="live-pill" aria-live="polite">Checking envelope template API…</span><span class="state">Status: DRAFT / NOT ISSUED</span></div>
+ </div>
+ <div class="tabs" role="tablist" aria-label="Signing workflow screens">
+  <button class="tab active" role="tab" id="tab-compose" aria-selected="true" aria-controls="view-compose" data-tab="compose" type="button">01 &nbsp; Internal envelope</button>
+  <button class="tab" role="tab" id="tab-sign" aria-selected="false" aria-controls="view-sign" data-tab="sign" type="button">02 &nbsp; Signature pad</button>
+  <button class="tab" role="tab" id="tab-audit" aria-selected="false" aria-controls="view-audit" data-tab="audit" type="button">03 &nbsp; Evidence &amp; delivery</button>
+ </div>
+ <section id="view-compose" role="tabpanel" aria-labelledby="tab-compose" class="tab-pane">
+  <div class="cols">
+   <div class="panel">
+    <h3>Envelope preparation</h3>
+    <p class="mini">An internal company reviewer prepares a document packet before an approved signing provider handles the external recipient.</p>
+    <form id="envelope-form" novalidate>
+     <label for="envtitle">Envelope subject <span aria-hidden="true">*</span></label>
+     <input id="envtitle" name="title" type="text" maxlength="120" required value="Vehicle Rental Agreement — draft review" autocomplete="off">
+     <div class="space12"></div>
+     <h4>Include documents</h4>
+     <div id="documents" class="doc-list"></div>
+     <div class="space12"></div>
+     <h4>Recipients and routing order</h4>
+     <p class="mini">Enter test information only; do not type real renter details into this preview.</p>
+     <div id="recipient-fields" class="recipient-list"></div>
+     <div class="controls"><button class="small-btn" type="button" id="add-recipient">+ Add recipient</button><span class="hint">Up to 12</span></div>
+     <div class="space12"></div>
+     <label for="expires">Envelope expiry (days)</label>
+     <select id="expires"><option value="3">3 days</option><option value="7" selected>7 days</option><option value="14">14 days</option><option value="30">30 days</option></select>
+     <div class="controls"><button type="submit" class="primary">Prepare local preview →</button><button type="reset" id="clear-envelope" class="secondary">Reset draft</button></div>
+     <p id="composer-msg" role="status" class="mini"></p>
+    </form>
+   </div>
+   <aside class="panel review">
+    <div class="eyebrow dark">CONTROLLED CHECKLIST</div>
+    <h3>Approval gates</h3>
+    <ul class="gates"><li><b>01</b><span>Reviewed rental terms and exact document versions</span><span class="pending">Pending</span></li>
+    <li><b>02</b><span>Driver credentials and coverage confirmed</span><span class="pending">Pending</span></li>
+    <li><b>03</b><span>Taxes, invoices, optional elections finalized</span><span class="pending">Pending</span></li>
+    <li><b>04</b><span>Recipient verified; E-SIGN consent delivered</span><span class="pending">Pending</span></li>
+    <li><b>05</b><span>Authenticated signing provider and certificate</span><span class="pending">Pending</span></li></ul>
+    <div class="note"><b>Available now:</b> a browser-local envelope design and signature pad. <b>Not available:</b> external signature requests, signed PDFs, email delivery, or verified ID collection.</div>
+    <div class="summary" id="envelope-summary"><strong>Draft summary</strong><p>Select documents and recipients, then prepare your preview.</p></div>
+    <div class="actions"><button id="issue" class="primary" disabled title="Requires verified signing provider, document vault and identity checks">Send real signature invitation — locked</button></div>
+   </aside>
+  </div>
+ </section>
+ <section id="view-sign" class="tab-pane hidden" role="tabpanel" aria-labelledby="tab-sign">
+  <div class="cols">
+   <div class="panel">
+    <h3>Signature and initials pad</h3>
+    <p class="mini">Test pen input, touch input, or a typed signature style. Nothing leaves this browser and no signature is certified.</p>
+    <div class="tabs small-tabs" role="group" aria-label="Choose signature input">
+      <button type="button" class="tab active" data-mode="draw">Draw</button>
+      <button type="button" class="tab" data-mode="type">Type</button>
+    </div>
+    <div id="draw-entry">
+      <label for="signature-pad">Practice signature (touch, mouse or stylus)</label>
+      <canvas id="signature-pad" class="signature-pad" width="700" height="185" tabindex="0" aria-label="Signature practice drawing area"></canvas>
+      <div class="controls"><button id="clear-signature" class="small-btn" type="button">Clear signature</button><span class="hint">Local practice only</span></div>
+      <label for="initials-pad">Practice initials</label>
+      <canvas id="initials-pad" class="signature-pad initials-pad" width="340" height="105" tabindex="0" aria-label="Initials practice drawing area"></canvas>
+      <div class="controls"><button id="clear-initials" class="small-btn" type="button">Clear initials</button></div>
+    </div>
+    <div id="typed-entry" class="hidden">
+      <label for="typed-name">Typed signature preview (sample text only)</label><input id="typed-name" maxlength="120" placeholder="Type a sample name" autocomplete="off">
+      <label for="typed-initials">Typed initials preview</label><input id="typed-initials" maxlength="12" placeholder="Initials" autocomplete="off">
+      <div id="typed-preview" aria-live="polite">Your sample signature appears here</div>
+    </div>
+    <div class="note" style="margin-top:20px">This is <b>not an E-SIGN consent form</b>. A legally effective envelope must present its full record, secure authentication, record retention terms, affirmative consent and certified completion workflow.</div>
+    <div class="controls"><button id="review-signature" type="button" class="primary">Review local signing sample</button><button type="button" class="secondary" id="clear-all-signatures">Clear all samples</button></div>
+    <p id="signature-msg" role="status" class="mini"></p>
+   </div>
+   <aside class="panel review"><div class="eyebrow dark">EXTERNAL SIGNER WORKFLOW</div><h3>Recipient experience</h3>
+     <ol class="signer-steps">
+      <li>Open an identity-verified invitation on a secure signing domain.</li>
+      <li>Review all actual documents and payment/coverage disclosures.</li>
+      <li>Read electronic delivery disclosures, affirm consent or decline.</li>
+      <li>Initial prescribed pages and separately elect optional waivers.</li>
+      <li>Sign the exact document revision, then receive a protected copy.</li>
+     </ol>
+     <p class="mini">Only the practice pen and typed preview are available today. No real signing link has been issued.</p>
+     <div id="signature-preview" class="signature-preview"><strong>Preview</strong><p>Use the pad, then select Review local signing sample.</p></div>
+   </aside>
+  </div>
+ </section>
+ <section id="view-audit" class="tab-pane hidden" role="tabpanel" aria-labelledby="tab-audit">
+  <div class="cols">
+   <div class="panel">
+     <div class="eyebrow dark">AUDIT DESIGN</div><h3>Envelope proof and document integrity</h3>
+     <p>An enforceable electronic agreement needs an immutable document version, affirmative signer consent, verified signer access, encrypted artifact storage, UTC timestamps, and a tamper-evident completion certificate.</p>
+     <div class="audit-stat"><span>Document status</span><strong>DRAFT / NOT EXECUTED</strong></div>
+     <div class="audit-stat"><span>Recipient invitations</span><strong>NOT SENT</strong></div>
+     <div class="audit-stat"><span>Signature collection</span><strong>NOT STORED</strong></div>
+     <div class="audit-stat"><span>Signer identity verification</span><strong>NOT PERFORMED</strong></div>
+     <div class="audit-stat"><span>Provider-backed audit certificate</span><strong>UNAVAILABLE</strong></div>
+     <div class="note" id="digest">No local draft fingerprint generated yet.</div>
+     <button type="button" class="secondary" id="fingerprint">Calculate local draft fingerprint</button>
+   </div>
+   <aside class="panel">
+     <div class="eyebrow dark">RELEASE ARCHITECTURE</div><h3>Native service + optional DocuSign adapter</h3>
+     <p class="mini">A complete system must support controlled routing, secure PDF rendering, template hashes, legal notices, signer authentication, email/SMS delivery, completion webhooks, immutable history, certificate export, expiration, voiding and paper alternatives.</p>
+     <div class="note">The native API supports schema-validated, MFA-protected internal <b>DRAFT</b> envelope preparation after a dedicated database is configured. It cannot issue signed agreements or capture customer ID images until those independently verified services are live.</div>
+     <div class="actions"><a href="https://github.com/ceortpsc/R-rent-rental-car-company/blob/main/docs/ESIGN_PLATFORM.md" class="primary aslink" target="_blank" rel="noreferrer">View implementation specification</a></div>
+   </aside>
+  </div>
+ </section>
+</section>
+</main>
+<footer>© 2026 Ross Tax Pro Software Company · R-Rent Sign · Not affiliated with DocuSign · This workspace is not a legally completed electronic signature service.</footer>
+<script defer src="/sign.js"></script>
+</body></html>
