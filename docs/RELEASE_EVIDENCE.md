@@ -1,25 +1,28 @@
-# R-Rent Release Evidence Record — v0.2.1
+# Verified Build and Remaining Acceptance Gates — R-Rent v0.2.1
 
-## Evidence observed (October 2026)
-- GitHub source repository: ceortpsc/R-rent-rental-car-company; main branch at c06d99393efc70559d00c3cce9a1edde03e63452 before this evidence update.
-- Vercel project: r-rent-rental-cars under the connected account.
-- First API deployment failed due to Vercel Hobby maximum 12 serverless functions; resolved by route consolidation to 11 functions.
-- Corrected production deployment dpl_9ACZQnfEjvSU4QsfGEvhEiUQT3J5 returned **READY** in Vercel.
-- Vercel aliases contain rtpscrentalcars.com, www.rtpscrentalcars.com, and r-rent-rental-cars.vercel.app.
-- Source file spot checks confirmed README.md, app.js, api/v1/quote.js, contracts/RR-004_DAMAGE_WAIVER.md, SQL migration and Texas review documentation in GitHub.
+## Confirmed on Vercel
+- GitHub commit \`dd2e30565ce0fd648d6d699899204210834407c2\` was built as production deployment \`dpl_4mr7e8sZM9VxzkqJZnyAQjRRDCEQ\`.
+- Vercel deployment state: **READY**, without deployment error.
+- Vercel aliases assigned: \`rtpscrentalcars.com\`, \`www.rtpscrentalcars.com\`, \`r-rent-rental-cars.vercel.app\`.
+- Build ran \`npm run check\`: **18 syntax checks passed; 0 failed**.
+- Build ran \`npm test\`: **9 tests passed; 0 failed, 0 skipped**, covering fleet safety status, short/long rental durations, taxes, invalid dates, unpriced Bronco and Stripe HMAC verification.
+- Previous function-count build failure was resolved by consolidating to 11 serverless functions within existing Vercel Hobby plan.
 
-## Limits to what this evidence establishes
-- READY proves Vercel build and deployment acceptance, **not** that DNS, public external SSL, every browser route, webhook or application integration has passed a live runtime test.
-- No authenticated Cloudflare DNS write access was available. The user's Cloudflare DNS records have not been programmatically modified.
-- Connected Stripe context was a separate 254-Tax Consultants **test** account; it has not been used for R-Rent. PayPal merchant integration unconnected.
-- The only visible Supabase project was INACTIVE and no dedicated database was selected; no SQL migration applied.
-- No real identity verification, driver eligibility, insurance policy, company coverage, signature provider, payment capture, ledger or vehicle release has been performed.
-- The test suite is committed; an independent successful GitHub Actions test result was **not** observed in the connected check status, which only showed successful Vercel deployment.
+## Evidence NOT established
+- Cloudflare authoritative DNS and public certificate chain/HTTPS were not independently confirmed; no authenticated Cloudflare DNS changes were performed.
+- No end-to-end browser test against the live domain was obtained through available network tools.
+- Connected historical Supabase project remained INACTIVE; no database migration executed.
+- Existing visible Stripe credentials were a different company's sandbox; not authorized for R-Rent payments.
+- PayPal production merchant, insurance carrier, driver's-license verification provider, secure document vault, e-sign signing service, refund/settlement ledger, and approved operational staff are not connected.
+- No renter files or personal data were seeded in the public repository, and no customer was charged, signed or vehicle-released.
+- The legal drafts require qualified Texas counsel and insurer sign-off before real-world use.
 
-## Required verification gate
-1. Execute \`npm run check\` and \`npm test\` in a trusted runner and preserve their output.
-2. Check \`GET /api/v1/health\`, \`GET /api/v1/vehicles\`, \`GET /api/v1/readiness\`, and \`POST /api/v1/quote\` over verified HTTPS, against production domain and Vercel alias.
-3. Check invalid methods/quotes return 405/422 and all gated transactional paths reject with 401/403/503.
-4. Confirm Content-Security-Policy, HSTS, referrer controls, mobile navigation and read-only visibility.
-5. Confirm DNS authoritative answers, Cloudflare certificate chain and strict TLS.
-6. Keep financial, identity, insurer, signing and dispatch gates OFF until independent vendor agreements, secure credentials and service-level tests are approved.
+## Next release gates
+1. Verify DNS A/CNAME in Cloudflare match Vercel's **project-specific** values, with TLS and routing checks.
+2. Provision dedicated R-Rent database + backup, migrate with review, validate RLS, anti-overlap constraint and authorization tests.
+3. Configure private storage and document malware scanning; verify insurance and driver-vendor contracts.
+4. Approve exact statutory disclosures, all mandatory charges, local taxes, insurance costs, refund methods and customer support.
+5. Provision merchant accounts; test provider-native tokenized card/PayPal flows, signed webhooks, immutable settlement and disputes.
+6. Integrate counsel-reviewed signing package and verified consent; only then conduct supervised end-to-end rental rehearsal.
+
+**State:** Public code and Vercel deployment ready. Full rental transactions, policy underwriting and settlement remain intentionally gated.
