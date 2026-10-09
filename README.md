@@ -108,3 +108,13 @@ No real renter identity records, addresses, card numbers, policy identifiers, si
 ## R-Rent Sign v0.3
 
 A proprietary signed-document experience now includes a browser-local electronic-signature/initials pad and draft envelope designer at `/sign`, plus a guarded API and database migration. [Architecture](docs/ESIGN_PLATFORM.md) · [API contract](docs/ESIGN_API_CONTRACT.md). Signature collection, send, authentication and legal execution are **not enabled** until external services, review and auditable persistence are complete.
+
+## Approved visual identity integration (2026-10-09)
+
+- Brand expression: **Drive More. Go Further. R-Rent.**
+- Design source: approved R-Rent Canva/ChatGPT brand-board concept; color palette navy `#0C1D34`, burgundy `#631E27`, gold `#BF9B56`, cream `#F5F0E8`, silver `#D9D9D9`, tan `#D2B48C`, white `#FFFFFF`, ink `#10151F`.
+- Vector monogram: `assets/r-rent-monogram.svg`, original source asset suitable for favicon/app icon; website styling in `styles.css` and customer experience in `app.js`.
+- Requested additional subdomain: `r-rent.rosstaxsoftware.com` (DNS and Vercel assignment **not verified**; older apex domains retained until explicitly reconfigured).
+- Owner brand ambassador: Andreaa Chan’nel. Owner portrait still needs a rights-cleared image upload, and generated mockup likenesses must **not** be represented as actual owner photographs.
+- Fleet: 2026 Chevrolet Trailblazer and 2026 Ford Bronco Sport Big Bend; retain representative-illustration disclosures until authenticated owner vehicle photography is available.
+- The design does **not** enable rentals, billing, electronic signing, or automated verification; existing security gates stay in force.
