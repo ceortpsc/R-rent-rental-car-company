@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0c1d34">
 <meta name="description" content="R-Rent Sign secure-document product overview and local nonbinding signing workspace.">
 <title>R-Rent Sign | Envelope Workspace</title>
-<link rel="icon" href="/assets/r-rent-symbol.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/r-rent-monogram.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/sign.css">
 </head>
 <body>
@@ -35,7 +35,8 @@
  <div class="tabs" role="tablist" aria-label="Signing workflow screens">
   <button class="tab active" role="tab" id="tab-compose" aria-selected="true" aria-controls="view-compose" data-tab="compose" type="button">01 &nbsp; Internal envelope</button>
   <button class="tab" role="tab" id="tab-sign" aria-selected="false" aria-controls="view-sign" data-tab="sign" type="button">02 &nbsp; Signature pad</button>
-  <button class="tab" role="tab" id="tab-audit" aria-selected="false" aria-controls="view-audit" data-tab="audit" type="button">03 &nbsp; Evidence &amp; delivery</button>
+  <button class="tab" role="tab" id="tab-accept" aria-selected="false" aria-controls="view-accept" data-tab="accept" type="button">03 &nbsp; Renter opt-in &amp; initials</button>
+  <button class="tab" role="tab" id="tab-audit" aria-selected="false" aria-controls="view-audit" data-tab="audit" type="button">04 &nbsp; Evidence &amp; delivery</button>
  </div>
  <section id="view-compose" role="tabpanel" aria-labelledby="tab-compose" class="tab-pane">
   <div class="cols">
@@ -110,6 +111,48 @@
      </ol>
      <p class="mini">Only the practice pen and typed preview are available today. No real signing link has been issued.</p>
      <div id="signature-preview" class="signature-preview"><strong>Preview</strong><p>Use the pad, then select Review local signing sample.</p></div>
+   </aside>
+  </div>
+ </section>
+ <section id="view-accept" class="tab-pane hidden" role="tabpanel" aria-labelledby="tab-accept">
+  <div class="cols">
+   <div class="panel"><div class="eyebrow dark">RENTER SIGNER EXPERIENCE — PREVIEW ONLY</div>
+    <h3>Renter agreement review and consent</h3>
+    <p class="mini">Designed for Trevon as the intended renter. This public preview does not authenticate Trevon or create a binding signature. Use fictitious sample entries only. Signing must take place in the secured, invite-only document packet once activated.</p>
+    <form id="renter-acknowledgment" novalidate>
+      <label for="renter-display-name">Signer name on envelope (sample)</label>
+      <input id="renter-display-name" type="text" autocomplete="off" maxlength="120" placeholder="Trevon — sample signer label" required>
+      <label for="agreement-reference">Agreement reference (sample)</label>
+      <input id="agreement-reference" type="text" maxlength="80" placeholder="RR-DRAFT-REFERENCE" required>
+      <fieldset class="sign-fields"><legend>Review and initial each document section</legend>
+        <p class="mini">Each initials field must be filled separately; a signature alone does not replace the review and optional-product elections.</p>
+        <label for="initial-rental">Rental terms and vehicle condition — initials</label><input id="initial-rental" type="text" maxlength="8" autocomplete="off" required placeholder="Enter sample initials">
+        <label for="initial-fees">Rental charges, deposit and fees — initials</label><input id="initial-fees" type="text" maxlength="8" autocomplete="off" required placeholder="Enter sample initials">
+        <label for="initial-coverage">Insurance, exclusions and incident procedures — initials</label><input id="initial-coverage" type="text" maxlength="8" autocomplete="off" required placeholder="Enter sample initials">
+        <label for="initial-returns">Fuel, mileage, late return and return inspection — initials</label><input id="initial-returns" type="text" maxlength="8" autocomplete="off" required placeholder="Enter sample initials">
+      </fieldset>
+      <fieldset class="sign-fields"><legend>Optional damage waiver election</legend>
+        <p class="mini">A damage waiver is optional, is not insurance, and requires a separate affirmative selection and applicable written terms/pricing.</p>
+        <div class="choice"><label><input type="radio" name="waiver-election" value="accept" required> Request optional damage waiver (pricing and coverage pending)</label></div>
+        <div class="choice"><label><input type="radio" name="waiver-election" value="decline"> Decline optional damage waiver</label></div>
+      </fieldset>
+      <fieldset class="sign-fields"><legend>Electronic records and signature election</legend>
+        <p class="mini">For actual signing, the complete E-SIGN disclosure must explain hardware/software requirements, the ability to withdraw consent, paper-copy options and applicable charges, and how to obtain a copy. This is only a preview of that selection.</p>
+        <div class="choice"><label><input id="esign-consent" type="checkbox" required> I affirmatively opt in to use electronic records and electronic signatures for this agreement preview.</label></div>
+        <div class="choice"><label><input id="review-complete" type="checkbox" required> I have reviewed the displayed agreement and its related addendums and understand that optional protections are separately elected.</label></div>
+      </fieldset>
+      <label for="renter-signature">Typed signature sample (not a legally executed signature)</label>
+      <input id="renter-signature" type="text" maxlength="120" autocomplete="off" required placeholder="Type sample signing name">
+      <label for="renter-date">Date of signing sample (signer selects date)</label>
+      <input id="renter-date" type="date" required>
+      <div class="controls"><button type="submit" class="primary">Validate local signer checklist</button><button type="button" id="decline-esign" class="secondary">Decline electronic signing</button><button type="reset" class="small-btn">Clear signer sample</button></div>
+      <p role="status" aria-live="polite" id="renter-ack-msg" class="mini"></p>
+    </form>
+   </div>
+   <aside class="panel review"><h3>Signer readiness</h3>
+     <ul class="signer-steps"><li>View full rental agreement, attachments and version</li><li>Verify signer and assigned recipient role</li><li>Initial each marked section</li><li>Accept or decline optional waiver separately</li><li>Affirmatively opt in, sign and enter signing date</li><li>Receive customer copy with tamper-evident audit certificate</li></ul>
+     <div class="note"><strong>Execution locked.</strong> Completing this preview does not contact Trevon, issue a contract, create a certificate, or imply identity, consent or payment verification.</div>
+     <div id="renter-ack-summary" class="summary" aria-live="polite">Not reviewed. No signer acknowledgment created.</div>
    </aside>
   </div>
  </section>
