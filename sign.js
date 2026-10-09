@@ -101,6 +101,33 @@ $("fingerprint").addEventListener("click",async ()=>{
  const bytes=await crypto.subtle.digest("SHA-256",data);const hex=[...new Uint8Array(bytes)].map(x=>x.toString(16).padStart(2,"0")).join("");
  $("digest").textContent="Local draft SHA-256 (not a certified signing record): "+hex+". No external delivery, file storage, or signer attestation occurred.";
 });
+
+// Explicit renter acceptance step: browser-local validation only, never execution or storage.
+const renterForm=$("renter-acknowledgment");
+if(renterForm){
+ renterForm.addEventListener("submit",event=>{
+  event.preventDefault();
+  const name=$("renter-display-name").value.trim();
+  const signature=$("renter-signature").value.trim();
+  const ref=$("agreement-reference").value.trim();
+  const date=$("renter-date").value;
+  const ids=["initial-rental","initial-fees","initial-coverage","initial-returns"];
+  const initials=ids.map(id=>$(id).value.trim().toUpperCase());
+  const selection=renterForm.querySelector('input[name="waiver-election"]:checked');
+  const status=$("renter-ack-msg");
+  const valid=Boolean(name&&signature&&ref&&date&&initials.every(x=>/^[A-Z]{1,8}$/.test(x))&&selection&&$("esign-consent").checked&&$("review-complete").checked);
+  if(!valid){status.textContent="Incomplete sample: provide signer, reference, all four initials, optional-waiver choice, separate opt-in and acknowledgment, signature and chosen date.";return;}
+  if(name.toLocaleLowerCase()!==signature.toLocaleLowerCase()){status.textContent="Sample signature must match the displayed signer name.";return;}
+  if(date!==new Date().toLocaleDateString("en-CA")){status.textContent="For this preview, enter today's local date; real provider events must use trusted server timestamps.";return;}
+  const sum=$("renter-ack-summary");sum.replaceChildren();
+  const head=document.createElement("strong");head.textContent="LOCAL CHECKLIST VALIDATED — NOT SIGNED";sum.append(head);
+  const p=document.createElement("p");p.textContent="Draft reference: "+ref+". Four acknowledgment fields completed. Optional waiver: "+(selection.value==="accept"?"selected for quotation/review":"declined")+". Electronic records: opted in for this preview. Date entered: "+date+". No binding document, signer identity verification or certificate created.";sum.append(p);
+  status.textContent="Local checklist complete only. Real execution is still disabled and requires secure invitation, exact document version and provider-backed evidence.";
+ });
+ $("decline-esign").addEventListener("click",()=>{$("esign-consent").checked=false;$("renter-ack-summary").textContent="Electronic signing declined. No document was executed. An accessible alternative signing process must be provided by the rental team.";$("renter-ack-msg").textContent="Declined — no electronic signature request has been issued.";});
+ renterForm.addEventListener("reset",()=>{$("renter-ack-summary").textContent="Signer sample cleared; not signed.";$("renter-ack-msg").textContent="";});
+}
+
 fetch("/api/v1/envelopes",{headers:{"Accept":"application/json"}}).then(r=>r.ok?r.json():Promise.reject(new Error("API unavailable"))).then(data=>{
  $("api-state").textContent=data.product+" template registry connected · issuing "+(data.external_delivery_enabled?"enabled":"locked");
 }).catch(()=>{$("api-state").textContent="Registry unavailable · local preview only";});
