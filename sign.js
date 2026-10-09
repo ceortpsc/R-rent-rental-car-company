@@ -118,7 +118,7 @@ if(renterForm){
   const valid=Boolean(name&&signature&&ref&&date&&initials.every(x=>/^[A-Z]{1,8}$/.test(x))&&selection&&$("esign-consent").checked&&$("review-complete").checked);
   if(!valid){status.textContent="Incomplete sample: provide signer, reference, all four initials, optional-waiver choice, separate opt-in and acknowledgment, signature and chosen date.";return;}
   if(name.toLocaleLowerCase()!==signature.toLocaleLowerCase()){status.textContent="Sample signature must match the displayed signer name.";return;}
-  if(date!==new Date().toLocaleDateString("en-CA")){status.textContent="For this preview, enter today's local date; real provider events must use trusted server timestamps.";return;}
+  if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)){status.textContent="Choose a valid sample date; real signed events require trusted provider timestamps.";return;}
   const sum=$("renter-ack-summary");sum.replaceChildren();
   const head=document.createElement("strong");head.textContent="LOCAL CHECKLIST VALIDATED — NOT SIGNED";sum.append(head);
   const p=document.createElement("p");p.textContent="Draft reference: "+ref+". Four acknowledgment fields completed. Optional waiver: "+(selection.value==="accept"?"selected for quotation/review":"declined")+". Electronic records: opted in for this preview. Date entered: "+date+". No binding document, signer identity verification or certificate created.";sum.append(p);
