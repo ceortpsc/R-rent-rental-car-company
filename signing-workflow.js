@@ -15,6 +15,77 @@ sample_signature_must_match:"Type the same sample name in the signature preview 
 sample_date_required:"Select a sample review date.",
 electronic_signing_declined:"Electronic signing was declined. A paper alternative requires contact with the rental team."
 };
+const REVIEW_TABS=Object.freeze(["documents","initials","consent","signature","verification","copies"]);
+const REVIEW_PANELS=Object.freeze(["doc-stage","initials-stage","consent-stage","signature-stage","verification-stage","delivery-stage","receipt-stage"]);
+function selectedTab(tab,options={}){
+ if(!REVIEW_TABS.includes(tab))return false;
+ const progress=getProgress(review);
+ const alert=$("esign-tab-alert");
+ if(tab==="signature"&&(progress.completed!==DOCUMENTS.length||review.declined||review.esignConsent!==true)){
+  alert.textContent=review.declined?
+    "Electronic signing was declined. No agreement has been executed; contact the rental office for an alternative.":
+    "Before signer practice, review all 10 documents and make a separate electronic-consent choice in RR-009.";
+  return false;
+ }
+ alert.textContent="";
+ let panel=tab==="documents"?"doc-stage":tab==="initials"?"initials-stage":tab==="consent"?"consent-stage":tab==="signature"?"signature-stage":tab==="verification"?"verification-stage":review.prepared?"receipt-stage":"delivery-stage";
+ for(const id of REVIEW_PANELS)$(id).hidden=id!==panel;
+ document.querySelectorAll("[data-review-tab]").forEach(b=>{
+  const isActive=b.dataset.reviewTab===tab;
+  b.classList.toggle("is-active",isActive);
+  b.setAttribute("aria-selected",String(isActive));
+  b.tabIndex=isActive?0:-1;
+ });
+ if(tab==="initials")renderInitialsSummary();
+ if(tab==="consent")$("consent-current-status").textContent=review.declined?
+  "Electronic signing declined; no agreement signed. Request a paper alternative through R-Rent.":
+  review.esignConsent?"Local preview opt-in acknowledged in RR-009; no provider-verified consent.":"Local preview opt-in not yet acknowledged. Open RR-009 to review and choose.";
+ if(tab==="copies"&&!review.prepared)$("unsigned-copy-state").textContent="Not prepared · complete 10 document reviews and signer practice first";
+ if(options.focus)document.querySelector('[aria-selected="true"][data-review-tab]')?.focus();
+ return true;
+}
+function renderInitialsSummary(){
+ const output=$("initials-review-list");
+ output.replaceChildren();
+ for(let i=0;i<DOCUMENTS.length;i++){
+  const doc=DOCUMENTS[i],done=review.reviewed[doc.code]===true;
+  const item=document.createElement("div");item.className="initials-summary-item";
+  const info=document.createElement("div");const head=document.createElement("strong");head.textContent=doc.code+" · "+doc.title;
+  const detail=document.createElement("p");let note=doc.initials?
+   (review.initials[doc.code]?"Sample initials recorded (not certified)":"Initials still needed"):"Document acknowledgment (no initials required)";
+  if(doc.election==="waiver")note+=" · Waiver: "+(review.elections.waiver||"no choice");
+  if(doc.election==="drivers")note+=" · Drivers: "+(review.elections.drivers||"no choice");
+  if(doc.election==="esign")note+=" · Electronic review consent: "+(review.esignConsent?"local opt-in":"not opted in");
+  detail.textContent=note;info.append(head,detail);
+  const button=document.createElement("button");button.type="button";button.className="secondary small-action";
+  button.textContent=done?"Review / change":"Complete section";
+  button.setAttribute("aria-label","Open "+doc.title);
+  button.addEventListener("click",()=>{active=i;showDocument();});
+  item.append(info,button);output.append(item);
+ }
+}
+function openDocument(code){const index=DOCUMENTS.findIndex(d=>d.code===code);if(index<0)return;active=index;showDocument();}
+function setTabHandlers(){
+ document.querySelectorAll("[data-review-tab]").forEach(b=>{
+  b.addEventListener("click",()=>{
+   if(b.dataset.reviewTab==="signature"){if(selectedTab("signature"))showSigner();return;}
+   selectedTab(b.dataset.reviewTab);
+  });
+  b.addEventListener("keydown",e=>{
+   if(!["ArrowLeft","ArrowRight","Home","End"].includes(e.key))return;
+   e.preventDefault();const i=REVIEW_TABS.indexOf(b.dataset.reviewTab);
+   const newIndex=e.key==="Home"?0:e.key==="End"?REVIEW_TABS.length-1:e.key==="ArrowRight"?(i+1)%REVIEW_TABS.length:(i+REVIEW_TABS.length-1)%REVIEW_TABS.length;
+   const next=document.querySelector('[data-review-tab="'+REVIEW_TABS[newIndex]+'"]');next?.focus();
+  });
+ });
+ $("initials-return").addEventListener("click",()=>showDocument());
+ $("initials-next").addEventListener("click",()=>selectedTab("consent"));
+ $("consent-document").addEventListener("click",()=>openDocument("RR-009"));
+ $("consent-next").addEventListener("click",()=>{if(selectedTab("signature"))showSigner();});
+ $("verification-next").addEventListener("click",()=>selectedTab("copies"));
+ $("copies-review").addEventListener("click",()=>showDocument());
+ $("copies-signer").addEventListener("click",()=>{if(selectedTab("signature"))showSigner();});
+}
 function current(){return DOCUMENTS[active];}
 function docNumber(i){return String(i+1).padStart(2,"0");}
 function electionHtml(doc){
@@ -34,7 +105,7 @@ function renderProgress(){
  $("progress-description").textContent=p.completed+" of "+p.total+" documents reviewed";
 }
 function showDocument(){
- $("doc-stage").hidden=false;$("signature-stage").hidden=true;$("receipt-stage").hidden=true;
+ selectedTab("documents");
  const d=current();
  $("doc-number").textContent=docNumber(active);
  $("doc-title").textContent=d.title;
@@ -82,7 +153,7 @@ function acceptDocument(e){
  showSigner();
 }
 function showSigner(){
- $("doc-stage").hidden=true;$("receipt-stage").hidden=true;$("signature-stage").hidden=false;
+ if(!selectedTab("signature"))return;
  $("signer-name").value=review.sampleSigner;
  $("signer-signature").value=review.sampleSignature;
  $("signed-date").value=review.sampleDate;
@@ -98,7 +169,7 @@ function receiptItem(label,status,ok=false){
  return '<div class="receipt-item '+(ok?'ok':'wait')+'"><span aria-hidden="true">'+(ok?'✓':'○')+'</span><strong>'+safe(label)+'</strong><em>'+safe(status)+'</em></div>';
 }
 function showReceipt(){
- $("doc-stage").hidden=true;$("signature-stage").hidden=true;$("receipt-stage").hidden=false;
+ selectedTab("copies");
  $("receipt-items").innerHTML=receiptItem("All 10 document sections reviewed","Local acknowledgment only",true)+receiptItem("Separate waiver election recorded","Preview selection only",true)+receiptItem("Signer and E-SIGN choice prepared","Not provider attested",true)+receiptItem("Identity photo verification","Not performed")+receiptItem("GPS recording","Not requested")+receiptItem("Certified signature and initial fields","Awaiting authenticated provider")+receiptItem("Signed document PDF","Not generated")+receiptItem("Customer and company delivery","Not sent")+receiptItem("Operator notification","Not sent");
  createPrintPacket();
  window.scrollTo({top:$("main").offsetTop+140,behavior:"auto"});
@@ -118,6 +189,7 @@ $("return-docs").addEventListener("click",()=>{active=DOCUMENTS.length-1;showDoc
 $("prepare-packet").addEventListener("click",prepareReview);
 $("print-review").addEventListener("click",()=>{if(!review.prepared)return;window.print();});
 $("start-over").addEventListener("click",()=>{review=blankReview();active=0;$("printable-packet").innerHTML="";showDocument();});
+setTabHandlers();
 showDocument();
 // Server execution is intentionally absent. Client-check boxes cannot satisfy SERVER_GATES.
 console.info("R-Rent signing preview: production execution unavailable; "+SERVER_GATES.length+" server evidence gates pending.");
