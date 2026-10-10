@@ -35,6 +35,14 @@
   ],
   "rewrites": [
     {
+      "source": "/api/v1/support-cases",
+      "destination": "/api/v1/applications?mode=support-cases"
+    },
+    {
+      "source": "/api/v1/auth-status",
+      "destination": "/api/v1/health?mode=auth-status"
+    },
+    {
       "source": "/sign",
       "destination": "/sign.html"
     },
