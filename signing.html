@@ -10,17 +10,25 @@
 </head><body>
 <a class="skip" href="#main">Skip to agreement review</a>
 <header class="header"><a class="brand" href="/"><img src="/assets/r-rent-brand-icon.svg" width="50" height="50" alt=""><span><strong>R-RENT SIGN</strong><small>Ross Tax Pro Software Company · Rental Car Division</small></span></a>
-<nav aria-label="Application navigation"><a href="/agreements">Agreements</a><a href="/sign">Envelope workspace</a><a href="/privacy">Privacy</a></nav></header>
+<nav aria-label="Application navigation"><a href="/agreements">Agreements</a><a href="/sign">Internal envelope workspace</a><a href="/privacy">Privacy</a></nav></header>
 <div class="hold-banner" role="note"><strong>DOCUMENT REVIEW WORKSPACE — NOT EXECUTED.</strong> This browser-local experience does not authenticate signers, capture customer IDs or GPS, send documents, bind insurance or produce a completed electronic signature.</div>
 <main id="main">
 <section class="intro"><div class="intro-content"><div class="eyebrow">R-RENT DOCUMENT CENTER</div><h1>Review your rental agreement</h1><p>Follow each document, confirm the relevant sections, and prepare an unsigned review copy for the authorized signing process.</p><div class="intro-meta"><span>10 documents</span><span>Separate optional waiver election</span><span>Renter consent choices</span><span>Human approval required</span></div></div></section>
 <div class="workspace">
 <div class="workspace-top"><div><div class="eyebrow ink">SIGNER REVIEW</div><h2>Agreement packet</h2><p id="progress-description">0 of 10 document sections reviewed</p></div><div class="reference"><span>Document package</span><strong>RRS-PREVIEW-10</strong><small>Draft · not issued</small></div></div>
 <div class="progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10" aria-label="Document review progress" id="progress"><span id="progress-fill"></span></div>
+<div class="esign-tabbar" role="tablist" aria-label="Electronic signing review sections">
+<button id="esign-tab-documents" data-review-tab="documents" class="esign-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="doc-stage"><span class="tab-count">01</span> Documents <span class="tab-check" aria-hidden="true"></span></button>
+<button id="esign-tab-initials" data-review-tab="initials" class="esign-tab" type="button" role="tab" aria-selected="false" aria-controls="initials-stage"><span class="tab-count">02</span> Initials &amp; elections</button>
+<button id="esign-tab-consent" data-review-tab="consent" class="esign-tab" type="button" role="tab" aria-selected="false" aria-controls="consent-stage"><span class="tab-count">03</span> E-SIGN consent</button>
+<button id="esign-tab-signature" data-review-tab="signature" class="esign-tab" type="button" role="tab" aria-selected="false" aria-controls="signature-stage"><span class="tab-count">04</span> Signature &amp; date</button>
+<button id="esign-tab-verification" data-review-tab="verification" class="esign-tab" type="button" role="tab" aria-selected="false" aria-controls="verification-stage"><span class="tab-count">05</span> Verification gates</button>
+<button id="esign-tab-copies" data-review-tab="copies" class="esign-tab" type="button" role="tab" aria-selected="false" aria-controls="receipt-stage"><span class="tab-count">06</span> Copies &amp; audit</button>
+</div><p id="esign-tab-alert" class="tab-alert" role="status" aria-live="polite"></p>
 <div class="workspace-grid">
 <aside class="sidebar"><h3>Documents</h3><p class="small">Select any section to review; all required acknowledgments must be complete.</p><ol id="documents-list"></ol><div class="side-note">The final issued rental must be personalized, legally approved, and secured behind verified access.</div></aside>
 <section class="document-area" aria-label="Document review">
-<div id="doc-stage"><div class="doc-header"><div class="eyebrow ink">DOCUMENT <span id="doc-number">01</span> OF 10</div><h2 id="doc-title">Motor Vehicle Rental Agreement</h2><p>Review the written section before providing acknowledgments.</p></div>
+<div id="doc-stage" role="tabpanel" aria-labelledby="esign-tab-documents"><div class="doc-header"><div class="eyebrow ink">DOCUMENT <span id="doc-number">01</span> OF 10</div><h2 id="doc-title">Motor Vehicle Rental Agreement</h2><p>Review the written section before providing acknowledgments.</p></div>
 <article class="document-sheet" aria-label="Unsigned document preview" id="doc-sheet"><div class="paper-top"><span>R-RENT</span><span>UNSIGNED DRAFT · FOR REVIEW</span></div><h3 id="sheet-title"></h3><div id="doc-text"></div><p class="paper-disclaimer">This public review form has no personalized renter, vehicle, signed pricing or binding legal status. A final approved agreement is required before a rental.</p><div class="paper-bottom">RR RENTAL DIVISION • DOCUMENT <span id="sheet-code"></span> • REVISION PREVIEW</div></article>
 <form id="doc-ack" novalidate><div class="ack-card"><h3>Confirm review</h3>
 <label class="check-row"><input id="doc-reviewed" type="checkbox" required><span>I have read this displayed document section and understand that the final issued agreement may contain customer-specific details.</span></label>
@@ -30,7 +38,53 @@
 <div class="actions"><button id="prev" class="secondary" type="button">← Previous</button><button id="next" class="primary" type="submit">Mark reviewed &amp; continue →</button></div>
 </div></form>
 </div>
-<section id="signature-stage" class="stage" hidden><div class="eyebrow ink">SIGNER ACKNOWLEDGMENT</div><h2>Prepare signer review</h2><p>All ten document sections have been reviewed locally. These remaining fields prepare a sample only; they do not replace identity-verification and provider signing.</p>
+<section id="initials-stage" class="stage review-section" role="tabpanel" aria-labelledby="esign-tab-initials" hidden>
+<div class="eyebrow ink">DOCUMENT ACKNOWLEDGMENTS</div><h2>Initials &amp; optional elections</h2>
+<p>Review the initials and separate choices associated with your document sections. Each item must be completed in its own document. These entries stay in this browser and are not authenticated signatures.</p>
+<div id="initials-review-list" class="initials-review-list" aria-live="polite"></div>
+<div class="actions"><button type="button" class="secondary" id="initials-return">Return to document review</button><button type="button" class="primary" id="initials-next">Review electronic consent →</button></div>
+</section>
+<section id="consent-stage" class="stage review-section" role="tabpanel" aria-labelledby="esign-tab-consent" hidden>
+<div class="eyebrow ink">SEPARATE E-SIGN ELECTION</div><h2>Electronic records &amp; consent</h2>
+<p>A renter's agreement to electronic records is separate from agreeing to the rental terms or purchasing any optional product.</p>
+<div class="disclosure-grid">
+<article><h3>Records &amp; documents</h3><p>The exact finalized rental agreement and all applicable addendums must be presented for review before a real signature is requested.</p></article>
+<article><h3>Hardware &amp; access</h3><p>The final production notice must list supported devices, browser/software requirements, and how to retain or print an electronic copy.</p></article>
+<article><h3>Paper alternatives</h3><p>The signer must receive applicable instructions for requesting paper records, any lawful charges, and a process for withdrawing electronic consent.</p></article>
+<article><h3>Choice and identity</h3><p>A secure provider must attribute consent to the verified signer, record the disclosure revision, and allow decline without implying consent.</p></article>
+</div>
+<div id="consent-current-status" class="notice-status">Preview consent: not yet acknowledged.</div>
+<p class="small">This informational section is not the final legally operative E-SIGN notice. Review and opt in to document RR-009 for the local checklist; an authenticated provider must later collect valid production consent.</p>
+<div class="actions"><button type="button" class="primary" id="consent-document">Open RR-009 consent section</button><button type="button" class="secondary" id="consent-next">Review signer details →</button></div>
+</section>
+<section id="verification-stage" class="stage review-section" role="tabpanel" aria-labelledby="esign-tab-verification" hidden>
+<div class="eyebrow ink">REQUIRED PROVIDER &amp; COMPANY EVIDENCE</div><h2>Identity, insurance &amp; payment gates</h2>
+<p>Completion of the local review cannot verify driver identity, valid rental coverage, payment, or a legally effective contract.</p>
+<div class="verification-checks">
+<div><strong>Driver's license and authorized drivers</strong><span>Not verified · use approved secure verification process only</span></div>
+<div><strong>Vehicle and coverage</strong><span>Not verified · insurance carrier approval required</span></div>
+<div><strong>Final charges and payment</strong><span>Not verified · signed processor events and ledger required</span></div>
+<div><strong>E-SIGN identity &amp; consent</strong><span>Not verified · authenticated provider and exact document revision required</span></div>
+<div><strong>Signed PDF and audit certificate</strong><span>Unavailable · cannot be created from practice entries</span></div>
+<div><strong>Customer and company copies</strong><span>Not delivered · separate provider delivery receipts required</span></div>
+</div>
+<div class="notice-status"><strong>Security:</strong> Do not enter driver's license images, policy declarations, full card numbers, or government identifiers into this preview. GPS is not requested or recorded.</div>
+<div class="actions"><a class="secondary as-link" href="/security">Security &amp; verification policy</a><button type="button" class="primary" id="verification-next">View copies &amp; audit →</button></div>
+</section>
+<section id="delivery-stage" class="stage review-section" role="tabpanel" aria-labelledby="esign-tab-copies" hidden>
+<div class="eyebrow ink">DOCUMENT DELIVERY</div><h2>Copies &amp; audit status</h2>
+<p>There is no issued envelope, signed agreement or certificate for this public review. Complete all document sections and the signer practice acknowledgment to create an unsigned review copy.</p>
+<div class="verification-checks">
+<div><strong>Unsigned review copy</strong><span id="unsigned-copy-state">Not prepared</span></div>
+<div><strong>Executed rental agreement</strong><span>Not executed</span></div>
+<div><strong>Renter copy</strong><span>Not sent</span></div>
+<div><strong>Company copy</strong><span>Not stored</span></div>
+<div><strong>Signer audit trail</strong><span>No provider audit certificate</span></div>
+<div><strong>GPS or ID evidence</strong><span>Not captured</span></div>
+</div>
+<div class="actions"><button type="button" id="copies-review" class="secondary">Review required documents</button><button type="button" id="copies-signer" class="primary">Continue to signer practice →</button></div>
+</section>
+<section id="signature-stage" class="stage" role="tabpanel" aria-labelledby="esign-tab-signature" hidden><div class="eyebrow ink">SIGNER ACKNOWLEDGMENT</div><h2>Prepare signer review</h2><p>All ten document sections have been reviewed locally. These remaining fields prepare a sample only; they do not replace identity-verification and provider signing.</p>
 <div class="sign-sample"><label for="signer-name">Signer display name (local practice only)</label><input id="signer-name" maxlength="120" autocomplete="off" placeholder="Sample signer name">
 <label for="signer-signature">Type sample signature</label><input id="signer-signature" maxlength="120" autocomplete="off" placeholder="Repeat the same sample name"><div class="signature-place">Signature placement: <strong>1 location in the final rental agreement</strong><p>No name or signature is uploaded or recorded by this public interface.</p></div>
 <label for="signed-date">Date of sample review</label><input id="signed-date" type="date">
@@ -38,7 +92,7 @@
 <label class="check-row"><input id="final-review" type="checkbox"><span>I understand this completes only a local document review, not a legally binding e-signature.</span></label>
 <p id="signature-error" class="error" role="status" aria-live="polite"></p><div class="actions"><button type="button" id="return-docs" class="secondary">← Review documents</button><button type="button" id="prepare-packet" class="primary">Prepare unsigned review copy →</button></div></div>
 </section>
-<section id="receipt-stage" class="stage" hidden>
+<section id="receipt-stage" class="stage" role="tabpanel" aria-labelledby="esign-tab-copies" hidden>
 <div class="receipt-symbol" aria-hidden="true">✓</div><h2>Review checklist prepared</h2><p class="receipt-lead">Your local review is complete. <strong>No legally binding signature has been executed.</strong></p>
 <div id="receipt-items" class="receipt-items" aria-label="Completion evidence statuses"></div>
 <div class="receipt-ref"><span>Preview reference</span><strong>RRS-PREVIEW-10</strong><p>No real envelope number or completed certificate has been issued.</p></div>
