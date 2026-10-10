@@ -127,3 +127,25 @@ A proprietary signed-document experience now includes a browser-local electronic
 - Bronco Sport media is **not published** until the specified approved source photograph is accessible in the repository and can be checked for sensitive plate or personal information.
 - No inferred trim, actual VIN, plate, possession, inspection, published Bronco price, instant confirmation or payment acceptance is represented as proven.
 - Only the specifically approved source asset for a given vehicle may be published. All subsequent changes to vehicle photographs, composite artwork or owner portraits require explicit approval for that exact asset.
+
+## Enterprise security and access architecture (2026-10-10)
+
+- [Enterprise blueprint and page directory](docs/ENTERPRISE_ARCHITECTURE.md)
+- [Written Information Security and Cybersecurity Program](docs/security/CYBERSECURITY_PROGRAM.md)
+- [Data Handling, Retention and Secure Disposal Policy](docs/security/DATA_HANDLING_AND_DISPOSAL.md)
+- [13-role RBAC and AES-256-GCM encryption standard](docs/security/RBAC_AND_ENCRYPTION.md)
+- [Worker orchestration, triggers and agent directives](docs/WORKER_ORCHESTRATION.md)
+- [Default-off feature/secret registry](config/feature-registry.json)
+- [Tenant-scoped security migration — **NOT APPLIED**](supabase/migrations/20261010_003_enterprise_security.sql)
+- [Encrypted case/envelope migration — **NOT APPLIED**](supabase/migrations/20261010_004_encrypted_case_storage.sql)
+
+### Interface locations
+- `/signing`: ten-document guided, browser-local unsigned review; initials, elections, confirmation and print-to-PDF. No legally executed envelopes or certified evidence.
+- `/sign`: original envelope design and signature practice pad. New review link added.
+- `/operations`: public-safe enterprise role and governance **preview only**; does not grant access or show protected records.
+- `/api/v1/roles`: harmless public role view/permission metadata.
+- `/api/v1/operations`: server-verified JWT + AAL2 MFA + staff membership + tenant gate, no protected customer records in its response; feature default disabled.
+- `/api/v1/readiness`: configuration readiness flags are not proof of successful external provider integration.
+
+### Critical operational boundary
+All security-heavy APIs, secure uploads, actual payment settlement, signer invitations, private-case collection, data disposition, insurance verification and vehicle release remain blocked until independent verified integrations and evidence gates exist. AES-256-GCM application encryption is implemented as a server module but not evidence that every record or backup has been migrated, encrypted or scanned. All sensitive document intake requires restricted vault, scanner and cipher provisioning; support-case descriptions and envelope recipients require encrypted schema/flags. No secrets, real renter data or production encryption keys are seeded in GitHub.
