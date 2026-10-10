@@ -59,7 +59,7 @@
       "destination": "/api/v1/payments?provider=paypal"
     },
     {
-      "source": "/((?!api/|assets/|sign|sign\\.html|sign\\.css|sign\\.js|styles\\.css|app\\.js|care\\.js|legal-policies\\.js|api-ui\\.js|robots\\.txt|sitemap\\.xml|openapi\\.json).*)",
+      "source": "/((?!api/|_vercel/|assets/|sign|sign\\.html|sign\\.css|sign\\.js|styles\\.css|app\\.js|care\\.js|legal-policies\\.js|api-ui\\.js|robots\\.txt|sitemap\\.xml|openapi\\.json).*)",
       "destination": "/index.html"
     }
   ],
