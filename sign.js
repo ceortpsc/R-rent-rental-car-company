@@ -4,7 +4,7 @@ const catalog=[
 ["RR-001","Vehicle Rental Agreement"],["RR-002","Vehicle Condition and Return"],["RR-003","Insurance and Coverage Election"],
 ["RR-004","Optional Damage Waiver Election"],["RR-005","Additional Authorized Driver"],
 ["RR-006","Payment and Fee Disclosures"],["RR-007","Fuel, Tolls and Mileage"],["RR-008","Roadside and Incident Procedures"],
-["RR-009","E-SIGN Electronic Consent"]];
+["RR-009","E-SIGN Electronic Consent"],["RR-010","Privacy, Final Packet & Copy Delivery"]];
 const $=id=>document.getElementById(id);
 const selects=$("documents");
 for (const [code,title] of catalog){
