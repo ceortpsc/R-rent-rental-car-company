@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="r-title r-desc">
+<title id="r-title">R-Rent icon</title><desc id="r-desc">Gold R monogram with a curved road motif on a burgundy and navy field.</desc>
+<defs><linearGradient id="rr-bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0C1D34"/><stop offset="1" stop-color="#631E27"/></linearGradient></defs>
+<rect width="128" height="128" rx="25" fill="url(#rr-bg)"/>
+<path d="M23 101V27h42c23 0 39 13 39 34 0 15-8 25-21 31l22 9H83L59 80H44v21H23Zm21-38h19c13 0 19-4 19-11s-6-11-19-11H44v22Z" fill="#BF9B56"/>
+<path d="M31 111C62 105 86 104 109 112" fill="none" stroke="#F5F0E8" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M66 109l8-1.5M85 108l7 .2" fill="none" stroke="#BF9B56" stroke-width="2" stroke-linecap="round"/>
+</svg>
