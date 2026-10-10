@@ -1,4 +1,4 @@
-import {DOCUMENTS,blankReview,validateDocument,getProgress,validateLocalReview,SERVER_GATES} from "./signing-rules.js";
+import {DOCUMENTS,blankReview,validateDocument,getProgress,validateLocalReview,canEnterSignerReview,SERVER_GATES} from "./signing-rules.js";
 const $=id=>document.getElementById(id);
 const safe=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 let review=blankReview(),active=0;
@@ -19,9 +19,8 @@ const REVIEW_TABS=Object.freeze(["documents","initials","consent","signature","v
 const REVIEW_PANELS=Object.freeze(["doc-stage","initials-stage","consent-stage","signature-stage","verification-stage","delivery-stage","receipt-stage"]);
 function selectedTab(tab,options={}){
  if(!REVIEW_TABS.includes(tab))return false;
- const progress=getProgress(review);
  const alert=$("esign-tab-alert");
- if(tab==="signature"&&(progress.completed!==DOCUMENTS.length||review.declined||review.esignConsent!==true)){
+ if(tab==="signature"&&!canEnterSignerReview(review)){
   alert.textContent=review.declined?
     "Electronic signing was declined. No agreement has been executed; contact the rental office for an alternative.":
     "Before signer practice, review all 10 documents and make a separate electronic-consent choice in RR-009.";
