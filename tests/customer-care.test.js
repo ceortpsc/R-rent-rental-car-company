@@ -24,11 +24,11 @@ test('review and case submission do not claim unperformed actions',()=>{
 test('published legal policies are accessible through named SPA routes',()=>{
  const legal=readFileSync(new URL('../legal-policies.js',import.meta.url),'utf8');
  const vercel=JSON.parse(readFileSync(new URL('../vercel.json',import.meta.url),'utf8'));
- assert.match(index,/legal-policies\\.js/);
- assert.match(app,/RRentLegal\\.render\\(p\\)/);
+ assert.match(index,/legal-policies\.js/);
+ assert.match(app,/RRentLegal\.render\(p\)/);
  assert.match(legal,/RR-LGL-001/);
  assert.match(legal,/RR-LGL-002/);
- assert.match(legal,/91\\.057/);
+ assert.match(legal,/91\.057/);
  assert.match(legal,/R-Rent Privacy Request/);
  assert.ok(vercel.redirects.some(r=>r.source==='/terms-of-service'&&r.destination==='/terms'));
  assert.ok(vercel.redirects.some(r=>r.source==='/privacy-policy'&&r.destination==='/privacy'));
