@@ -17,7 +17,7 @@ export default async function handler(req,res){
    if(actor.aal!=='aal2')return sendReply(res,403,{error:'staff_mfa_required'});
    const rows=await dbQuery('staff_members',{select:'role,tenant,active',tenant:'eq.'+TENANT,user_id:'eq.'+actor.id,active:'eq.true',limit:'1'});
    const row=rows[0];
-   if(!row||!ROLE_DEFINITIONS[row.role]||!ROLE_SCREENS[row.role]||!['RENTER','ADDITIONAL_DRIVER'].includes(row.role)&&actor.aal!=='aal2')return sendReply(res,403,{error:'role_not_authorized'});
+   if(!row||!ROLE_DEFINITIONS[row.role]||!ROLE_SCREENS[row.role]||['RENTER','ADDITIONAL_DRIVER'].includes(row.role))return sendReply(res,403,{error:'role_not_authorized'});
    return sendReply(res,200,{role:row.role,scope:ROLE_DEFINITIONS[row.role].scope,screens:ROLE_SCREENS[row.role],permissions:ROLE_DEFINITIONS[row.role].permissions,records:[],data_status:'not_loaded',action_status:'gated',note:'No privileged records are returned by the catalog endpoint. Scoped data services require separate audited controls.'});
   }catch(err){return apiError(res,err);}
  }
