@@ -118,3 +118,12 @@ A proprietary signed-document experience now includes a browser-local electronic
 - Owner brand ambassador: Andreaa Chan’nel. Owner portrait still needs a rights-cleared image upload, and generated mockup likenesses must **not** be represented as actual owner photographs.
 - Fleet: 2026 Chevrolet Trailblazer and 2026 Ford Bronco Sport Big Bend; retain representative-illustration disclosures until authenticated owner vehicle photography is available.
 - The design does **not** enable rentals, billing, electronic signing, or automated verification; existing security gates stay in force.
+
+## Fleet media publication corrections (2026-10-10)
+
+- The owner has not approved the original generated vehicle graphics or earlier R-Rent artwork. Their references have been removed from rendered public views.
+- A newly regenerated **2026 Chevrolet Trailblazer concept crop** has been added to `assets/trailblazer-2026-concept.svg`. Its embedded low-resolution image is AI-generated and expressly labeled as a concept, **not an actual verified photograph**.
+- Dedicated model pages: `/fleet/trailblazer-2026` and `/fleet/bronco-sport-2026`.
+- Bronco Sport media is **not published** until the specified approved source photograph is accessible in the repository and can be checked for sensitive plate or personal information.
+- No inferred trim, actual VIN, plate, possession, inspection, published Bronco price, instant confirmation or payment acceptance is represented as proven.
+- Only the specifically approved source asset for a given vehicle may be published. All subsequent changes to vehicle photographs, composite artwork or owner portraits require explicit approval for that exact asset.
