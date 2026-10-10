@@ -42,3 +42,10 @@ Texas Business & Commerce Code Chapter 322 and federal E-SIGN govern electronica
 - [ ] Qualified counsel and insurer approval, end-to-end compliance/security testing.
 
 **Only after every required gate passes should the R-Rent server accept real electronic signatures.**
+
+## Guided e-sign tabs (v0.4 UI)
+- Public /signing: six review tabs, 10 document sections, initials/elections, local separate opt-in, sample date and signature, verification-readiness dashboard and unsigned print-to-PDF.
+- Internal /sign: fifth “Guided e-sign sections” tab directs to the guided view.
+- Browser state is not a signed record; no secure invitation or provider-issued certificate.
+- Required server evidence, provider webhooks, identity confirmation, final agreement approval, and customer/company delivery remain explicitly blocked.
+- Detailed navigation and state contract: [E-Sign Tabs and Sections](ESIGN_TABS_AND_SECTIONS.md).
