@@ -1,9 +1,10 @@
+import {encryptionReady} from '../../lib/crypto-vault.js';
 import {randomUUID} from 'node:crypto';
 import {method,reply,requireJSON,enforceOrigin,failClosed,enabled,error,text} from '../../lib/http.js';
 import {dbReady,userFromRequest,ownedApplication,dbQuery,TENANT} from '../../lib/identity.js';
 export default async function handler(req,res){
  if(!method(req,res,['POST']))return;if(!enforceOrigin(req,res))return;
- if(!dbReady()||!enabled('RR_ENABLE_SECURE_UPLOADS'))return failClosed(res,'document_upload_unavailable');
+ if(!dbReady()||!enabled('RR_ENABLE_SECURE_UPLOADS')||!enabled('RR_ENABLE_PRIVATE_VAULT')||!enabled('RR_ENABLE_MALWARE_SCAN')||!encryptionReady())return failClosed(res,'secure_document_vault_unavailable','Sensitive document intake is disabled until encrypted private storage, malware scanning, authenticated RBAC and approved retention are confirmed.');
  const b=requireJSON(req,res);if(!b)return;
  const types=['license_front','license_back','insurance_card','insurance_declarations','vehicle_condition','supporting_document'];
  if(!types.includes(b.document_type)||!text(b.application_id,36)||!['application/pdf','image/jpeg','image/png'].includes(b.content_type)||!Number.isSafeInteger(b.size_bytes)||b.size_bytes<1||b.size_bytes>10485760)return reply(res,422,{error:'invalid_document_metadata'});
