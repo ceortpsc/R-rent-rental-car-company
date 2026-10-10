@@ -6,7 +6,7 @@ export default async function handler(req,res){
  if(mode==='readiness'){
   const db=dbReady();
   return reply(res,200,{provider_configuration_flags:{
-   public_quote:true,auth_database_configured:db,applications_enabled:db&&enabled('RR_ENABLE_APPLICATIONS'),
+   public_quote:true,auth_database_configured:db,oauth_signin_enabled:false,support_case_api_enabled:db&&enabled('RR_ENABLE_CASES')&&enabled('RR_ENABLE_OAUTH'),applications_enabled:db&&enabled('RR_ENABLE_APPLICATIONS'),
    document_upload_enabled:db&&enabled('RR_ENABLE_SECURE_UPLOADS'),
    legal_contract_approval:enabled('RR_CONTRACTS_LEGAL_APPROVED'),
    insurance_program_approval:enabled('RR_INSURANCE_PROGRAM_APPROVED'),
