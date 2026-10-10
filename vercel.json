@@ -35,6 +35,10 @@
   ],
   "rewrites": [
     {
+      "source": "/signing",
+      "destination": "/signing.html"
+    },
+    {
       "source": "/api/v1/support-cases",
       "destination": "/api/v1/applications?mode=support-cases"
     },
