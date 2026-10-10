@@ -26,7 +26,9 @@ test('31-day illustrative Texas rate 6.25%',()=>{
 });
 test('returns must be later',()=>assert.throws(()=>calculate({vehicle_id:'trailblazer-2026',pickup_at:'2026-10-07T10:00:00Z',return_at:'2026-10-06T10:00:00Z'}),/invalid_rental_period/));
 test('timezone offsets mandatory',()=>assert.throws(()=>calculate({vehicle_id:'trailblazer-2026',pickup_at:'2026-10-07T10:00',return_at:'2026-10-08T10:00'}),/timezone_required/));
-test('unapproved Bronco rate cannot be quoted',()=>assert.throws(()=>calculate({vehicle_id:'bronco-sport-big-bend-2026',pickup_at:'2026-10-07T10:00:00Z',return_at:'2026-10-08T10:00:00Z'}),/rate_unavailable/));
+test('Bronco Sport Big Bend is $89.99 per day with provisional $9 state tax',()=>{const q=calculate({vehicle_id:'bronco-sport-big-bend-2026',pickup_at:'2026-10-07T10:00:00Z',return_at:'2026-10-08T10:00:00Z'});assert.equal(q.base_rental_cents,8999);assert.equal(q.provisional_state_tax_cents,900);assert.equal(q.provisional_subtotal_cents,9899);assert.equal(q.payment_due,false);});
+test('optional proposed $9 daily protection does not create active insurance',()=>{const q=calculate({vehicle_id:'trailblazer-2026',pickup_at:'2026-10-07T10:00:00Z',return_at:'2026-10-09T10:00:00Z',insurance_selected:true});assert.equal(q.base_rental_cents,11800);assert.equal(q.optional_insurance_estimate_cents,1800);assert.equal(q.provisional_state_tax_cents,1180);assert.equal(q.provisional_subtotal_cents,14780);assert.equal(q.coverage_bound,false);assert.equal(q.insurance_status,'NOT_VERIFIED_NOT_BOUND');});
+test('malformed optional selection cannot silently be interpreted',()=>assert.throws(()=>calculate({vehicle_id:'trailblazer-2026',pickup_at:'2026-10-07T10:00:00Z',return_at:'2026-10-09T10:00:00Z',insurance_selected:'yes'}),/invalid_insurance_selection/));
 test('Stripe HMAC timing and payload checks',()=>{
  const now=Math.floor(Date.now()/1000),raw=Buffer.from('{"type":"test"}'),secret='whsec_testonly';
  const sig=createHmac('sha256',secret).update(now+'.').update(raw).digest('hex');
