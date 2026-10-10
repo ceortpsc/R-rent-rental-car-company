@@ -149,3 +149,11 @@ A proprietary signed-document experience now includes a browser-local electronic
 
 ### Critical operational boundary
 All security-heavy APIs, secure uploads, actual payment settlement, signer invitations, private-case collection, data disposition, insurance verification and vehicle release remain blocked until independent verified integrations and evidence gates exist. AES-256-GCM application encryption is implemented as a server module but not evidence that every record or backup has been migrated, encrypted or scanned. All sensitive document intake requires restricted vault, scanner and cipher provisioning; support-case descriptions and envelope recipients require encrypted schema/flags. No secrets, real renter data or production encryption keys are seeded in GitHub.
+
+## Guided e-sign tabs — October 10, 2026
+
+The guided **/signing** UI contains six responsive, keyboard-accessible views: **Documents**, **Initials & Elections**, **E-SIGN Consent**, **Signature & Date**, **Verification Gates**, and **Copies & Audit**. Each document acknowledgment remains separate; waiver choices are never preselected. Signature/date practice is gated by the ten-section review and local E-SIGN choice. An unsigned print-to-PDF review copy becomes available only after local completion. All identity verification, legally binding signatures, provider certificates, payment settlement, and verified delivery remain disabled until independent production integration.
+
+The internal **/sign** envelope workspace now has a fifth tab linking to guided review. Public navigation provides a direct full-page E-Sign link. The user interface never marks an unsigned preview as executed.
+
+See [E-Sign Tabs and Sections](docs/ESIGN_TABS_AND_SECTIONS.md) and [Signing Platform](docs/ESIGN_PLATFORM.md).
