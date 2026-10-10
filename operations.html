@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0c1d34">
+<title>R-Rent | Enterprise Operations & Security</title>
+<meta name="description" content="R-Rent administrative permission architecture and secure operations access readiness.">
+<link rel="icon" type="image/svg+xml" href="/assets/r-rent-brand-icon.svg"><link rel="stylesheet" href="/operations.css">
+</head><body>
+<a class="skip" href="#app">Skip to dashboard</a>
+<header class="masthead"><a href="/" class="brand"><img src="/assets/r-rent-brand-icon.svg" width="48" height="48" alt=""><span>R-RENT <small>Enterprise Operations</small></span></a><nav><a href="/">Website</a><a href="/signing">Document Review</a><a href="/security">Security</a><a href="/terms">Policies</a></nav></header>
+<div class="guard"><strong>PROTECTED RECORDS ARE NOT ACCESSIBLE ON THIS PAGE.</strong> This interface displays only role-policy structure. It is not a login, account session, or permission grant.</div>
+<main id="app" class="shell">
+<section class="lead"><div><div class="eyebrow">R-RENT CONTROL CENTER / ARCHITECTURE</div><h1>Enterprise Operations</h1><p>Governed customer experience, fleet, verification, contracts, finance, cybersecurity, configurations and data retention—each with least-privilege boundaries and auditable decisions.</p></div><div class="review-status"><span id="service-state">Checking public system status…</span><strong>Production protected access remains gated</strong></div></section>
+<div class="role-layout">
+<aside class="role-panel"><div class="eyebrow dark">RBAC POLICY PREVIEW</div><h2>Roles & views</h2><p>Select a role to inspect its designated screens and permissions. This changes only the preview below.</p>
+<label for="role-select">Review permission model</label><select id="role-select"><option value="">Loading role catalog…</option></select>
+<div class="scope-box" id="scope-box">No role selected.</div>
+<div class="hint" id="role-count">Loading thirteen-role registry…</div>
+<button id="verify-access" type="button" class="btn outline">Check secure access gate</button><p class="hint" id="access-message" aria-live="polite">A server-issued, verified identity is required before protected operations can open.</p></aside>
+<div class="dashboard">
+<div class="tabbar" role="tablist" aria-label="Dashboard sections">
+<button type="button" role="tab" class="tab selected" data-tab="views" aria-selected="true">Role views</button>
+<button type="button" role="tab" class="tab" data-tab="actions" aria-selected="false">Actions & approvals</button>
+<button type="button" role="tab" class="tab" data-tab="security" aria-selected="false">Cybersecurity & data</button>
+<button type="button" role="tab" class="tab" data-tab="configuration" aria-selected="false">Configuration</button>
+</div>
+<section class="tab-content" id="section-views" role="tabpanel"><h2>Permitted dashboard views</h2><p>The displayed cards are policy descriptions, not customer or transaction data.</p><div class="card-grid" id="view-cards"><div class="placeholder">Choose a role to inspect its assigned views.</div></div><h3>Allowed permissions</h3><div id="permission-list" class="permissions"></div></section>
+<section class="tab-content" id="section-actions" role="tabpanel" hidden><h2>Actions requiring approval</h2><p>All protected actions are disabled here. Operational execution must pass authenticated API authorization and required verified evidence.</p><div class="card-grid" id="action-cards"></div>
+<div class="buttons"><a class="btn primary" href="/signing">Review unsigned document workflow</a><a class="btn outline" href="/agreements">Contract index</a></div></section>
+<section class="tab-content" id="section-security" role="tabpanel" hidden><h2>Security and information governance</h2><div id="security-cards" class="card-grid"></div><div class="buttons"><a class="btn primary" href="https://github.com/ceortpsc/R-rent-rental-car-company/blob/main/docs/security/CYBERSECURITY_PROGRAM.md" target="_blank" rel="noopener">Cybersecurity program</a><a class="btn outline" href="https://github.com/ceortpsc/R-rent-rental-car-company/blob/main/docs/security/DATA_HANDLING_AND_DISPOSAL.md" target="_blank" rel="noopener">Data handling & disposal</a></div></section>
+<section class="tab-content" id="section-configuration" role="tabpanel" hidden><h2>Configuration management</h2><p>Proposed changes require documented scope, security review, a second approver for high-risk changes, testing and rollback evidence.</p><div id="configuration-cards" class="card-grid"></div><div class="buttons"><button type="button" class="btn outline" id="copy-checklist">Copy deployment checklist</button><a class="btn primary" href="https://github.com/ceortpsc/R-rent-rental-car-company/blob/main/docs/ENTERPRISE_ARCHITECTURE.md" target="_blank" rel="noopener">Read enterprise blueprint</a></div><p id="copy-status" role="status" class="hint"></p></section>
+</div></div>
+</main><footer>R-Rent · Ross Tax Pro Software Company · No customer files, credentials, payment records or verified identity displayed on this page.</footer>
+<script defer src="/operations.js"></script></body></html>
