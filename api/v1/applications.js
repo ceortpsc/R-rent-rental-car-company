@@ -1,8 +1,10 @@
+import handleSupportCases from '../../lib/support-cases.js';
 import {randomUUID} from 'node:crypto';
 import {method,reply,requireJSON,enforceOrigin,failClosed,enabled,error} from '../../lib/http.js';
 import {calculate} from '../../lib/pricing.js';
 import {dbReady,userFromRequest,dbQuery,TENANT} from '../../lib/identity.js';
 export default async function handler(req,res){
+ if(new URL(req.url,'https://rtpscrentalcars.com').searchParams.get('mode')==='support-cases')return handleSupportCases(req,res);
  if(!method(req,res,['POST']))return;if(!enforceOrigin(req,res))return;
  if(!dbReady()||!enabled('RR_ENABLE_APPLICATIONS'))return failClosed(res);
  const b=requireJSON(req,res);if(!b)return;
