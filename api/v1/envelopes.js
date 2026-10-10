@@ -10,7 +10,7 @@ export default async function handler(req,res) {
  if(req.method==="GET"){
    return reply(res,200,{
      product:"R-Rent Sign",version:"0.3.0",templates:DOCUMENTS,
-     envelope_states:STATES,local_signature_canvas:true,
+     envelope_states:STATES,local_signature_canvas:true, guided_review_url:"/signing",guided_review_document_count:10,public_review_mode:"BROWSER_LOCAL_UNSIGNED", identity_check_status:"NOT_PERFORMED",gps_recorded:false,signed_pdf_available:false,customer_and_company_copies_delivered:false,
      external_delivery_enabled:false,document_execution_enabled:false,
      identity_upload_enabled:false,
      note:"The public signature pad is a local preview. No signature is collected or stored."
