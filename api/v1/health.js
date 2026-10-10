@@ -1,3 +1,4 @@
+import {encryptionReady} from '../../lib/crypto-vault.js';
 import {ROLE_DEFINITIONS,ROLE_SCREENS,publicCatalog} from '../../lib/rbac.js';
 import {userFromRequest,dbQuery,TENANT} from '../../lib/identity.js';
 import {reply as sendReply,failClosed,error as apiError} from '../../lib/http.js';
@@ -23,8 +24,8 @@ export default async function handler(req,res){
  if(mode==='readiness'){
   const db=dbReady();
   return reply(res,200,{provider_configuration_flags:{
-   public_quote:true,rbac_backend_available:db&&enabled('RR_ENABLE_RBAC'),encryption_key_configured:false,auth_database_configured:db,oauth_signin_enabled:false,support_case_api_enabled:db&&enabled('RR_ENABLE_CASES')&&enabled('RR_ENABLE_OAUTH'),applications_enabled:db&&enabled('RR_ENABLE_APPLICATIONS'),
-   document_upload_enabled:db&&enabled('RR_ENABLE_SECURE_UPLOADS'),
+   public_quote:true,rbac_backend_available:db&&enabled('RR_ENABLE_RBAC'),encryption_key_configured:encryptionReady(),auth_database_configured:db,oauth_signin_enabled:false,support_case_api_enabled:db&&enabled('RR_ENABLE_CASES')&&enabled('RR_ENABLE_OAUTH'),applications_enabled:db&&enabled('RR_ENABLE_APPLICATIONS'),
+   document_upload_enabled:db&&encryptionReady()&&enabled('RR_ENABLE_PRIVATE_VAULT')&&enabled('RR_ENABLE_MALWARE_SCAN')&&enabled('RR_ENABLE_SECURE_UPLOADS'),
    legal_contract_approval:enabled('RR_CONTRACTS_LEGAL_APPROVED'),
    insurance_program_approval:enabled('RR_INSURANCE_PROGRAM_APPROVED'),
    local_tax_review:enabled('RR_LOCAL_TAX_REVIEW_APPROVED'),
