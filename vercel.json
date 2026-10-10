@@ -35,6 +35,18 @@
   ],
   "rewrites": [
     {
+      "source": "/api/v1/roles",
+      "destination": "/api/v1/health?mode=roles"
+    },
+    {
+      "source": "/api/v1/operations",
+      "destination": "/api/v1/health?mode=operations"
+    },
+    {
+      "source": "/operations",
+      "destination": "/operations.html"
+    },
+    {
       "source": "/signing",
       "destination": "/signing.html"
     },
