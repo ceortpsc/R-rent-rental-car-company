@@ -1,3 +1,4 @@
+import {encryptRestricted,encryptionReady} from '../../lib/crypto-vault.js';
 import {method,reply,requireJSON,enforceOrigin,failClosed,enabled,error} from "../../lib/http.js";
 import {DOCUMENTS,STATES,parseDraft,fingerprint} from "../../lib/envelopes.js";
 import {dbReady,staffFromRequest,dbQuery,TENANT} from "../../lib/identity.js";
@@ -17,7 +18,7 @@ export default async function handler(req,res) {
    });
  }
  if(!enforceOrigin(req,res))return;
- if(!dbReady()||!enabled("RR_ENABLE_ENVELOPES"))return failClosed(res,"envelope_database_not_ready");
+ if(!dbReady()||!enabled("RR_ENABLE_ENVELOPES")||!enabled("RR_ENABLE_ENCRYPTED_ENVELOPES")||!encryptionReady())return failClosed(res,"envelope_database_not_ready");
  const action=new URL(req.url,"https://rtpscrentalcars.com").searchParams.get("action")||"draft";
  if(action!=="draft")return failClosed(res,"envelope_delivery_locked",
    "Envelopes cannot be issued or executed until secure delivery, verified signer identity, document storage and consent evidence are operational.");
@@ -29,7 +30,7 @@ export default async function handler(req,res) {
    await dbQuery("envelopes",{},{
      method:"POST",body:{
        id:draft.id,tenant:TENANT,created_by:actor.id,title:draft.title,
-       document_codes:draft.documents,recipients_json:draft.recipients,
+       document_codes:draft.documents,recipients_json:encryptRestricted(JSON.stringify(draft.recipients),{tenant:TENANT,recordId:draft.id,field:'envelope_recipients'}),
        expires_in_days:draft.expires_in_days,revision_sha256:hash,status:"DRAFT"
      }
    });
