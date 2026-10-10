@@ -1,0 +1,204 @@
+{
+  "schema_version": "1.0.0",
+  "service": "R-Rent",
+  "owner": "Ross Tax Pro Software Company",
+  "environment": "production_configuration_template",
+  "status": "NOT_ACTIVATED",
+  "no_auto_enable": true,
+  "rules": {
+    "default": "false",
+    "activation": "requires approved change request, independent review, scope and real provider evidence",
+    "rollback": "immediate flag-off for emergencies with audited incident/change record",
+    "secrets": "Never store actual values in this manifest"
+  },
+  "features": [
+    {
+      "key": "RR_ENABLE_RBAC",
+      "category": "identity",
+      "default": false,
+      "requires": [
+        "dedicated_database",
+        "verified_oidc_tokens",
+        "staff_mfa",
+        "tenant_rls",
+        "rbac_pen_test"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_OAUTH",
+      "category": "identity",
+      "default": false,
+      "requires": [
+        "approved_identity_provider",
+        "secure_sessions",
+        "pkce",
+        "token_revocation",
+        "login_qa"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_APPLICATIONS",
+      "category": "rental",
+      "default": false,
+      "requires": [
+        "authenticated_renter",
+        "tenant_rls",
+        "verified_fleet_catalog",
+        "privacy_notice"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_ENVELOPES",
+      "category": "esign",
+      "default": false,
+      "requires": [
+        "staff_mfa",
+        "approved_contract_revision",
+        "private_database"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_ENCRYPTED_ENVELOPES",
+      "category": "esign",
+      "default": false,
+      "requires": [
+        "RR_ENABLE_ENVELOPES",
+        "RR_ENABLE_RBAC",
+        "dedicated_key_vault",
+        "encrypted_envelopes_schema",
+        "legacy_backfill_completed"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_PRIVATE_VAULT",
+      "category": "storage",
+      "default": false,
+      "requires": [
+        "private_bucket",
+        "tenant_object_policy",
+        "signed_url_limit",
+        "backups",
+        "retention"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_MALWARE_SCAN",
+      "category": "security",
+      "default": false,
+      "requires": [
+        "quarantine_pipeline",
+        "virus_scanner",
+        "scan_verification"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_SECURE_UPLOADS",
+      "category": "storage",
+      "default": false,
+      "requires": [
+        "RR_ENABLE_PRIVATE_VAULT",
+        "RR_ENABLE_MALWARE_SCAN",
+        "RR_ENABLE_RBAC",
+        "dedicated_key_vault"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_CASES",
+      "category": "support",
+      "default": false,
+      "requires": [
+        "RR_ENABLE_OAUTH",
+        "staff_queue",
+        "privacy_request_process"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_ENCRYPTED_CASE_STORAGE",
+      "category": "support",
+      "default": false,
+      "requires": [
+        "RR_ENABLE_CASES",
+        "dedicated_key_vault",
+        "encrypted_case_schema",
+        "legacy_backfill_completed"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_PAYMENTS",
+      "category": "payments",
+      "default": false,
+      "requires": [
+        "approved_merchant_accounts",
+        "PCI_hosted_checkout",
+        "provider_webhook_verification",
+        "durable_ledger",
+        "insured_rental_terms",
+        "tax_and_fee_review"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_SIGNING",
+      "category": "esign",
+      "default": false,
+      "requires": [
+        "approved_esign_provider",
+        "RR_ENABLE_ENCRYPTED_ENVELOPES",
+        "verified_signer_identity",
+        "consent_evidence",
+        "immutable_artifact_storage",
+        "completion_webhook"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_RELEASE",
+      "category": "fleet",
+      "default": false,
+      "requires": [
+        "RR_ENABLE_SIGNING",
+        "RR_ENABLE_PAYMENTS",
+        "carrier_coverage_verified",
+        "fleet_anti_overlap",
+        "pretrip_inspection",
+        "human_dispatch_approval"
+      ]
+    }
+  ],
+  "secrets": [
+    {
+      "key": "RR_ENCRYPTION_KEY_B64",
+      "where": "external secret manager",
+      "rotation": "key version and re-encryption plan",
+      "never_public": true
+    },
+    {
+      "key": "RR_ENCRYPTION_KEY_ID",
+      "where": "server configuration",
+      "never_public": false
+    },
+    {
+      "key": "SUPABASE_SERVICE_ROLE_KEY",
+      "where": "server secret manager",
+      "never_public": true
+    },
+    {
+      "key": "STRIPE_SECRET_KEY",
+      "where": "server secret manager",
+      "never_public": true
+    },
+    {
+      "key": "STRIPE_WEBHOOK_SECRET",
+      "where": "server secret manager",
+      "never_public": true
+    },
+    {
+      "key": "PAYPAL_CLIENT_SECRET",
+      "where": "server secret manager",
+      "never_public": true
+    },
+    {
+      "key": "RR_ESIGN_API_KEY",
+      "where": "server secret manager",
+      "never_public": true
+    }
+  ]
+}
