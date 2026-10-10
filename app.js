@@ -1,6 +1,6 @@
 (function(){
 "use strict";
-var navItems=[["/","Home"],["/fleet","Our Fleet"],["/book","Get a Quote"],["/requirements","Requirements"],["/agreements","Agreements"],["/fees","Fees"],["/sign","R-Rent Sign"],["/about","About"],["/contact","Contact"],["/feedback","Feedback"]];
+var navItems=[["/","Home"],["/fleet","Fleet"],["/book","Get a Quote"],["/about","About Us"],["/contact","Contact"],["/reviews","Reviews"],["/complaints","Complaints"],["/disputes","Billing"],["/access","Account"]];
 var routes=["/","/fleet","/book","/requirements","/agreements","/fees","/security","/portal","/admin","/privacy","/terms","/contact"].concat(window.RRentCare?window.RRentCare.routes:[]);
 var state={path:"/"};
 function a(path,label,cls){return '<a href="'+path+'"'+(path==='/sign'?'':' data-route')+' class="'+(cls||"")+'">'+label+'</a>';}
