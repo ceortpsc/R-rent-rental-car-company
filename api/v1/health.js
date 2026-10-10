@@ -3,6 +3,7 @@ import {dbReady} from '../../lib/identity.js';
 export default async function handler(req,res){
  if(!method(req,res,['GET']))return;
  const mode=new URL(req.url,'https://rtpscrentalcars.com').searchParams.get('mode');
+ if(mode==='auth-status')return reply(res,200,{service:'R-Rent customer identity',oauth_signin_publicly_available:false,provider_onboarding_configured:dbReady()&&enabled('RR_ENABLE_OAUTH'),authenticated_case_api_configured:dbReady()&&enabled('RR_ENABLE_OAUTH')&&enabled('RR_ENABLE_CASES'),requires_staff_mfa:true,public_login_url:null,note:'Configuration status only. No credentials or sessions are issued.'});
  if(mode==='readiness'){
   const db=dbReady();
   return reply(res,200,{provider_configuration_flags:{
