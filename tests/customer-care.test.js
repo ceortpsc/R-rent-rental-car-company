@@ -34,3 +34,13 @@ test('published legal policies are accessible through named SPA routes',()=>{
  assert.ok(vercel.redirects.some(r=>r.source==='/privacy-policy'&&r.destination==='/privacy'));
  assert.ok(vercel.rewrites.some(r=>r.source.includes('legal-policies')));
 });
+
+test('unapproved fleet illustrations are removed from public rendering',()=>{
+  assert.doesNotMatch(app,/assets\\/trailblazer\\.svg/);
+  assert.doesNotMatch(app,/assets\\/bronco\\.svg/);
+  assert.doesNotMatch(app,/assets\\/r-rent-monogram\\.svg/);
+  assert.match(app,/assets\\/trailblazer-2026-concept\\.svg/);
+  assert.match(app,/fleet\\/trailblazer-2026/);
+  assert.match(app,/fleet\\/bronco-sport-2026/);
+  assert.match(app,/Manual confirmation required/);
+});
