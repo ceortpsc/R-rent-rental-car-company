@@ -23,7 +23,7 @@
 <button id="esign-tab-consent" data-review-tab="consent" class="esign-tab" type="button" role="tab" aria-selected="false" aria-controls="consent-stage"><span class="tab-count">03</span> E-SIGN consent</button>
 <button id="esign-tab-signature" data-review-tab="signature" class="esign-tab" type="button" role="tab" aria-selected="false" aria-controls="signature-stage"><span class="tab-count">04</span> Signature &amp; date</button>
 <button id="esign-tab-verification" data-review-tab="verification" class="esign-tab" type="button" role="tab" aria-selected="false" aria-controls="verification-stage"><span class="tab-count">05</span> Verification gates</button>
-<button id="esign-tab-copies" data-review-tab="copies" class="esign-tab" type="button" role="tab" aria-selected="false" aria-controls="receipt-stage"><span class="tab-count">06</span> Copies &amp; audit</button>
+<button id="esign-tab-copies" data-review-tab="copies" class="esign-tab" type="button" role="tab" aria-selected="false" aria-controls="delivery-stage receipt-stage"><span class="tab-count">06</span> Copies &amp; audit</button>
 </div><p id="esign-tab-alert" class="tab-alert" role="status" aria-live="polite"></p>
 <div class="workspace-grid">
 <aside class="sidebar"><h3>Documents</h3><p class="small">Select any section to review; all required acknowledgments must be complete.</p><ol id="documents-list"></ol><div class="side-note">The final issued rental must be personalized, legally approved, and secured behind verified access.</div></aside>
@@ -55,7 +55,7 @@
 </div>
 <div id="consent-current-status" class="notice-status">Preview consent: not yet acknowledged.</div>
 <p class="small">This informational section is not the final legally operative E-SIGN notice. Review and opt in to document RR-009 for the local checklist; an authenticated provider must later collect valid production consent.</p>
-<div class="actions"><button type="button" class="primary" id="consent-document">Open RR-009 consent section</button><button type="button" class="secondary" id="consent-next">Review signer details →</button></div>
+<div class="actions"><button type="button" class="primary" id="consent-document">Open RR-009 consent section</button><button type="button" class="secondary" id="consent-next">Review signer details →</button><button type="button" class="secondary" id="reset-consent-preview">Reset local review</button></div>
 </section>
 <section id="verification-stage" class="stage review-section" role="tabpanel" aria-labelledby="esign-tab-verification" hidden>
 <div class="eyebrow ink">REQUIRED PROVIDER &amp; COMPANY EVIDENCE</div><h2>Identity, insurance &amp; payment gates</h2>
