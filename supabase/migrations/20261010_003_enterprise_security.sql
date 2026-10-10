@@ -12,7 +12,7 @@ create index if not exists rr_staff_tenant_lookup on public.staff_members(tenant
 create table if not exists public.restricted_records(
  id uuid primary key default gen_random_uuid(),
  tenant text not null,subject_user_id uuid not null,application_id uuid references public.applications(id),
- field_class text not null check(field_class in ('driver_license','license_number','date_of_birth','identity_document','insurance_policy','insurance_declarations','bank_account','signed_contract','signature_image','government_identifier','incident_evidence')),
+ field_class text not null check(field_class in ('driver_license','license_number','date_of_birth','identity_document','insurance_policy','insurance_declarations','bank_account','signed_contract','signature_image','government_identifier','incident_evidence','envelope_recipients','support_case_description')),
  envelope jsonb not null check(envelope ? 'alg' and envelope ? 'kid' and envelope ? 'iv' and envelope ? 'ct' and envelope ? 'tag'),
  checksum_sha256 text check(checksum_sha256 ~ '^[a-f0-9]{64}$'),
  key_id text not null,storage_region text,
