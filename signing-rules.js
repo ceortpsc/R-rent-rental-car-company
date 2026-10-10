@@ -47,3 +47,9 @@ export function productionReadiness(evidence={},isTrustedServer=false){
  const missing=SERVER_GATES.filter(g=>!isTrustedServer||evidence?.[g]?.verified!==true||!evidence?.[g]?.evidence_id||!evidence?.[g]?.verified_at);
  return {ready:missing.length===0,missing,execution_enabled:false,source:isTrustedServer?"server_evidence_assessment":"untrusted_preview"};
 }
+
+/** A public signer-review panel may only become available after all local acknowledgments.
+ *  This is not a legal signature or provider authorization. */
+export function canEnterSignerReview(review){
+ return Boolean(review&&!review.declined&&review.esignConsent===true&&getProgress(review).completed===DOCUMENTS.length);
+}
