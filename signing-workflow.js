@@ -82,6 +82,7 @@ function setTabHandlers(){
  $("initials-next").addEventListener("click",()=>selectedTab("consent"));
  $("consent-document").addEventListener("click",()=>openDocument("RR-009"));
  $("consent-next").addEventListener("click",()=>{if(selectedTab("signature"))showSigner();});
+ $("reset-consent-preview").addEventListener("click",()=>{review=blankReview();active=0;$("printable-packet").innerHTML="";showDocument();});
  $("verification-next").addEventListener("click",()=>selectedTab("copies"));
  $("copies-review").addEventListener("click",()=>showDocument());
  $("copies-signer").addEventListener("click",()=>{if(selectedTab("signature"))showSigner();});
