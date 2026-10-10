@@ -37,6 +37,7 @@
   <button class="tab" role="tab" id="tab-sign" aria-selected="false" aria-controls="view-sign" data-tab="sign" type="button">02 &nbsp; Signature pad</button>
   <button class="tab" role="tab" id="tab-accept" aria-selected="false" aria-controls="view-accept" data-tab="accept" type="button">03 &nbsp; Renter opt-in &amp; initials</button>
   <button class="tab" role="tab" id="tab-audit" aria-selected="false" aria-controls="view-audit" data-tab="audit" type="button">04 &nbsp; Evidence &amp; delivery</button>
+  <button class="tab" role="tab" id="tab-guided" aria-selected="false" aria-controls="view-guided" data-tab="guided" type="button">05 &nbsp; Guided e-sign sections</button>
  </div>
  <section id="view-compose" role="tabpanel" aria-labelledby="tab-compose" class="tab-pane">
   <div class="cols">
@@ -154,6 +155,14 @@
      <div class="note"><strong>Execution locked.</strong> Completing this preview does not contact Trevon, issue a contract, create a certificate, or imply identity, consent or payment verification.</div>
      <div id="renter-ack-summary" class="summary" aria-live="polite">Not reviewed. No signer acknowledgment created.</div>
    </aside>
+  </div>
+ </section>
+ <section id="view-guided" class="tab-pane hidden" role="tabpanel" aria-labelledby="tab-guided">
+  <div class="cols">
+   <div class="panel"><div class="eyebrow dark">GUIDED RENTER SIGNING EXPERIENCE</div><h3>Six review tabs • Ten rental documents</h3><p>Open the renter-facing review for document-by-document acknowledgments, separate initials, optional waiver decisions, electronic-records consent, signer date, and unsigned review-copy preparation.</p>
+   <ol class="signer-steps"><li>Documents — ten controlled contract and addendum sections</li><li>Initials and elections — individual section checks, waiver and drivers</li><li>Electronic consent — separate E-SIGN choice and paper alternatives</li><li>Signer and date — local sample fields, after all review steps</li><li>Verification gates — identity, insurance, billing and provider proofs</li><li>Copies and audit — visibly pending certificates and protected delivery</li></ol>
+   <a class="primary aslink" href="/signing">Open Guided E-Sign Review →</a></div>
+   <aside class="panel review"><div class="eyebrow dark">REQUIRED PRODUCTION CONTROL</div><h3>Do not confuse review with execution</h3><div class="note"><strong>Not enabled:</strong> secure invitations, verified signer authentication, insurer proof, approved final rental packet, payment settlement, certified signatures, GPS, signed PDF generation, customer/company delivery.</div><p class="mini">Document reviewers can inspect the proposed UX without uploading renter identity documents or creating an actual e-sign envelope.</p></aside>
   </div>
  </section>
  <section id="view-audit" class="tab-pane hidden" role="tabpanel" aria-labelledby="tab-audit">
