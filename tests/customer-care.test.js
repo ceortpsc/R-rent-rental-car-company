@@ -18,5 +18,5 @@ test('refund disclosures respect consumer rights',()=>{
 test('review and case submission do not claim unperformed actions',()=>{
  assert.match(care,/does not file a case automatically/);
  assert.match(care,/No authenticated customer reviews are published yet/);
- assert.match(care,/do not provide complete payment card/iu);
+ assert.match(care,/Do not enter private ID numbers/iu);
 });
