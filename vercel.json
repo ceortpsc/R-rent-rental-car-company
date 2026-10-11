@@ -35,6 +35,14 @@
   ],
   "rewrites": [
     {
+      "source": "/launch",
+      "destination": "/launch.html"
+    },
+    {
+      "source": "/api/v1/launch",
+      "destination": "/api/v1/health?mode=launch"
+    },
+    {
       "source": "/support/chat",
       "destination": "/support-chat.html"
     },
