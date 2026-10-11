@@ -124,7 +124,7 @@ begin
    id,envelope_id,user_id,tenant,document_sha256,consent_sha256,idempotency_key,
    signature_sha256,consent_hash,event_hmac,encrypted_payload,server_recorded_at)
  values(p_event_id,p_envelope_id,p_signer_user_id,p_tenant,p_document_sha256,p_consent_sha256,
-   p_idempotency_key,p_signature_sha256,p_consent_hash,p_event_proof,p_encrypted_payload,clock_timestamp());
+   p_idempotency_key,p_signature_sha256,p_consent_hash,p_event_proof,p_encrypted_payload,p_event_at);
  update public.inhouse_signers set status='SIGNED',signed_at=clock_timestamp()
  where envelope_id=p_envelope_id and user_id=p_signer_user_id;
  select count(*) into v_remaining from public.inhouse_signers
