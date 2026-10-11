@@ -207,6 +207,21 @@
         "short_lived_signed_url",
         "document_permission_tests"
       ]
+    },
+    {
+      "key": "RR_ENABLE_GOVERNED_LLM",
+      "category": "ai",
+      "default": false,
+      "requires": [
+        "approved_model_service",
+        "privacy_review",
+        "safety_evaluation",
+        "prompt_injection_tests",
+        "rate_limiting",
+        "human_escalation",
+        "policy_retrieval_versioning",
+        "full_observability"
+      ]
     }
   ],
   "secrets": [
