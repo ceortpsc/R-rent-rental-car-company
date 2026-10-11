@@ -16,7 +16,7 @@
     "workers:deploy:production": "node scripts/cloudflare-preflight.mjs deploy production && npx --yes wrangler@4.147.0 deploy --env production",
     "workers:tail:staging": "npx --yes wrangler@4.147.0 tail --env staging",
     "workers:dry-run": "node scripts/cloudflare-preflight.mjs check staging && npx --yes wrangler@4.147.0 deploy --dry-run --outdir .wrangler-build --env staging",
-    "launch:audit": "node scripts/release-audit.mjs"
+    "launch:audit": "node scripts/release-audit.mjs",
     "ci:security": "node scripts/ci-security-check.mjs"
   },
   "license": "UNLICENSED"
