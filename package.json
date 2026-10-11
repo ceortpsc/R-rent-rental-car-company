@@ -14,7 +14,8 @@
     "workers:dev": "npx --yes wrangler@4.147.0 dev --env staging",
     "workers:deploy:staging": "node scripts/cloudflare-preflight.mjs deploy staging && npx --yes wrangler@4.147.0 deploy --env staging",
     "workers:deploy:production": "node scripts/cloudflare-preflight.mjs deploy production && npx --yes wrangler@4.147.0 deploy --env production",
-    "workers:tail:staging": "npx --yes wrangler@4.147.0 tail --env staging"
+    "workers:tail:staging": "npx --yes wrangler@4.147.0 tail --env staging",
+    "workers:dry-run": "node scripts/cloudflare-preflight.mjs check staging && npx --yes wrangler@4.147.0 deploy --dry-run --outdir .wrangler-build --env staging"
   },
   "license": "UNLICENSED"
 }
