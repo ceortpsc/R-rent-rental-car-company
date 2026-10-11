@@ -5,7 +5,7 @@ const src=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('high risk features remain off until verified provider dependencies',()=>{
  const r=JSON.parse(src('config/feature-registry.json'));
  assert.equal(r.no_auto_enable,true);
- assert.equal(r.features.length,13);
+ assert.ok(r.features.length>=17);
  assert.ok(r.features.every(x=>x.default===false&&x.requires.length>0));
  for(const flag of ['RR_ENABLE_PRIVATE_VAULT','RR_ENABLE_PAYMENTS','RR_ENABLE_SIGNING','RR_ENABLE_RELEASE','RR_ENABLE_RBAC','RR_ENABLE_ENCRYPTED_CASE_STORAGE']){
   assert.ok(r.features.some(x=>x.key===flag),'missing '+flag);
