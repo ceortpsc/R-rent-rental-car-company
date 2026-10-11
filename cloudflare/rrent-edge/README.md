@@ -81,3 +81,19 @@ For rollback, remove any route added to the Worker, revoke Access application/se
 - [Worker-specific Access policies](https://developers.cloudflare.com/workers/configuration/cloudflare-access/#protect-one-worker)
 
 **This repository creates configuration and testable source only.** Deployment to the Cloudflare account, Access policy creation and DNS changes require a connected authenticated Cloudflare management capability and actual account/app identifiers.
+
+## 8. Direct Cloudflare staging deployment without Vercel
+
+The manually dispatched GitHub Action at https://github.com/ceortpsc/R-rent-rental-car-company/actions/workflows/rrent-cloudflare-deploy-staging.yml can validate or deploy the isolated Cloudflare staging Worker. It does not call Vercel or change DNS.
+
+Required secrets in GitHub repository Settings > Secrets and variables > Actions:
+- CLOUDFLARE_API_TOKEN: narrowly scoped to deployment of Worker Scripts in the correct Cloudflare account; no DNS rights.
+- CLOUDFLARE_ACCOUNT_ID: matching Cloudflare account ID.
+- RR_CF_ACCESS_AUD_STAGING: audience of the staging Worker Access application.
+- RR_CF_STAFF_ALLOWLIST_STAGING: exact authorized staff email addresses separated by commas, never a wildcard.
+
+Open GitHub Actions > R-Rent Cloudflare Direct Staging Deployment > Run workflow. Choose validate-only first. After confirming the Zero Trust app and all four secrets, choose deploy-staging and enter STAGE_RRENT_EDGE. Only that manually chosen mode deploys; the default is a dry-run.
+
+After deployment, use Cloudflare Workers & Pages > rrent-access-edge-staging > Access to protect all traffic and verify the correct Access AUD and MFA-approved staff. Until Access authentication and Worker secrets are correct, the Worker denies requests. Production does not have any attached route or preview URL. This is not a working e-sign backend or payment service.
+
+GitHub environment rrent-edge-staging can require an independent reviewer before manual deployment. The initial staging URL is Worker-only; the public Vercel rental website remains unchanged.
