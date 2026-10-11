@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "R-Rent API",
-    "version": "0.3.0",
+    "version": "0.6.0",
     "description": "Provider-gated rental APIs; public quote active, transactional routes closed until evidence gates pass."
   },
   "servers": [
@@ -212,6 +212,23 @@
           },
           "503": {
             "description": "Signing integration unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/launch": {
+      "get": {
+        "summary": "Read-only source and independent-evidence launch gate assessment (not certification)",
+        "tags": [
+          "Governance",
+          "Readiness"
+        ],
+        "responses": {
+          "200": {
+            "description": "17-module source and independently gated dependency registry, no secrets or customer data"
+          },
+          "405": {
+            "description": "Method denied"
           }
         }
       }
