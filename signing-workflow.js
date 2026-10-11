@@ -189,6 +189,13 @@ $("return-docs").addEventListener("click",()=>{active=DOCUMENTS.length-1;showDoc
 $("prepare-packet").addEventListener("click",prepareReview);
 $("print-review").addEventListener("click",()=>{if(!review.prepared)return;window.print();});
 $("start-over").addEventListener("click",()=>{review=blankReview();active=0;$("printable-packet").innerHTML="";showDocument();});
+// Public browser bridge exposes only non-sensitive acknowledgment state for the in-house pad.
+window.RRentSigningReview=Object.freeze({snapshot:()=>({
+ ready:canEnterSignerReview(review),declined:review.declined,
+ waiver:review.elections.waiver||null,
+ initials:{...review.initials},
+ reviewed_codes:DOCUMENTS.filter(d=>review.reviewed[d.code]===true).map(d=>d.code)
+})});
 setTabHandlers();
 showDocument();
 // Server execution is intentionally absent. Client-check boxes cannot satisfy SERVER_GATES.
