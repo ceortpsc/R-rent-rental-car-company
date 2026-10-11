@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "r-rent-edge",
+  "main": "./workers/edge.js",
+  "compatibility_date": "2026-10-10",
+  "workers_dev": true,
+  "preview_urls": true,
+  "vars": {
+    "RR_ENVIRONMENT": "development",
+    "RR_PUBLIC_SITE_URL": "https://rtpscrentalcars.com"
+  },
+  "env": {
+    "staging": {
+      "name": "r-rent-edge-staging",
+      "workers_dev": true,
+      "preview_urls": true,
+      "vars": {
+        "RR_ENVIRONMENT": "staging",
+        "RR_PUBLIC_SITE_URL": "https://rtpscrentalcars.com"
+      }
+    },
+    "production": {
+      "name": "r-rent-edge-production",
+      "workers_dev": true,
+      "preview_urls": true,
+      "vars": {
+        "RR_ENVIRONMENT": "production",
+        "RR_PUBLIC_SITE_URL": "https://rtpscrentalcars.com"
+      }
+    }
+  }
+}
