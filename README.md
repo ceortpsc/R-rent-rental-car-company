@@ -178,3 +178,7 @@ See [Cloudflare Workers + Wrangler runbook](docs/CLOUDFLARE_WORKERS_WRANGLER.md)
 - `cloudflare/rrent-edge/src/index.js` uses only authenticated Cloudflare `ctx.access` runtime identity, validates the app AUD and explicit staff allowlist; no spoofable client role headers, no origin proxy, no renter/financial/private operations.
 - Root Node regression coverage: `tests/cloudflare-access.test.js`.
 - **Not deployed to Cloudflare:** an authenticated Cloudflare account, Worker-level Access policy and application AUD are not available to the connected tools. Vercel continues to host the public site; no DNS changes are made by this configuration.
+
+## Cloudflare direct staging workaround
+
+To avoid invoking an exhausted Vercel deployment quota for the separate Access Worker, use [GitHub Actions staging deployment](https://github.com/ceortpsc/R-rent-rental-car-company/actions/workflows/rrent-cloudflare-deploy-staging.yml). Run validate-only first, then configure the Cloudflare deployment token, account ID and staging Access secrets and choose deploy-staging with STAGE_RRENT_EDGE. This does not alter public DNS, Vercel, payment, identity verification or signing permissions. Detailed runbook: cloudflare/rrent-edge/README.md.
