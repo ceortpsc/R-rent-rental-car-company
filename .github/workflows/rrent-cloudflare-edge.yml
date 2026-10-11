@@ -1,0 +1,50 @@
+name: R-Rent Cloudflare Access Edge Verification
+
+on:
+  push:
+    paths:
+      - "cloudflare/rrent-edge/**"
+      - "tests/cloudflare-access.test.js"
+      - ".github/workflows/rrent-cloudflare-edge.yml"
+  pull_request:
+    paths:
+      - "cloudflare/rrent-edge/**"
+      - "tests/cloudflare-access.test.js"
+      - ".github/workflows/rrent-cloudflare-edge.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Worker syntax, Access policy and routing regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate zero-trust Worker JS
+        run: node --check cloudflare/rrent-edge/src/index.js
+      - name: Execute Access and unauthorized-route checks
+        run: node --test tests/cloudflare-access.test.js
+      - name: Validate no attached production hostname
+        run: |
+          node --input-type=module -e '
+          import fs from "node:fs";
+          const c=JSON.parse(fs.readFileSync("cloudflare/rrent-edge/wrangler.jsonc","utf8"));
+          if(c.routes||c.route||c.workers_dev!==false||c.preview_urls!==false||
+            c.vars?.RR_PRIVATE_ACTIONS_ENABLED!=="false"||
+            c.env?.staging?.vars?.RR_PRIVATE_ACTIONS_ENABLED!=="false")process.exit(1);
+          console.log("PASS: no production route, no automatically enabled actions");
+          '
+      - name: Validate Wrangler packaging, no deployment
+        working-directory: cloudflare/rrent-edge
+        run: |
+          npm install --no-audit --no-fund
+          npx wrangler deploy --dry-run --env staging
+      - name: Cloudflare Account Deployment
+        run: |
+          echo "Not deployed. An authorized Cloudflare operator must configure Access and launch staging using the audited runbook."
