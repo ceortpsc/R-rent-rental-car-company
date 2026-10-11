@@ -157,3 +157,16 @@ The guided **/signing** UI contains six responsive, keyboard-accessible views: *
 The internal **/sign** envelope workspace now has a fifth tab linking to guided review. Public navigation provides a direct full-page E-Sign link. The user interface never marks an unsigned preview as executed.
 
 See [E-Sign Tabs and Sections](docs/ESIGN_TABS_AND_SECTIONS.md) and [Signing Platform](docs/ESIGN_PLATFORM.md).
+
+## Cloudflare Workers / Wrangler Edge Layer (2026-10-10)
+
+Wrangler configuration is versioned in [`wrangler.jsonc`](wrangler.jsonc), with separate staging and production Workers, no custom DNS route enabled by default.
+
+- Worker entry: [`workers/edge.js`](workers/edge.js).
+- Public-only services: `GET /v1/health`, `POST /v1/support`, `GET /v1/support/capabilities`, `GET /v1/guide/signing`, `GET /v1/guide/returning`.
+- Policy and resource data: [`lib/support-policy.js`](lib/support-policy.js), [`lib/rental-help.js`](lib/rental-help.js).
+- Validate: `npm run workers:check`; local dev: `npm run workers:dev`.
+- Deploy only after verified Cloudflare account credentials: `npm run workers:deploy:staging`; after approved staging acceptance: `npm run workers:deploy:production`.
+- **Cloudflare deployment and live DNS route remain unverified.** Source in GitHub and Vercel production builds do not by themselves deploy a Cloudflare Worker. All protected payments, insurance, e-signing and customer records remain confined to independent gated backend flows.
+
+See [Cloudflare Workers + Wrangler runbook](docs/CLOUDFLARE_WORKERS_WRANGLER.md).
