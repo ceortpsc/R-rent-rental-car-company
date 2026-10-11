@@ -5,3 +5,9 @@ node_modules/
 *.pem
 *.key
 *.pdf
+
+.wrangler/
+/.wrangler-build/
+/.dev.vars*
+/.env*
+*.local
