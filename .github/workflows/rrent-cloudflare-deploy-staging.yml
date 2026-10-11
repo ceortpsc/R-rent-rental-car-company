@@ -58,7 +58,7 @@ jobs:
   deploy-staging:
     name: Deploy R-Rent edge to Cloudflare staging (not Vercel)
     needs: verify
-    if: ${{ inputs.mode == 'deploy-staging' }}
+    if: ${{ inputs.mode == 'deploy-staging' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     timeout-minutes: 12
     environment: rrent-edge-staging

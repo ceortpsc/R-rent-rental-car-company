@@ -1,17 +1,39 @@
-name: R-Rent safety and quality
+name: R-Rent Quality Gate
+
 on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
   push:
     branches: [main]
-  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rrent-quality-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  node:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
+  check:
+    name: quality / check
+    # Self-hosted is opt-in and only used for trusted same-repository PRs or main.
+    # External/fork PRs always stay on GitHub-hosted infrastructure.
+    runs-on: ${{ vars.RRENT_CI_RUNNER_MODE == 'self-hosted' && (github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor == 'ceortpsc')) && fromJSON('["self-hosted","rrent-ci"]') || 'ubuntu-latest' }}
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
-      - run: npm run check
-      - run: npm test
+          node-version: "22"
+      - name: Inspect allocated runner and trusted repository
+        run: node scripts/runner-preflight.mjs
+      - name: Check JavaScript syntax
+        run: npm run check
+      - name: Run application and Access policy tests
+        run: npm test
+      - name: Enforce default-deny deployment and data safeguards
+        run: npm run ci:security
+      - name: Confirm read-only checks
+        run: echo "PR checks never use deployment secrets or private customer data."
