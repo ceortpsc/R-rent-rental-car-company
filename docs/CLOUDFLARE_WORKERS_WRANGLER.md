@@ -25,6 +25,7 @@ Required: **Node.js 22**, npm, verified Cloudflare account with Workers permissi
 
 \`\`\`bash
 npm run workers:check
+npm run workers:dry-run  # compile/bundle without deploying
 npm run workers:dev
 # For deployment, provide credentials through a secure shell or approved CI secret store:
 export CLOUDFLARE_ACCOUNT_ID="<VERIFIED_32_CHAR_ACCOUNT_ID>"
