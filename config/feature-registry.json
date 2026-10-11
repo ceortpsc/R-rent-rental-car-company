@@ -161,6 +161,52 @@
         "pretrip_inspection",
         "human_dispatch_approval"
       ]
+    },
+    {
+      "key": "RR_ENABLE_INHOUSE_ESIGN",
+      "category": "esign",
+      "default": false,
+      "requires": [
+        "approved_first_party_signer_session",
+        "RR_ENABLE_RBAC",
+        "RR_ENABLE_PRIVATE_VAULT",
+        "RR_ENABLE_INHOUSE_PDF_FINALIZER",
+        "RR_CONTRACTS_LEGAL_APPROVED",
+        "verified_server_event_ledger",
+        "key_vault"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_INHOUSE_PDF_FINALIZER",
+      "category": "esign",
+      "default": false,
+      "requires": [
+        "reviewed_final_pdf_renderer",
+        "private_immutable_bucket",
+        "approved_signature_anchor_map",
+        "signed_pdf_integrity_tests"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_INHOUSE_AUDIT_STORE",
+      "category": "esign",
+      "default": false,
+      "requires": [
+        "applied_inhouse_ledger_migration",
+        "append_only_events",
+        "retention_schedule",
+        "audit_key_rotation"
+      ]
+    },
+    {
+      "key": "RR_ENABLE_PRIVATE_DOC_READER",
+      "category": "storage",
+      "default": false,
+      "requires": [
+        "approved_private_bucket",
+        "short_lived_signed_url",
+        "document_permission_tests"
+      ]
     }
   ],
   "secrets": [
@@ -199,6 +245,16 @@
       "key": "RR_ESIGN_API_KEY",
       "where": "server secret manager",
       "never_public": true
+    },
+    {
+      "key": "RR_SIGN_EVENT_HMAC_KEY_B64",
+      "where": "server secret manager; 32-byte distinct random key",
+      "never_public": true
+    },
+    {
+      "key": "RR_PRIVATE_PDF_BUCKET",
+      "where": "server-side config: private bucket ID",
+      "never_public": false
     }
   ]
 }
