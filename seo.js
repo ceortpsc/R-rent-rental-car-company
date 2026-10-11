@@ -24,7 +24,7 @@ const copy={
 "/terms":{heading:"Terms of Service",subtitle:"Review our website conditions, rental policies and your rights before any binding transaction."},
 "/privacy":{heading:"Privacy Policy",subtitle:"Understand our current data practices, planned protected workflows and privacy request options."}
 };
-const pages={
+const pages={"/support/chat":["Andreaa AI Support | R-Rent","Ask Andreaa, R-Rent’s policy-guided automated customer support for signing, quotes, returns, insurance and billing guidance."],
 "/":["R-Rent | Central Texas Vehicle Rentals","Explore R-Rent's 2026 Chevrolet Trailblazer ($59/day) and Ford Bronco Sport Big Bend ($89.99/day). Get a preliminary rental quote in Central Texas."],
 "/fleet":["2026 SUVs for Rent | R-Rent Central Texas","Browse R-Rent's Chevrolet Trailblazer and Ford Bronco Sport Big Bend with preliminary rates, vehicle details and rental requirements."],
 "/fleet/trailblazer-2026":["2026 Chevrolet Trailblazer Rental | $59/Day | R-Rent","Review manufacturer model specifications and calculate a preliminary $59/day Trailblazer rental quote for Central Texas."],
