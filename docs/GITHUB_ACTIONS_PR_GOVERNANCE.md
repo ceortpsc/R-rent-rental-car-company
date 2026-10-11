@@ -47,3 +47,9 @@ Run Quality Gate and Worker dry-run without Cloudflare or Vercel credentials. Cl
 - Vercel quota or failure: leave website changes pending; do not bypass the platform policy or claim a READY deployment.
 
 **Connected integration limitation:** GitHub App cannot update repository administrator branch-protection rules or install GitHub Actions secrets. Admin user must set those controls for enforcement.
+
+## Optional Runner Assignment (PR #1 follow-up)
+
+The quality/check workflow selects an administrator-configured self-hosted runner with labels [self-hosted, rrent-ci] for main and same-repo PRs initiated by trusted maintainer ceortpsc when repository Actions variable RRENT_CI_RUNNER_MODE equals self-hosted. Without that variable it uses ubuntu-latest; external fork PRs always remain GitHub-hosted. The job includes a read-only runner preflight and remains subject to the same test and security gates. It does not provision, register, or start a machine.
+
+See [Runner Setup and Security](../docs/RRENT_RUNNER_SETUP.md). GitHub strongly advises ephemeral, isolated runners for public repositories. The owner or administrator must register a disposable VM, attach the rrent-ci label, and verify that GitHub reports the runner Online/Idle before enabling the variable. Current connected desktop RTPAB1 was offline, so registration is not claimed. A queued/unassigned job is not a passing check.
