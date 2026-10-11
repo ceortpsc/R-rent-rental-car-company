@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>R-Rent | Enterprise Launch & Compliance Control</title>
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0c1d34">
+<meta name="description" content="R-Rent platform module readiness and engineering compliance gates.">
+<link rel="icon" type="image/svg+xml" href="/assets/r-rent-brand-icon.svg"><link rel="stylesheet" href="/launch.css"></head>
+<body><a class="skip" href="#main">Skip to launch control</a>
+<header class="top"><a class="brand" href="/"><img src="/assets/r-rent-brand-icon.svg" alt="" width="52" height="52"><span><strong>R-RENT</strong><small>Ross Tax Pro Software Company</small></span></a><nav><a href="/">Website</a><a href="/operations">Operations</a><a href="/signing">E-Sign Review</a><a href="/support/chat">Support</a></nav></header>
+<div class="caution" role="note"><strong>INFORMATIONAL READINESS REPORT — NOT A PRODUCTION AUTHORIZATION.</strong> Status values do not prove live integrations, insurance, payment settlement, identity verification, or signed agreements.</div>
+<main id="main" class="shell">
+<section class="mast"><p class="eyebrow">ENGINEERING • COMPLIANCE • EVIDENCE</p><h1>Launch Control Center</h1><p>See exactly which R-Rent modules have source code, which dependencies remain unconfigured, and which independently verified release approvals are missing.</p>
+<div class="controls"><button type="button" id="refresh" class="btn primary">Refresh server assessment</button><button type="button" id="download-log" class="btn outline" disabled>Export audit JSON</button><a class="btn outline" href="https://github.com/ceortpsc/R-rent-rental-car-company/blob/main/docs/LAUNCH_ENGINEERING_BLUEPRINT.md" target="_blank" rel="noopener">Engineering blueprint</a></div><p id="report-message" role="status" aria-live="polite">Retrieving server report…</p></section>
+<section class="overview" aria-label="Launch readiness summary"><article><small>RELEASE CLASSIFICATION</small><strong id="release-status">NOT VERIFIED</strong></article><article><small>SOURCE MODULES</small><strong id="public-count">—</strong></article><article><small>RESTRICTED MODULES</small><strong id="locked-count">—</strong></article><article><small>SERVER ASSESSMENT</small><strong id="report-timestamp">—</strong></article></section>
+<section class="listing"><div class="section-head"><div><p class="eyebrow">ROUTE &amp; CONTRACT INVENTORY</p><h2>Platform dependencies</h2></div><label>Filter <select id="module-filter"><option value="all">All modules</option><option value="public">Public source</option><option value="restricted">Restricted operations</option></select></label></div>
+<div id="module-list" class="module-list" aria-live="polite"><p>Loading validated module inventory. No completion claims will appear without trusted evidence.</p></div></section>
+<section class="governance"><h2>Mandatory release principles</h2><div class="principles">
+<article><strong>Fail closed</strong><p>Unverified credentials or missing evidence cannot authorize customer data collection, card capture, rental release or signatures.</p></article>
+<article><strong>Least privilege</strong><p>Every privileged API needs identity, MFA, tenant membership, scoped RBAC and human approval when required.</p></article>
+<article><strong>Traceable evidence</strong><p>Retain approved revision hashes, verified provider events, append-only logs and independently reviewed change records.</p></article>
+<article><strong>Reproducible release</strong><p>Commit pinning, PR review, runner execution, tests, staging gates, smoke checks and rollback evidence precede production activation.</p></article>
+</div></section></main>
+<footer>© 2026 Ross Tax Pro Software Company · R-Rent · This screen exposes no customer data, secret values or privileged operational controls. <a href="/privacy">Privacy</a></footer>
+<script defer src="/launch.js"></script></body></html>
