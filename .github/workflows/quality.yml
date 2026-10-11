@@ -18,7 +18,9 @@ concurrency:
 jobs:
   check:
     name: quality / check
-    runs-on: ubuntu-latest
+    # Self-hosted is opt-in and only used for trusted same-repository PRs or main.
+    # External/fork PRs always stay on GitHub-hosted infrastructure.
+    runs-on: ${{ vars.RRENT_CI_RUNNER_MODE == 'self-hosted' && (github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor == 'ceortpsc')) && fromJSON('["self-hosted","rrent-ci"]') || 'ubuntu-latest' }}
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
