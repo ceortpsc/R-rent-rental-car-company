@@ -50,6 +50,17 @@ Run Quality Gate and Worker dry-run without Cloudflare or Vercel credentials. Cl
 
 ## Optional Runner Assignment (PR #1 follow-up)
 
-The quality/check workflow selects an administrator-configured self-hosted runner with labels [self-hosted, rrent-ci] for main and same-repo PRs initiated by trusted maintainer ceortpsc when repository Actions variable RRENT_CI_RUNNER_MODE equals self-hosted. Without that variable it uses ubuntu-latest; external fork PRs always remain GitHub-hosted. The job includes a read-only runner preflight and remains subject to the same test and security gates. It does not provision, register, or start a machine.
+The quality/check workflow now selects a Linux self-hosted runner labeled `rrent-ci` for protected `main` pushes and manual runs on `main`. All pull requests, including same-repository PRs, stay on GitHub-hosted `ubuntu-latest` to prevent unchecked PR code from accessing a private runner. The separate manually triggered staging workflow uses `rrent-ci` for verification and `rrent-deploy` for deployment, on protected `main` only. The `rrent-edge-staging` environment must have independent reviewer approval and scoped Cloudflare secrets. The job includes a read-only runner preflight and remains subject to the same test and security gates. It does not provision, register, or start a machine.
 
 See [Runner Setup and Security](../docs/RRENT_RUNNER_SETUP.md). GitHub strongly advises ephemeral, isolated runners for public repositories. The owner or administrator must register a disposable VM, attach the rrent-ci label, and verify that GitHub reports the runner Online/Idle before enabling the variable. Current connected desktop RTPAB1 was offline, so registration is not claimed. A queued/unassigned job is not a passing check.
+
+## Current `runs-on: self-hosted` assignment (2026-10-11)
+
+| Job | Assigned runner | Branch/trigger constraint |
+| --- | --- | --- |
+| `R-Rent Quality Gate / quality / check` | `[self-hosted, linux, rrent-ci]` | protected main only; PRs stay `ubuntu-latest` |
+| `R-Rent Cloudflare Access Edge Verification / verify` | `[self-hosted, linux, rrent-ci]` | main only; PRs and non-main pushes stay `ubuntu-latest` |
+| `R-Rent Cloudflare Direct Staging Deployment / verify` | `[self-hosted, linux, rrent-ci]` | workflow_dispatch on main only |
+| `R-Rent Cloudflare Direct Staging Deployment / deploy-staging` | `[self-hosted, linux, rrent-deploy]` | manual `STAGE_RRENT_EDGE` + main + approved `rrent-edge-staging` environment |
+
+**Runner registration and activation are pending administrator action.** A YAML `runs-on` setting does not install or start a runner; GitHub will queue the job until an online runner with every required label exists. Use separate ephemeral isolated runners for `rrent-ci` (no secrets) and `rrent-deploy` (staging secrets only). Never put long-lived Cloudflare tokens on a PR runner, permit unreviewed workflow edits into main, or launch production from the staging job.
