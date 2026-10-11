@@ -170,3 +170,11 @@ Wrangler configuration is versioned in [`wrangler.jsonc`](wrangler.jsonc), with 
 - **Cloudflare deployment and live DNS route remain unverified.** Source in GitHub and Vercel production builds do not by themselves deploy a Cloudflare Worker. All protected payments, insurance, e-signing and customer records remain confined to independent gated backend flows.
 
 See [Cloudflare Workers + Wrangler runbook](docs/CLOUDFLARE_WORKERS_WRANGLER.md).
+
+## Cloudflare Workers / Wrangler staged Zero Trust edge
+
+- [Wrangler configuration and Cloudflare Zero Trust Access runbook](cloudflare/rrent-edge/README.md)
+- `cloudflare/rrent-edge/wrangler.jsonc` declares a **protected** production Worker with no DNS route or workers.dev URL, plus a separate staging Worker.
+- `cloudflare/rrent-edge/src/index.js` uses only authenticated Cloudflare `ctx.access` runtime identity, validates the app AUD and explicit staff allowlist; no spoofable client role headers, no origin proxy, no renter/financial/private operations.
+- Root Node regression coverage: `tests/cloudflare-access.test.js`.
+- **Not deployed to Cloudflare:** an authenticated Cloudflare account, Worker-level Access policy and application AUD are not available to the connected tools. Vercel continues to host the public site; no DNS changes are made by this configuration.
