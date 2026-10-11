@@ -27,7 +27,7 @@ tests/cloudflare-access.test.js  # repo-wide Worker unit tests
 3. Deploy staging only after authenticating Wrangler to that account:
    ```bash
    cd cloudflare/rrent-edge
-   npm ci
+   npm install
    npm run test
    npx wrangler whoami
    npx wrangler deploy --env staging
