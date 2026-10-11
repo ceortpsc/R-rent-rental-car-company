@@ -182,3 +182,15 @@ See [Cloudflare Workers + Wrangler runbook](docs/CLOUDFLARE_WORKERS_WRANGLER.md)
 ## Cloudflare direct staging workaround
 
 To avoid invoking an exhausted Vercel deployment quota for the separate Access Worker, use [GitHub Actions staging deployment](https://github.com/ceortpsc/R-rent-rental-car-company/actions/workflows/rrent-cloudflare-deploy-staging.yml). Run validate-only first, then configure the Cloudflare deployment token, account ID and staging Access secrets and choose deploy-staging with STAGE_RRENT_EDGE. This does not alter public DNS, Vercel, payment, identity verification or signing permissions. Detailed runbook: cloudflare/rrent-edge/README.md.
+
+## Release compliance and launch dashboard (proposed 2026-10-11)
+
+- [R-Rent Launch Control Center](launch.html) — `/launch` direct informational dashboard; no operational authorization or private renter records.
+- [Public-safe GET launch gate endpoint](api/v1/health.js) — `/api/v1/launch` rewrites to `health?mode=launch`; 17 modules are enumerated and externally verified evidence stays missing until independently demonstrated.
+- [Engineering principles, directory and full execution boundary](docs/LAUNCH_ENGINEERING_BLUEPRINT.md)
+- [Point-in-time connected-system verification and compliance log](docs/LAUNCH_COMPLIANCE_LOG_2026-10-11.md)
+- [Release manifest (not production approved)](config/release-manifest.json)
+- Regression tests: `tests/launch-readiness.test.js`
+- Source-only local check: `npm run launch:audit`; this audit does **not** contact or certify payment processors, insurers, signing, hosting availability or user identities.
+
+Source status: launch-control feature branch, **NOT a completed high-risk production deployment**. Production release requires separate approved vendor credentials, active dedicated database with verified RLS, lawful coverage, full e-sign execution, financial reconciliation, secure disposal, passing CI, real browser smoke tests and documented corporate approval. Do not enable these actions just to change a status indicator.
