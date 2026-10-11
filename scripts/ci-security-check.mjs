@@ -27,6 +27,12 @@ const quality=read('.github/workflows/quality.yml');
 check(quality.includes('pull_request:')&&quality.includes('branches: [main]'),'main PR quality gate required');
 check(!quality.includes('pull_request_target:'),'PR workflow must not use pull_request_target');
 check(!quality.includes('secrets.'),'PR quality workflow must not access deployment secrets');
+check(quality.includes("vars.RRENT_CI_RUNNER_MODE == 'self-hosted'"),'self-hosted runner must be explicitly administrator enabled');
+check(quality.includes("github.event.pull_request.head.repo.full_name == github.repository"),'self-hosted runner must reject external fork PRs');
+check(quality.includes("github.actor == 'ceortpsc'"),'self-hosted runner must require approved PR actor');
+check(quality.includes('["self-hosted","rrent-ci"]'),'self-hosted runner must have a dedicated label');
+check(quality.includes("'ubuntu-latest'"),'untrusted PRs must retain GitHub-hosted default');
+check(quality.includes('node scripts/runner-preflight.mjs'),'runner preflight must run before application tests');
 const vercel=JSON.parse(read('vercel.json'));
 check(vercel.rewrites.some(r=>r.source==='/api/v1/readiness'),'readiness endpoint required');
 for(const p of ['.github/CODEOWNERS','.github/pull_request_template.md','docs/GITHUB_ACTIONS_PR_GOVERNANCE.md']){
