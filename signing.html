@@ -86,11 +86,36 @@
 </section>
 <section id="signature-stage" class="stage" role="tabpanel" aria-labelledby="esign-tab-signature" hidden><div class="eyebrow ink">SIGNER ACKNOWLEDGMENT</div><h2>Prepare signer review</h2><p>All ten document sections have been reviewed locally. These remaining fields prepare a sample only; they do not replace identity-verification and provider signing.</p>
 <div class="sign-sample"><label for="signer-name">Signer display name (local practice only)</label><input id="signer-name" maxlength="120" autocomplete="off" placeholder="Sample signer name">
-<label for="signer-signature">Type sample signature</label><input id="signer-signature" maxlength="120" autocomplete="off" placeholder="Repeat the same sample name"><div class="signature-place">Signature placement: <strong>1 location in the final rental agreement</strong><p>No name or signature is uploaded or recorded by this public interface.</p></div>
+<label for="signer-signature">Typed signature (local review)</label><input id="signer-signature" maxlength="120" autocomplete="off" placeholder="Repeat the same sample name">
+<div class="inhouse-pad-panel">
+ <div class="eyebrow ink">R-RENT IN-HOUSE SIGNATURE PAD</div><h3>Draw or type your signature</h3>
+ <p class="small">Touch, mouse and stylus supported. Signature strokes stay in browser memory unless an authenticated approved signing session is available and you explicitly submit.</p>
+ <div class="pad-options" role="radiogroup" aria-label="Signature method">
+  <label><input type="radio" name="inhouse-pad-mode" value="DRAW" checked> Draw signature</label>
+  <label><input type="radio" name="inhouse-pad-mode" value="TYPE"> Type signature</label>
+ </div>
+ <div id="inhouse-pad-draw">
+  <canvas id="inhouse-signature-canvas" width="680" height="180" role="img" aria-label="Draw your signature with mouse, touch, or stylus"></canvas>
+  <div class="actions"><button class="secondary" id="clear-inhouse-pad" type="button">Clear drawing</button><span class="small" id="inhouse-pad-state" role="status">No signature drawn</span></div>
+ </div>
+ <div class="signature-place">Signature placement: <strong>Final contract must be visible and hash-matched before signing</strong><p>This browser preview never issues a certified signature or transmits handwriting automatically.</p></div>
+</div>
+<div class="signature-place">Signature placement: <strong>1 location in the final rental agreement</strong><p>No name or signature is uploaded or recorded by this public interface.</p></div>
 <label for="signed-date">Date of sample review</label><input id="signed-date" type="date">
 <p class="small">Official signing time must be derived from the authenticated provider server, not this browser date.</p>
 <label class="check-row"><input id="final-review" type="checkbox"><span>I understand this completes only a local document review, not a legally binding e-signature.</span></label>
-<p id="signature-error" class="error" role="status" aria-live="polite"></p><div class="actions"><button type="button" id="return-docs" class="secondary">← Review documents</button><button type="button" id="prepare-packet" class="primary">Prepare unsigned review copy →</button></div></div>
+<p id="signature-error" class="error" role="status" aria-live="polite"></p><div class="actions"><button type="button" id="return-docs" class="secondary">← Review documents</button><button type="button" id="prepare-packet" class="primary">Prepare unsigned review copy →</button></div>
+<div class="inhouse-auth-panel">
+ <div class="eyebrow ink">IN-HOUSE SIGNING SERVICE</div>
+ <h3>Authenticated document and signing record</h3>
+ <p id="inhouse-service-status" role="status" aria-live="polite">Checking the R-Rent signing service…</p>
+ <div class="actions"><button id="inhouse-check" class="secondary" type="button">Check secure signing session</button><a id="inhouse-final-pdf" class="secondary as-link" href="#" target="_blank" rel="noopener noreferrer" hidden>View exact approved rental PDF</a></div>
+ <label class="check-row"><input id="inhouse-read-pdf" type="checkbox" disabled><span>I have opened and reviewed the exact final PDF for my authenticated envelope.</span></label>
+ <label class="check-row"><input id="inhouse-sign-intent" type="checkbox" disabled><span>I intend to sign the approved rental agreement electronically, using my chosen signature and the separate E-SIGN disclosure.</span></label>
+ <button id="inhouse-sign-submit" class="primary" type="button" disabled>Record authenticated in-house signature</button>
+ <p class="small" id="inhouse-live-result" role="status" aria-live="polite">Locked until verified identity, contract revision, secure vault, signed-PDF generation, and private delivery are available.</p>
+ <p class="small"><strong>Security:</strong> Never share sign-in tokens, license scans or card information in this public page. R-Rent does not store or transmit pad strokes until a valid authorized signing request is submitted.</p>
+</div></div>
 </section>
 <section id="receipt-stage" class="stage" role="tabpanel" aria-labelledby="esign-tab-copies" hidden>
 <div class="receipt-symbol" aria-hidden="true">✓</div><h2>Review checklist prepared</h2><p class="receipt-lead">Your local review is complete. <strong>No legally binding signature has been executed.</strong></p>
@@ -105,4 +130,5 @@
 <div id="printable-packet" aria-hidden="true"></div>
 </main><footer>© 2026 Ross Tax Pro Software Company · R-Rent Sign · Confidential information must not be entered in this public preview · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></footer>
 <script type="module" src="/signing-workflow.js"></script>
+<script type="module" src="/inhouse-signing-ui.js"></script>
 </body></html>
