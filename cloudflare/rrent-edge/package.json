@@ -1,16 +1,20 @@
 {
- "name":"@rrent/access-edge",
- "private":true,
- "version":"1.0.0",
- "type":"module",
- "description":"Zero Trust Cloudflare Worker for internal R-Rent edge policy endpoints; no private data routes.",
- "engines":{"node":">=20"},
- "scripts":{
-   "dev":"wrangler dev --env staging",
-   "deploy:staging":"wrangler deploy --env staging",
-   "deploy:production":"wrangler deploy",
-   "test":"node --test ../../tests/cloudflare-access.test.js",
-   "check":"node --check src/index.js && npm run test"
- },
- "devDependencies":{"wrangler":"^4.102.0"}
+  "name": "@rrent/access-edge",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Zero Trust Cloudflare Worker for internal R-Rent edge policy endpoints; no private data routes.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "wrangler dev --env staging",
+    "deploy:staging": "wrangler deploy --env staging",
+    "deploy:production": "wrangler deploy",
+    "test": "node --test ../../tests/cloudflare-access.test.js",
+    "check": "node --check src/index.js && npm run test"
+  },
+  "devDependencies": {
+    "wrangler": "^4.102.0"
+  }
 }
