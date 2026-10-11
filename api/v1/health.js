@@ -1,3 +1,5 @@
+import {evaluatePublicSupport,publicCapabilities} from '../../lib/support-policy.js';
+import {requireJSON,enforceOrigin} from '../../lib/http.js';
 import {encryptionReady} from '../../lib/crypto-vault.js';
 import {ROLE_DEFINITIONS,ROLE_SCREENS,publicCatalog} from '../../lib/rbac.js';
 import {userFromRequest,dbQuery,TENANT} from '../../lib/identity.js';
@@ -5,8 +7,17 @@ import {reply as sendReply,failClosed,error as apiError} from '../../lib/http.js
 import {method,reply,enabled} from '../../lib/http.js';
 import {dbReady} from '../../lib/identity.js';
 export default async function handler(req,res){
- if(!method(req,res,['GET']))return;
  const mode=new URL(req.url,'https://rtpscrentalcars.com').searchParams.get('mode');
+ if(mode==='assistant'){
+  if(!method(req,res,['GET','POST']))return;
+  if(req.method==='GET')return reply(res,200,{...publicCapabilities(),no_chat_log_storage:true});
+  if(!enforceOrigin(req,res))return;
+  const payload=requireJSON(req,res);if(!payload)return;
+  if(Object.keys(payload).some(k=>k!=='message'))return reply(res,422,{error:'unsupported_chat_fields'});
+  const answer=evaluatePublicSupport(payload.message);
+  return reply(res,answer.ok?200:422,{...answer,mode:'policy_knowledge_base',automated:true,not_an_account_agent:true,persistent_ticket_created:false});
+ }
+ if(!method(req,res,['GET']))return;
  if(mode==='auth-status')return reply(res,200,{service:'R-Rent customer identity',oauth_signin_publicly_available:false,provider_onboarding_configured:dbReady()&&enabled('RR_ENABLE_OAUTH'),authenticated_case_api_configured:dbReady()&&enabled('RR_ENABLE_OAUTH')&&enabled('RR_ENABLE_CASES'),requires_staff_mfa:true,public_login_url:null,note:'Configuration status only. No credentials or sessions are issued.'});
 
  if(mode==='roles')return sendReply(res,200,{roles:publicCatalog(),mode:'public_permission_metadata_only',live_access_granted:false});
