@@ -9,7 +9,12 @@
   },
   "scripts": {
     "check": "node scripts/check-syntax.mjs",
-    "test": "node --test tests/*.test.js"
+    "test": "node --test tests/*.test.js",
+    "workers:check": "node scripts/cloudflare-preflight.mjs check staging && node --test tests/cloudflare-worker.test.js",
+    "workers:dev": "npx --yes wrangler@4.147.0 dev --env staging",
+    "workers:deploy:staging": "node scripts/cloudflare-preflight.mjs deploy staging && npx --yes wrangler@4.147.0 deploy --env staging",
+    "workers:deploy:production": "node scripts/cloudflare-preflight.mjs deploy production && npx --yes wrangler@4.147.0 deploy --env production",
+    "workers:tail:staging": "npx --yes wrangler@4.147.0 tail --env staging"
   },
   "license": "UNLICENSED"
 }
