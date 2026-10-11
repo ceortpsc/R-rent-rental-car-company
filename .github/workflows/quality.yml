@@ -27,6 +27,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Inspect allocated runner and trusted repository
+        run: node scripts/runner-preflight.mjs
       - name: Check JavaScript syntax
         run: npm run check
       - name: Run application and Access policy tests
