@@ -1,0 +1,107 @@
+name: R-Rent Cloudflare Direct Staging Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Choose validation only or direct Cloudflare staging deployment"
+        required: true
+        type: choice
+        options:
+          - validate-only
+          - deploy-staging
+        default: validate-only
+      confirmation:
+        description: "For deploy-staging type STAGE_RRENT_EDGE"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rrent-cloudflare-stage
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify protected Worker before deployment
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Test Access authorization and forbidden routes
+        run: |
+          node --check cloudflare/rrent-edge/src/index.js
+          node --test tests/cloudflare-access.test.js
+      - name: Verify public DNS and production remain untouched
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const config=JSON.parse(fs.readFileSync('cloudflare/rrent-edge/wrangler.jsonc','utf8'));
+          if(config.route || config.routes || config.workers_dev!==false ||
+             config.preview_urls!==false ||
+             config.vars?.RR_PRIVATE_ACTIONS_ENABLED!=='false' ||
+             config.env?.staging?.vars?.RR_PRIVATE_ACTIONS_ENABLED!=='false')
+            throw Error('Fail-closed staging/isolation invariant failed');
+          console.log('PASS: production hostname and sensitive actions untouched.');
+          JS
+      - name: Build staging Worker using Wrangler without deployment
+        working-directory: cloudflare/rrent-edge
+        run: |
+          npm install --no-audit --no-fund
+          npx wrangler deploy --dry-run --env staging
+
+  deploy-staging:
+    name: Deploy R-Rent edge to Cloudflare staging (not Vercel)
+    needs: verify
+    if: ${{ inputs.mode == 'deploy-staging' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    environment: rrent-edge-staging
+    steps:
+      - name: Explicit deployment approval check
+        env:
+          CONFIRM: ${{ inputs.confirmation }}
+        run: |
+          if [ "$CONFIRM" != "STAGE_RRENT_EDGE" ]; then
+            echo "::error::Staging requires the explicit STAGE_RRENT_EDGE confirmation."
+            exit 1
+          fi
+      - name: Verify Cloudflare secrets are installed (values never printed)
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_AUD: ${{ secrets.RR_CF_ACCESS_AUD_STAGING }}
+          CF_ALLOWLIST: ${{ secrets.RR_CF_STAFF_ALLOWLIST_STAGING }}
+        run: |
+          for name in CF_TOKEN CF_ACCOUNT CF_AUD CF_ALLOWLIST; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing required Cloudflare staging secret. Configure the four documented secrets."
+              exit 1
+            fi
+          done
+      - uses: actions/checkout@v4
+      - name: Deploy directly with official Cloudflare Wrangler Action
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: cloudflare/rrent-edge
+          wranglerVersion: "4.136.3"
+          command: deploy --env staging
+          secrets: |
+            CF_ACCESS_AUD
+            RR_STAFF_ALLOWLIST
+        env:
+          CF_ACCESS_AUD: ${{ secrets.RR_CF_ACCESS_AUD_STAGING }}
+          RR_STAFF_ALLOWLIST: ${{ secrets.RR_CF_STAFF_ALLOWLIST_STAGING }}
+      - name: Deployment boundary notice
+        run: |
+          echo "Cloudflare staging Worker deployed. This did not invoke Vercel."
+          echo "The Worker serves policy/health information only after Cloudflare Access login."
+          echo "Confirm Worker-level Access (all traffic), exact staff allowlist and required MFA."
+          echo "Never connect production rental/signature/payment routes until independent security review."
