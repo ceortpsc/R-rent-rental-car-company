@@ -19,13 +19,16 @@ permissions:
 jobs:
   verify:
     name: Worker syntax, Access policy and routing regression
-    runs-on: ubuntu-latest
+    # Pull requests and non-main changes remain on GitHub-hosted isolation.
+    runs-on: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && fromJSON('["self-hosted","linux","rrent-ci"]') || 'ubuntu-latest' }}
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Verify runner baseline
+        run: node scripts/runner-preflight.mjs
       - name: Validate zero-trust Worker JS
         run: node --check cloudflare/rrent-edge/src/index.js
       - name: Execute Access and unauthorized-route checks

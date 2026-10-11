@@ -1,0 +1,11 @@
+# R-Rent code ownership proposals; admins must enforce reviews with a branch ruleset.
+* @ceortpsc
+.github/workflows/ @ceortpsc
+cloudflare/ @ceortpsc
+lib/ @ceortpsc
+api/ @ceortpsc
+supabase/migrations/ @ceortpsc
+contracts/ @ceortpsc
+docs/security/ @ceortpsc
+docs/corporate/ @ceortpsc
+config/ @ceortpsc

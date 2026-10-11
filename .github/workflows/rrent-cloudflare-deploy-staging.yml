@@ -26,13 +26,16 @@ concurrency:
 jobs:
   verify:
     name: Verify protected Worker before deployment
-    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: [self-hosted, linux, rrent-ci]
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Verify trusted self-hosted runner
+        run: node scripts/runner-preflight.mjs
       - name: Test Access authorization and forbidden routes
         run: |
           node --check cloudflare/rrent-edge/src/index.js
@@ -58,8 +61,8 @@ jobs:
   deploy-staging:
     name: Deploy R-Rent edge to Cloudflare staging (not Vercel)
     needs: verify
-    if: ${{ inputs.mode == 'deploy-staging' }}
-    runs-on: ubuntu-latest
+    if: ${{ inputs.mode == 'deploy-staging' && github.ref == 'refs/heads/main' }}
+    runs-on: [self-hosted, linux, rrent-deploy]
     timeout-minutes: 12
     environment: rrent-edge-staging
     steps:
@@ -85,6 +88,11 @@ jobs:
             fi
           done
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify trusted deployment runner
+        run: node scripts/runner-preflight.mjs
       - name: Deploy directly with official Cloudflare Wrangler Action
         uses: cloudflare/wrangler-action@v4
         with:
