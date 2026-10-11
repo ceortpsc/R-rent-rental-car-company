@@ -1,4 +1,4 @@
-import {signingReadiness,recordInhouseSignature} from '../../lib/inhouse-signing.js';
+import {signingReadiness,recordInhouseSignature,getInhouseSession} from '../../lib/inhouse-signing.js';
 import {encryptRestricted,encryptionReady} from '../../lib/crypto-vault.js';
 import {method,reply,requireJSON,enforceOrigin,failClosed,enabled,error} from "../../lib/http.js";
 import {DOCUMENTS,STATES,parseDraft,fingerprint} from "../../lib/envelopes.js";
@@ -19,6 +19,11 @@ export default async function handler(req,res) {
    try{return reply(res,202,await recordInhouseSignature(req,b));}catch(e){
      if(e?.code)return reply(res,409,{error:"inhouse_signing_denied",message:"Signer, document revision, consent or required evidence could not be verified."});return error(res,e);
    }
+ }
+ if(req.method==="GET"&&action==="inhouse-session"){
+   if(!signingReadiness().ready)return failClosed(res,"inhouse_session_not_ready","An authenticated in-house signer session is not available until production security and approved contract evidence is configured.");
+   try{return reply(res,200,await getInhouseSession(req));}
+   catch(e){if(e?.code)return reply(res,403,{error:"signer_session_denied",message:"Signer authentication, approved document, or identity evidence is missing."});return error(res,e);}
  }
  if(req.method==="GET"&&action==="registry"){
    return reply(res,200,{
