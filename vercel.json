@@ -35,6 +35,14 @@
   ],
   "rewrites": [
     {
+      "source": "/support/chat",
+      "destination": "/support-chat.html"
+    },
+    {
+      "source": "/api/v1/support/chat",
+      "destination": "/api/v1/health?mode=assistant"
+    },
+    {
       "source": "/api/v1/roles",
       "destination": "/api/v1/health?mode=roles"
     },
