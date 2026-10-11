@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "artifact": "RR-RELEASE-MANIFEST",
+  "owner": "Ross Tax Pro Software Company — R-Rent Rental Car Division",
+  "source_branch": "feature/platform-launch-control-20261011",
+  "proposed_environment": "preview_only",
+  "approval": "PENDING",
+  "release_authorized": false,
+  "production_sensitive_actions_enabled": false,
+  "mandatory_evidence_fields": [
+    "control_id",
+    "owner",
+    "tenant",
+    "source_reference",
+    "verified_at",
+    "reviewer",
+    "result",
+    "evidence_digest"
+  ],
+  "conditions": [
+    "protected_PR_review",
+    "github_runner_tests_executed",
+    "dns_verified",
+    "dedicated_RLS_database",
+    "cryptographic_keys_private",
+    "identity_and_insurance_approved",
+    "binding_signing_evidence",
+    "payment_reconciliation",
+    "independent_release_approval"
+  ],
+  "rollback": "Restore prior reviewed commit, retain immutable ledgers, suspend compromised features, verify data migration compatibility",
+  "status": "SOURCE_PREPARED_NOT_PRODUCTION_APPROVED"
+}

@@ -1,3 +1,4 @@
+import {LAUNCH_MODULES,evaluateLaunch} from '../../lib/launch-registry.js';
 import {evaluatePublicSupport,publicCapabilities} from '../../lib/support-policy.js';
 import {requireJSON,enforceOrigin} from '../../lib/http.js';
 import {encryptionReady} from '../../lib/crypto-vault.js';
@@ -18,6 +19,14 @@ export default async function handler(req,res){
   return reply(res,answer.ok?200:422,{...answer,mode:'policy_knowledge_base',automated:true,not_an_account_agent:true,persistent_ticket_created:false});
  }
  if(!method(req,res,['GET']))return;
+ if(mode==='launch'){
+  const required=new Set(LAUNCH_MODULES.flatMap(x=>x.requirements||[]));
+  const flags=Object.fromEntries([...required].map(x=>[x,enabled(x)]));
+  // Server configuration is not a verified provider transaction. No private evidence
+  // is accepted from headers, browser requests, or unverified environment flags.
+  const assessment=evaluateLaunch({flags,generatedAt:new Date().toISOString()});
+  return reply(res,200,assessment);
+ }
  if(mode==='auth-status')return reply(res,200,{service:'R-Rent customer identity',oauth_signin_publicly_available:false,provider_onboarding_configured:dbReady()&&enabled('RR_ENABLE_OAUTH'),authenticated_case_api_configured:dbReady()&&enabled('RR_ENABLE_OAUTH')&&enabled('RR_ENABLE_CASES'),requires_staff_mfa:true,public_login_url:null,note:'Configuration status only. No credentials or sessions are issued.'});
 
  if(mode==='roles')return sendReply(res,200,{roles:publicCatalog(),mode:'public_permission_metadata_only',live_access_granted:false});
