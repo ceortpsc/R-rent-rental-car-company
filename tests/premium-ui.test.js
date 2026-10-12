@@ -1,1 +1,26 @@
-import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport {readFileSync} from 'node:fs';\nconst app=readFileSync('app.js','utf8');\nconst luxury=readFileSync('luxury-experience.js','utf8');\nconst html=readFileSync('index.html','utf8');\ntest('premium routes are wired into production renderer',()=>{for(const route of ['/locations','/deals','/business','/app'])assert.ok(app.includes(route));assert.match(html,/luxury-experience\\.js/);});\ntest('brand and contact details are correct',()=>{assert.match(luxury,/Move Further/);assert.match(luxury,/254-423-0594/);assert.match(luxury,/condre@rosstaxprepandbookkeeping\\.com/);});\ntest('no fake inventory or checkout in mobile app',()=>{assert.match(luxury,/no reservation/i);assert.match(luxury,/pending backend release/);assert.match(luxury,/not activated/);});\n
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+
+const app = readFileSync('app.js', 'utf8');
+const luxury = readFileSync('luxury-experience.js', 'utf8');
+const html = readFileSync('index.html', 'utf8');
+
+test('premium routes are wired into production renderer', () => {
+  for (const route of ['/locations', '/deals', '/business', '/app']) {
+    assert.ok(app.includes(route));
+  }
+  assert.ok(html.includes('/luxury-experience.js'));
+});
+
+test('brand and contact details are correct', () => {
+  assert.ok(luxury.includes('Move Further.'));
+  assert.ok(luxury.includes('254-423-0594'));
+  assert.ok(luxury.includes('condre@rosstaxprepandbookkeeping.com'));
+});
+
+test('mobile app does not create fake inventory or payments', () => {
+  assert.match(luxury, /no reservation/i);
+  assert.match(luxury, /pending backend release/i);
+  assert.match(luxury, /not activated/i);
+});
