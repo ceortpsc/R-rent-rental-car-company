@@ -1,0 +1,18 @@
+{
+  "name": "R-RENT Car Rental",
+  "short_name": "R-RENT",
+  "description": "R-RENT mobile-ready car rental reference listings and quotes",
+  "start_url": "/app",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0c1d34",
+  "theme_color": "#631e27",
+  "icons": [
+    {
+      "src": "/assets/r-rent-brand-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
