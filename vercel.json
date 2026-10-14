@@ -59,6 +59,10 @@
       "destination": "/api/v1/health?mode=operations"
     },
     {
+      "source": "/extensions/operations",
+      "destination": "/extension-operations.html"
+    },
+    {
       "source": "/operations",
       "destination": "/operations.html"
     },
@@ -91,7 +95,7 @@
       "destination": "/api/v1/payments?provider=paypal"
     },
     {
-      "source": "/((?!api/|_vercel/|assets/|sign|sign\\.html|sign\\.css|sign\\.js|styles\\.css|luxury-experience\\.css|luxury-experience\\.js|manifest\\.webmanifest|sw\\.js|app\\.js|care\\.js|legal-policies\\.js|api-ui\\.js|robots\\.txt|sitemap\\.xml|openapi\\.json).*)",
+      "source": "/((?!api/|_vercel/|assets/|extension-operations|sign|sign\\.html|sign\\.css|sign\\.js|styles\\.css|luxury-experience\\.css|luxury-experience\\.js|manifest\\.webmanifest|sw\\.js|app\\.js|care\\.js|legal-policies\\.js|api-ui\\.js|robots\\.txt|sitemap\\.xml|openapi\\.json).*)",
       "destination": "/index.html"
     }
   ],
