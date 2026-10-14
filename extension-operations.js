@@ -43,7 +43,7 @@
   const days=Number(byId('days').value);
   if(!Number.isSafeInteger(days)||days<1||days>180)throw Error('Choose 1–180 whole days.');
   validateDates();
-  const result=await invoke('/api/v1/extension-control',{method:'POST',body:JSON.stringify({action:'preview',days})});
+  const result=await invoke('/api/v1/quote?mode=extension',{method:'POST',body:JSON.stringify({action:'preview',days})});
   display(result.estimate);
   byId('status').textContent='Preview recalculated. No invoice or extension was activated; dates, tax, and insurance remain subject to independent approval.';
  }
@@ -66,7 +66,7 @@
   const text=Object.entries(plan.triggers||{}).map(([event,tasks])=>event+' => '+tasks.join('; ')).join('\n');
   copyText(text,byId('copy-result'));
  });
- invoke('/api/v1/extension-control').then(data=>{
+ invoke('/api/v1/quote?mode=extension').then(data=>{
   display(data.estimate);register(data);
   byId('status').textContent='Pricing API online · Preview only · Production acceptance, payment, key and release actions locked.';
  }).catch(e=>{byId('status').textContent='Read-only API unavailable: '+e.message+'; transactions remain blocked.';});
