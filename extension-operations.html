@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#101d34">
+<title>R-Rent | Extension Control Center</title>
+<link rel="icon" href="/assets/r-rent-brand-icon.svg" type="image/svg+xml">
+<style>
+:root{color-scheme:dark;font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif;background:#0b1729;color:#f4f0e7}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 90% 5%,#60314766,transparent 30%),#0b1729}
+a{color:#d9b66c}header{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:20px clamp(16px,4vw,64px);border-bottom:1px solid #ffffff20;background:#0c1b2f}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.11em;text-decoration:none;color:#fff;font-size:1.2rem}.logo img{width:42px;height:42px}
+nav{display:flex;gap:18px;flex-wrap:wrap}main{max-width:1160px;padding:36px 18px 70px;margin:auto}
+.eyebrow{color:#d9b66c;font-size:.78rem;letter-spacing:.18em;font-weight:800}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.1;margin:8px 0 12px}h2{font-size:1.14rem;margin:0 0 10px}p{color:#b9c5d1;margin:7px 0 15px}
+.hero{display:flex;align-items:start;justify-content:space-between;gap:24px;margin-bottom:28px;flex-wrap:wrap}
+.pill{display:inline-block;background:#64354b;border:1px solid #bb8c8b;border-radius:100px;padding:7px 12px;font-weight:750;font-size:.78rem}
+.layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:18px}
+.panel{background:#13253d;border:1px solid #31465e;border-radius:17px;padding:24px;box-shadow:0 20px 40px #0002}
+label{display:block;font-weight:650;font-size:.85rem;margin:12px 0 6px}
+input{background:#071526;border:1px solid #5e7187;color:white;border-radius:8px;padding:12px;width:100%;font:inherit}
+form .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+button{font:inherit;cursor:pointer;border-radius:9px;padding:12px 18px;font-weight:750;border:1px solid #d9b66c;background:#d9b66c;color:#132238}
+button.secondary{background:transparent;color:#e8cd91}button:disabled{opacity:.5;cursor:not-allowed}
+.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:19px}
+table{width:100%;border-collapse:collapse;margin-top:8px}td{border-bottom:1px solid #ffffff20;padding:9px 0}td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.total{font-size:1.55rem;color:#e5c681;font-weight:800}
+small,.note{color:#a6b9c9;font-size:.82rem}
+.mini{padding:12px;border-left:3px solid #c49d57;background:#0b1a30;margin-top:14px}
+.flow{margin-top:18px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.step{background:#13253d;padding:18px;border:1px solid #31465e;border-radius:12px}
+.step strong{display:block}.step span{display:block;color:#e0b977;font-size:.76rem;margin-top:8px}
+.gates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.gate{border:1px solid #344963;border-radius:9px;padding:14px;background:#0d1c30}
+.gate b{display:block}.gate em{font-style:normal;font-size:.76rem;color:#e3bb82}
+ol{color:#d9e3ec;padding-left:22px}li{padding:3px}
+footer{border-top:1px solid #ffffff20;padding:24px;text-align:center;color:#90a2b7}
+@media(max-width:790px){.layout{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){form .fields,.gates,.flow{grid-template-columns:1fr}}
+@media print{header,button,form,.flow{display:none!important}body{background:white;color:black}.panel{color:black;border:1px solid #333}p,small,.note{color:#333}}
+</style></head>
+<body><header><a href="/" class="logo"><img src="/assets/r-rent-brand-icon.svg" alt="">R-RENT <span style="color:#d9b66c">/ EXTENSIONS</span></a><nav><a href="/operations">Operations</a><a href="/signing">Agreements</a><a href="/launch">Launch Gate</a></nav></header>
+<main><div class="hero"><div><div class="eyebrow">ROSS TAX PRO SOFTWARE CO. · RENTAL DIVISION</div><h1>Extension Control Center</h1><p>Itemized pricing, acceptance, payments, settlement verification, receipts, and accountable staff work orders.</p></div><span class="pill">CONTROLLED PREVIEW · NO LIVE INVOICE</span></div>
+<div class="layout">
+<section class="panel"><h2>01 / Extension request</h2><p>Use a verified rental record before issuing any customer-facing agreement or invoice. No customer identity is shown in this public preview.</p>
+<form id="extension-form"><div class="fields"><div><label for="vehicle">Vehicle</label><input id="vehicle" value="2026 Chevrolet Trailblazer" disabled></div><div><label for="days">Billed extension days</label><input id="days" type="number" min="1" max="180" step="1" value="7" required></div><div><label for="begin">Proposed start (local time)</label><input id="begin" type="datetime-local"></div><div><label for="finish">Proposed end (local time)</label><input id="finish" type="datetime-local"></div></div>
+<div class="buttons"><button type="submit">Recalculate proposal</button><button type="button" class="secondary" id="copy">Copy itemized estimate</button></div><p id="status" class="note" role="status" aria-live="polite">Connecting to the read-only pricing API…</p></form>
+<div class="mini"><b>Dates are provisional.</b> The existing contract, actual handover/return times, availability and full contract duration determine the legal extension and final tax treatment.</div></section>
+<section class="panel"><h2>02 / Itemized payment breakdown</h2><p>Renter-facing calculation preview (USD).</p><table aria-label="Proposed extension charges">
+<tbody><tr><td id="rent-label">Rental · 7 × $59.00</td><td id="rent-val">$413.00</td></tr>
+<tr><td id="insurance-label">Insurance · 7 × $9.50 (unbound)</td><td id="insurance-val">$66.50</td></tr>
+<tr><td>Extension fee</td><td id="fee-val">$50.00</td></tr>
+<tr><td>Provisional Texas rental tax</td><td id="tax-val">$46.30</td></tr>
+<tr><td>Refundable deposit (separate liability)</td><td id="deposit-val">$50.00</td></tr>
+<tr><td><b>Total proposed invoice</b></td><td class="total" id="total-val">$625.80</td></tr></tbody></table>
+<div class="mini"><b>Replacement key fob: $1,000 (conditional).</b> No automatic charge; requires documented event, accepted policy, substantiated costs and authorized review.</div>
+<div class="buttons"><button disabled title="Requires verified acceptance and configured merchant">Issue invoice — gated</button><button disabled class="secondary" title="Requires signed Stripe payment and reconciliation">Send receipt — gated</button></div></section>
+</div>
+<h2 style="margin-top:36px">03 / Verified workflow gates</h2>
+<div class="flow"><div class="step"><strong>Request & review</strong><small>Eligibility · coverage · availability</small><span>AWAITING VERIFICATION</span></div><div class="step"><strong>Acceptance</strong><small>Signed extension · price disclosure</small><span>AWAITING SIGNATURE</span></div><div class="step"><strong>Payment & settlement</strong><small>Stripe invoice · verified webhooks</small><span>NOT CONNECTED</span></div><div class="step"><strong>Activation & receipt</strong><small>Manager approval · audit · return</small><span>LOCKED</span></div></div>
+<div class="layout" style="margin-top:18px">
+<section class="panel"><h2>04 / Evidence checklist</h2><div id="gates" class="gates"><p>Loading gate requirements…</p></div><p class="note">Only the server and trusted providers can record accepted evidence. UI selections never constitute a signature, payment, insurance coverage, or authorization.</p></section>
+<section class="panel"><h2>05 / Task trigger register</h2><p>Each event produces an idempotent task plan. Queues and notifications remain inactive until persistence, access control, and delivery receipts are verified.</p><ol id="triggers"><li>Loading event triggers…</li></ol><div class="buttons"><button type="button" class="secondary" id="copy-tasks">Copy task plan</button></div><p id="copy-result" role="status" class="note"></p></section></div>
+</main><footer>R-Rent • Protected production operations require verified tenant identity, multifactor authentication, written acceptance, signed Stripe events and human review. No payment is collected on this page.</footer>
+<script defer src="/extension-operations.js"></script></body></html>
