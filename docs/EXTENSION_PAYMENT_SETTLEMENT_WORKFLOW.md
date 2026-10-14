@@ -79,7 +79,7 @@ The `myChevrolet` consumer app's remote functions depend on vehicle equipment an
 
 ## Source inventory
 - `lib/extension-control.js`: pricing, allowed transitions, strict evidence gates, signed payment reconciliation contract, task catalog and replacement-key guard.
-- `api/v1/extension-control.js`: safe preview API. Mutating actions deliberately return HTTP 503.
+- `api/v1/quote.js?mode=extension`: safe preview API consolidated into the existing serverless function. Mutating actions deliberately return HTTP 503.
 - `extension-operations.html` and `extension-operations.js`: branded interactive calculation, workflow/evidence cards, task register.
 - `tests/extension-control.test.js`: pure logic assertions.
 
