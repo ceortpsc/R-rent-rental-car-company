@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0c1d34">
+<title>R-Rent | Document Automation Studio</title>
+<link rel="icon" type="image/svg+xml" href="/assets/r-rent-brand-icon.svg">
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#10243c;background:#f3f0e9;line-height:1.48}
+*{box-sizing:border-box}body{margin:0}header{background:#0c1d34;color:#fff;border-bottom:5px solid #bf9b56;padding:18px 4vw}
+nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}nav a{color:#ebd8af;text-decoration:none;font-size:.91rem}
+.brand{display:flex;align-items:center;gap:15px;font-weight:850;letter-spacing:.08em;font-size:1.35rem}.brand img{width:55px;height:55px}
+main{max-width:1180px;margin:0 auto;padding:34px 18px 64px}h1{margin:5px 0;font-size:clamp(2.1rem,4vw,3.4rem)}
+.lead{display:flex;align-items:center;justify-content:space-between;gap:25px;flex-wrap:wrap}
+small,.soft{color:#627084}.eyebrow{font-size:.75rem;font-weight:800;letter-spacing:.16em;color:#99753b}
+.pill{padding:9px 14px;border:1px solid #b9a68b;border-radius:100px;background:#fff8e9;font-size:.79rem;font-weight:750}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:26px 0}
+.panel{background:#fff;border:1px solid #d7dce2;border-radius:12px;padding:24px;box-shadow:0 16px 30px #1930460e}
+h2{margin:0 0 12px;font-size:1.16rem}.panel h3{margin:0 0 8px;font-size:1.02rem;color:#132f4d}
+.name{display:block;font-size:.75rem;letter-spacing:.1em;font-weight:800;color:#906929}
+.panel p{color:#5f6b78;font-size:.9rem}.code{font:12px ui-monospace,Consolas,monospace;background:#edf0f3;border-radius:6px;padding:5px 8px}
+button{padding:11px 16px;background:#0c1d34;color:#fff;border:1px solid #0c1d34;border-radius:7px;font-weight:700;cursor:pointer}
+button.secondary{background:#fff;color:#0c1d34}button:disabled{opacity:.5;cursor:not-allowed}.actions{display:flex;gap:10px;flex-wrap:wrap}
+.policy{background:#f9f1e6;border-left:4px solid #8b2436;padding:14px 17px;margin:22px 0;border-radius:4px}
+.status{color:#6c4b1d;font-weight:700}.workspace{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+pre{background:#0c1d34;color:#e9eef3;padding:20px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;border-radius:9px;min-height:190px}
+.swatches{display:flex;gap:5px}.swatches span{display:block;width:26px;height:10px;border-radius:3px}
+table{border-collapse:collapse;width:100%;font-size:.9rem}td,th{padding:9px;border-bottom:1px solid #e7e9eb;text-align:left}
+footer{text-align:center;border-top:1px solid #cdd2d7;padding:24px;color:#637183;font-size:.82rem}
+@media(max-width:830px){.grid{grid-template-columns:1fr 1fr}.workspace{grid-template-columns:1fr}}
+@media(max-width:580px){.grid{grid-template-columns:1fr}}
+@media print{header,footer,.actions,.policy,pre,#template-catalog{display:none!important}body{background:white}.panel{border:0;box-shadow:none}}
+</style></head><body><header><nav><div class="brand"><img src="/assets/r-rent-brand-icon.svg" alt="">R-RENT <span style="color:#daba7a">DOCS</span></div><div><a href="/operations">Operations</a> &nbsp; <a href="/signing">Agreements</a> &nbsp; <a href="/launch">Launch gate</a></div></nav></header>
+<main><div class="lead"><div><div class="eyebrow">ROSS TAX PRO SOFTWARE COMPANY · DOCUMENT ENGINE V1</div><h1>Document Automation Studio</h1><p class="soft">Generate from approved R-Rent Word masters. Invoice · Receipt · Rental Agreement · Extension · Letterhead</p></div><span class="pill" id="engine-state">Checking renderer availability…</span></div>
+<div class="policy"><strong>Controlled document output.</strong> Sample previews do not create invoices, accept money, sign agreements, or settle deposits. Live PDF/DOCX packages require MFA-verified staff and a connected private renderer. Payment status may only originate from verified Stripe records.</div>
+<section id="template-catalog" class="grid" aria-label="Document template catalog">
+ <article class="panel"><span class="name">01 / BILLING</span><h3>Customer invoice</h3><p>Itemized rent, fees, taxes and refundable deposit; payment instructions and status-gated invoice number.</p><button class="secondary" type="button" data-example="invoice">Preview schema</button></article>
+ <article class="panel"><span class="name">02 / COLLECTIONS</span><h3>Payment receipt</h3><p>Charge, authorized hold, Stripe reference, capture versus payout, independent deposit reconciliation.</p><button class="secondary" type="button" data-example="receipt">Preview schema</button></article>
+ <article class="panel"><span class="name">03 / EXTENSION</span><h3>Rental extension addendum</h3><p>Original agreement reference, extension terms, coverage disclosures, fee schedule and unsigned signer fields.</p><button class="secondary" type="button" data-example="extension">Preview schema</button></article>
+ <article class="panel"><span class="name">04 / AGREEMENTS</span><h3>Motor vehicle rental agreement</h3><p>Controlled contract master, verified parties, vehicle details, legal and insurer approval placeholders.</p><button class="secondary" type="button" data-example="agreement">Preview schema</button></article>
+ <article class="panel"><span class="name">05 / CORRESPONDENCE</span><h3>Corporate letterhead</h3><p>Brand-consistent correspondence, sender/recipient details, policy notice and company signature block.</p><button class="secondary" type="button" data-example="letterhead">Preview schema</button></article>
+ <article class="panel"><span class="name">06 / EXPORT</span><h3>Batch & manifest</h3><p>DOCX, PDF, HTML, CSV, JSON and ZIP packages with per-file SHA-256 audit manifest and dedupe key.</p><button class="secondary" type="button" id="download-schema">Download engine schema</button></article>
+</section>
+<div class="workspace"><section class="panel"><h2>Document input schema</h2><p>These are synthetic examples, not customer records or ready-to-send documents.</p><div class="actions"><button id="copy-payload" type="button">Copy example JSON</button><button type="button" class="secondary" id="download-payload">Download JSON</button></div><pre id="payload-preview" tabindex="0" aria-label="Document data schema">Choose a template above.</pre><div class="status" id="copy-state" role="status"></div></section>
+<section class="panel"><h2>Available export operations</h2><table><tbody><tr><td>Word / DOCX</td><td>Original styled master</td></tr><tr><td>PDF</td><td>Print-ready conversion</td></tr><tr><td>HTML</td><td>Embedded brand image</td></tr><tr><td>CSV / JSON</td><td>Structured ledger-safe extracts</td></tr><tr><td>ZIP</td><td>Batch packet + SHA-256 manifest</td></tr></tbody></table><p class="soft" id="gateway-note">The preview catalog is public; customer data and protected exports must pass staff authentication.</p><div class="swatches"><span style="background:#0c1d34"></span><span style="background:#bf9b56"></span><span style="background:#631e27"></span><span style="background:#f7f4ec;border:1px solid #bbb"></span></div></section></div>
+</main><footer>© R-Rent Rental Cars · Operated by Ross Tax Pro Software Company · Draft-only document architecture · No payment or legal execution is performed by this page.</footer><script defer src="/document-studio.js"></script></body></html>
