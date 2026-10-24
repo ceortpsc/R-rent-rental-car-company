@@ -31,9 +31,39 @@
           "value": "max-age=31536000; includeSubDomains"
         }
       ]
+    },
+    {
+      "source": "/management",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, private"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        }
+      ]
+    },
+    {
+      "source": "/management.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, private"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        }
+      ]
     }
   ],
   "rewrites": [
+    {
+      "source": "/management",
+      "destination": "/management.html"
+    },
     {
       "source": "/launch",
       "destination": "/launch.html"
@@ -91,7 +121,7 @@
       "destination": "/api/v1/payments?provider=paypal"
     },
     {
-      "source": "/((?!api/|_vercel/|assets/|sign|sign\\.html|sign\\.css|sign\\.js|styles\\.css|luxury-experience\\.css|luxury-experience\\.js|manifest\\.webmanifest|sw\\.js|app\\.js|care\\.js|legal-policies\\.js|api-ui\\.js|robots\\.txt|sitemap\\.xml|openapi\\.json).*)",
+      "source": "/((?!api/|_vercel/|assets/|management(?:\\.html|\\.css|\\.js)?$|sign|sign\\.html|sign\\.css|sign\\.js|styles\\.css|luxury-experience\\.css|luxury-experience\\.js|manifest\\.webmanifest|sw\\.js|app\\.js|care\\.js|legal-policies\\.js|api-ui\\.js|robots\\.txt|sitemap\\.xml|openapi\\.json).*)",
       "destination": "/index.html"
     }
   ],

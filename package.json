@@ -17,7 +17,12 @@
     "workers:tail:staging": "npx --yes wrangler@4.147.0 tail --env staging",
     "workers:dry-run": "node scripts/cloudflare-preflight.mjs check staging && npx --yes wrangler@4.147.0 deploy --dry-run --outdir .wrangler-build --env staging",
     "launch:audit": "node scripts/release-audit.mjs",
-    "ci:security": "node scripts/ci-security-check.mjs"
+    "ci:security": "node scripts/ci-security-check.mjs",
+    "test:management:browser": "node scripts/management-browser-check.mjs"
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@electric-sql/pglite": "0.3.14",
+    "playwright": "1.62.1"
+  }
 }
