@@ -61,6 +61,10 @@
   ],
   "rewrites": [
     {
+      "source": "/staff-privacy",
+      "destination": "/staff-privacy.html"
+    },
+    {
       "source": "/management",
       "destination": "/management.html"
     },
@@ -121,7 +125,7 @@
       "destination": "/api/v1/payments?provider=paypal"
     },
     {
-      "source": "/((?!api/|_vercel/|assets/|management(?:\\.html|\\.css|\\.js)?$|sign|sign\\.html|sign\\.css|sign\\.js|styles\\.css|luxury-experience\\.css|luxury-experience\\.js|manifest\\.webmanifest|sw\\.js|app\\.js|care\\.js|legal-policies\\.js|api-ui\\.js|robots\\.txt|sitemap\\.xml|openapi\\.json).*)",
+      "source": "/((?!api/|_vercel/|assets/|staff-privacy(?:\\.html)?$|management(?:\\.html|\\.css|\\.js)?$|sign|sign\\.html|sign\\.css|sign\\.js|styles\\.css|luxury-experience\\.css|luxury-experience\\.js|manifest\\.webmanifest|sw\\.js|app\\.js|care\\.js|legal-policies\\.js|api-ui\\.js|robots\\.txt|sitemap\\.xml|openapi\\.json).*)",
       "destination": "/index.html"
     }
   ],
