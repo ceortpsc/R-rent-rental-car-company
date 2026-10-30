@@ -194,3 +194,10 @@ To avoid invoking an exhausted Vercel deployment quota for the separate Access W
 - Source-only local check: `npm run launch:audit`; this audit does **not** contact or certify payment processors, insurers, signing, hosting availability or user identities.
 
 Source status: launch-control feature branch, **NOT a completed high-risk production deployment**. Production release requires separate approved vendor credentials, active dedicated database with verified RLS, lawful coverage, full e-sign execution, financial reconciliation, secure disposal, passing CI, real browser smoke tests and documented corporate approval. Do not enable these actions just to change a status indicator.
+
+
+## Management authentication (review branch, October 23, 2026)
+
+`/management` adds Supabase-backed staff login, TOTP MFA, host-only HttpOnly sessions, secure invitations, account controls, dual-approved role changes, suspension/revocation and tenant-scoped management audit. The published thirteen-role policy remains authoritative. Owner-manager Condre Ross starts at `CORPORATE_OWNER`; designated manager Alzor Comeaux starts at `RENTAL_MANAGER` after approved onboarding. No identities or privileges are seeded by source.
+
+See [management architecture and onboarding](docs/MANAGEMENT_ACCESS.md). Run `npm ci --ignore-scripts`, `npm run check`, `npm test` and `npm run ci:security`. The new database tests execute PostgreSQL through pinned PGlite; Auth provider responses are contract mocks. Dedicated production database, SMTP, independent reviewer/bootstrap, hosted MFA and actual manager acceptance remain dependencies. Management flags default false; signature, financial, insurance and vehicle-release gates are preserved. The separate AppDeploy application is not migrated or modified.

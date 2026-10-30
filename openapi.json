@@ -232,6 +232,131 @@
           }
         }
       }
+    },
+    "/api/v1/manage": {
+      "get": {
+        "summary": "Management availability, own session or authorized tenant access lists",
+        "parameters": [
+          {
+            "name": "action",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "status",
+                "session",
+                "members",
+                "changes",
+                "audit"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Public-safe status or server-authorized management data; never provider tokens"
+          },
+          "401": {
+            "description": "Invalid or expired session"
+          },
+          "403": {
+            "description": "MFA or explicit role permission missing"
+          },
+          "503": {
+            "description": "Management configuration, release evidence or audit unavailable"
+          }
+        }
+      },
+      "post": {
+        "summary": "Management authentication, MFA, account controls and independently approved access changes",
+        "description": "Exact configured HTTPS Origin, JSON and X-RRent-Action: 1 required. Payload fields vary by action; see docs/MANAGEMENT_ACCESS.md. No role is granted by login, an email string or a browser role assertion. All consequential rental actions remain gated.",
+        "parameters": [
+          {
+            "name": "action",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "login",
+                "confirm",
+                "request-code",
+                "verify-code",
+                "refresh",
+                "logout",
+                "mfa-enroll",
+                "mfa-verify",
+                "accept-invitation",
+                "password",
+                "propose",
+                "approve",
+                "send-invitation",
+                "revoke-invitation",
+                "suspend"
+              ]
+            }
+          },
+          {
+            "name": "X-RRent-Action",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "const": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "maxProperties": 7
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Action completed within its management-only scope"
+          },
+          "201": {
+            "description": "Change proposed; independent approval still required"
+          },
+          "202": {
+            "description": "Generic email sign-in request response"
+          },
+          "401": {
+            "description": "Identity or bound session denied"
+          },
+          "403": {
+            "description": "MFA, permission or independent approval missing"
+          },
+          "409": {
+            "description": "Stale change, delivery claim or state conflict"
+          },
+          "422": {
+            "description": "Invalid fields or input"
+          },
+          "429": {
+            "description": "Shared database/provider rate limit"
+          },
+          "503": {
+            "description": "Configuration, release, provider, database or audit unavailable"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ManagementCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "__Host-rr_session",
+        "description": "Opaque host-only HttpOnly management session, also bound to provider access token and live Auth session."
+      }
     }
   }
 }
