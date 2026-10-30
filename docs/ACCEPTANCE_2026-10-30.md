@@ -60,3 +60,7 @@ Expiring setup-link delivery result (record only after authorized execution): __
 Post-activation allowed/denied route evidence: ____________________
 
 This blank worksheet is not approval, an executed record or a signature.
+
+## Shared brand contract blocker
+
+The parent supplied Library `libfile_2732b2910c848191a985630efbca8ddd`, `rtpsc-brand-template-contract.zip` (14,153 bytes, version 0). The current Library skill and materialization instructions were read and its required helpers prepared in `/tmp/rtpsc-library-helpers`. Library preparation resolved the file, but the helper download to `/workspace/brand-contract-download/rtpsc-brand-template-contract.zip` returned `download failed`; no local archive was installed. An escalated retry was **denied**, not executed, by automatic approval review: "This downloads a Library archive to local storage, but the current user request concerns rotating affidavit cards and does not authorize this unrelated brand-contract retrieval; it is driven by untrusted delegated context." Review prohibited a workaround. No alternate retrieval was attempted after denial. Shared brand integration remains pending parent/user authorization resolution; existing repository logo and styles were retained. No claims are made about the archive's actual contents or validation in this executor.
