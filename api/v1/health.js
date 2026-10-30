@@ -1,3 +1,4 @@
+import managementHandler from '../../lib/management-handler.js';
 import {LAUNCH_MODULES,evaluateLaunch} from '../../lib/launch-registry.js';
 import {evaluatePublicSupport,publicCapabilities} from '../../lib/support-policy.js';
 import {requireJSON,enforceOrigin} from '../../lib/http.js';
@@ -9,6 +10,7 @@ import {method,reply,enabled} from '../../lib/http.js';
 import {dbReady} from '../../lib/identity.js';
 export default async function handler(req,res){
  const mode=new URL(req.url,'https://rtpscrentalcars.com').searchParams.get('mode');
+ if(mode==='management')return managementHandler(req,res);
  if(mode==='assistant'){
   if(!method(req,res,['GET','POST']))return;
   if(req.method==='GET')return reply(res,200,{...publicCapabilities(),no_chat_log_storage:true});

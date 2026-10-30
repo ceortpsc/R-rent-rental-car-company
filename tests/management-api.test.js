@@ -1,6 +1,6 @@
 import test, { afterEach } from 'node:test';
 import assert from 'node:assert/strict';
-import handler from '../api/v1/manage.js';
+import handler from '../api/v1/health.js';
 import { managementAllowed, managementDescriptor } from '../lib/management-policy.js';
 import { ROLE_NAMES } from '../lib/rbac.js';
 import { TENANT } from '../lib/identity.js';
@@ -35,7 +35,7 @@ function setup({ role = 'CORPORATE_OWNER', aal = 'aal2', override } = {}) {
   return { calls, token };
 }
 async function request(action, body, { token = jwt(), headers = {}, cookie = true, method } = {}) {
-  const req = { url: '/api/v1/manage?action=' + action, method: method || (body === undefined ? 'GET' : 'POST'), body,
+  const req = { url: '/api/v1/health?mode=management&action=' + action, method: method || (body === undefined ? 'GET' : 'POST'), body,
     socket: { remoteAddress: '127.0.0.1' }, headers: { 'content-type': 'application/json', origin, 'x-rrent-action': '1', 'sec-fetch-site': 'same-origin',
       ...(cookie ? { cookie: `__Host-rr_access=${token}; __Host-rr_refresh=test-refresh-token; __Host-rr_session=${'a'.repeat(43)}` } : {}), ...headers } };
   const res = { statusCode: 200, headers: {}, setHeader(key, value) { this.headers[key.toLowerCase()] = value; }, end(value) { this.body = JSON.parse(value); } };

@@ -9,7 +9,7 @@ Review date: October 23, 2026 (America/Chicago). Status: implemented in a review
 | Public UI | `management.html`, `management.css`, `management.js` | Same-origin login, authenticator, account, team, approval, audit interfaces |
 | Policy | `lib/rbac.js`, `lib/management-policy.js` | Existing thirteen-role catalog; explicit bounded management actions |
 | Identity/session adapter | `lib/management-provider.js` | Supabase Auth validation, host-only HttpOnly cookies, refresh, database session binding |
-| Server controller | `api/v1/manage.js` | Origin/CSRF, body validation, database rate limits, permission checks, audit, provider email |
+| Server controller | `lib/management-handler.js` via `api/v1/health.js` | Origin/CSRF, body validation, database rate limits, permission checks, audit, provider email |
 | Schema | `supabase/migrations/20261024014334_management_access.sql` | Private management tables, service-only RPCs, transactional approvals and revocation |
 | Verification | `tests/management-api.test.js`, `tests/management-database.test.js`, `scripts/management-browser-check.mjs` | Provider-contract mocks and executable PostgreSQL tests using pinned PGlite |
 
