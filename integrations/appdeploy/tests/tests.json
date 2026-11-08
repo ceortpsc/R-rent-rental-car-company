@@ -1,0 +1,254 @@
+[
+  {
+    "name": "Vehicle inquiry profiles and server-priced estimates",
+    "sanity": true,
+    "viewport": "desktop",
+    "covers": [
+      "GET /api/catalog",
+      "GET /api/market/catalog",
+      "POST /api/market/estimate",
+      "fleet search and comparison",
+      "vehicle detail hash routes",
+      "integer-cent estimate and tax bands",
+      "no booking or payment side effect"
+    ],
+    "description": "A public visitor compares both vehicles and receives an explicitly preliminary server estimate.",
+    "steps": [
+      "Open Vehicles, search Trailblazer, open its specifications and verify record/manufacturer/pending source labels.",
+      "Open Pricing & quotes, select Trailblazer with 7 days and calculate. Verify base $413.00, illustrative state tax $41.30 and known subtotal $454.30 when the default published rates are active; any existing published pricebook override must be used consistently instead.",
+      "Select Bronco with 7 days and calculate. Verify base $629.93 and known subtotal $692.92 for its default $89.99 rate, or consistent arithmetic for a persisted override.",
+      "Change rental days to 31, calculate and verify the state tax illustration uses 6.25%. Try zero days and verify validation prevents a result.",
+      "Return to Vehicles, compare both vehicles, open the Bronco profile and reload its vehicle hash route."
+    ],
+    "expected": "Both vehicle profiles survive direct hash-route reload. Calculations use published backend rates, unknown fees/deposit stay unconfirmed, the insurance option is unavailable, and no vehicle hold or payment is claimed."
+  },
+  {
+    "name": "Posting copy and signed-out drafting boundary",
+    "viewport": "desktop",
+    "covers": [
+      "eight prepared posting formats",
+      "copy and text export",
+      "GET /api/market/posts anonymous denial",
+      "POST /api/market/posts anonymous denial",
+      "GET /api/market/posts/:id anonymous denial",
+      "PUT /api/market/posts/:id anonymous denial",
+      "DELETE /api/market/posts/:id anonymous denial"
+    ],
+    "description": "A visitor can prepare and export inquiry copy without gaining staff draft or external publishing authority.",
+    "steps": [
+      "Open Posting studio through the marketplace navigation. Select each vehicle and inspect all four posting formats.",
+      "Use Download posting copy for a social caption and verify the exported text includes the vehicle, base rate, contact and fee/availability disclosures.",
+      "Remain signed out and verify that saving, editing and deleting stored staff drafts is unavailable, with a clear restricted-access explanation.",
+      "Attempt the protected posting route family without a bearer token, including GET/POST /api/market/posts and GET/PUT/DELETE /api/market/posts/record_0000001; confirm authentication denial and no returned private record."
+    ],
+    "expected": "Eight useful inquiry texts are available. Staff records remain protected and no external social or Turo publication is represented as completed."
+  },
+  {
+    "name": "Managed renter access and verified executive-manager delegation",
+    "viewport": "mobile",
+    "covers": [
+      "managed OAuth sign-in entry",
+      "popup cancellation handling",
+      "GET /api/account anonymous denial",
+      "POST /api/account/register anonymous denial",
+      "GET /api/market/staff/:id anonymous denial",
+      "POST /api/market/staff/:id anonymous denial",
+      "fourteen-role registry",
+      "no self-promotion",
+      "mobile navigation and private data boundary",
+      "POST /api/market/staff-invites anonymous denial",
+      "POST /api/market/staff-invites/:code/join anonymous denial",
+      "email-bound rental_manager invitation activation",
+      "no temporary password or owner elevation",
+      "authenticated executive manager role for admin@rosstaxsoftware.com",
+      "manager pricebook review and override",
+      "manager staff supervision",
+      "independent manager company signature",
+      "GET /api/account delegated profile",
+      "POST /api/rental/admin/prices reason audit",
+      "existing signed contract non-overwrite",
+      "MFA and provider verification gates remain active"
+    ],
+    "description": "A mobile visitor reaches the managed sign-in flow and cannot select staff roles or access private administration.",
+    "steps": [
+      "Open mobile navigation, choose My account, and verify the managed sign-in/Create account action and renter-only enrollment explanation.",
+      "Open Sign in / Create account and inspect the managed Google, Apple, X and email options. Cancel or close the popup without supplying a real person's credentials; verify the application remains usable and does not claim a signed-in account.",
+      "Open Roles & access and inspect all fourteen role descriptions, including the rental_manager operational grant boundary. Verify role editing is unavailable to an anonymous visitor.",
+      "Attempt manager-invitation creation and join without authentication; verify denial and no role write. Resolve a synthetic invalid invite code and verify no recipient identity is revealed.",
+      "Attempt GET /api/account, POST /api/account/register and GET/POST /api/market/staff/subject0001 without a bearer token. Verify authentication denial and no account/role write.",
+      "Open My trips and Agreements while signed out. Confirm private records are not displayed.",
+      "Sign in as an authorized test user with verified admin@rosstaxsoftware.com identity and confirm /api/account reports executive_manager, Executive Office Manager / Supervisor and company fleet access rather than renter profile creation.",
+      "Open Rental operations, fee directory, agreements and staff management; confirm routine manager approval can be given without CEO authentication.",
+      "Override a synthetic pricebook entry with a business reason, verify the published price updates and the audit record captures old/new amount, actor and reason; reject a blank reason.",
+      "Counter-sign a synthetic renter-signed agreement in the executive manager's own legal name only when verification gates are satisfied; confirm renter signature and any prior contract remain unchanged.",
+      "Sign in as a different email, verify company-wide routes, pricing updates and executive-manager assignment are forbidden. Verify privileged executive_manager role cannot be delegated by staff form."
+    ],
+    "expected": "Regular renters remain isolated. Verified admin@rosstaxsoftware.com receives company-wide R-RENT executive_manager authority, audited independent pricing and contract decision access; neither a manager role nor ordinary sign-in bypasses renter consent, settlement, identity, insurance or MFA gates."
+  },
+  {
+    "name": "Dated request handoff and documented action wiring",
+    "viewport": "mobile",
+    "covers": [
+      "POST /api/rental/search",
+      "GET /api/rental/options",
+      "POST /api/rental/requests enrollment boundary",
+      "GET /api/rental/requests account boundary",
+      "legacy request and payment release gates",
+      "workflow registry and export",
+      "public contact and legal overview links",
+      "custom pickup and return requests",
+      "future dates beyond 366 days",
+      "extended stays over 180 days with manual pricing"
+    ],
+    "description": "Vehicle selection transfers to the existing dated request workflow while approval and payment remain separate.",
+    "steps": [
+      "Open Bronco specifications and choose Request written quote. Verify the reservation workflow selects the adventure SUV class.",
+      "Enter valid upcoming pickup and return times in Central Time, review options and verify availability requires staff review.",
+      "Set different custom pickup and return cities and use pickup and return dates more than one year in the future with a stay over 180 days. Review options. Confirm the search accepts these as requests, requires staff location/time-zone review and shows no unapproved automatic long-term total.",
+      "While signed out, attempt to submit a rental request and verify authentication/profile creation is required rather than a booking being confirmed.",
+      "Return to the marketplace Workflow map, inspect the six stages and registered action table, and download the registry.",
+      "Use Contact and inspect the company telephone/email, then review the preliminary terms and privacy links."
+    ],
+    "expected": "The existing dated request workflow remains reachable and preserves the selected class. No unverified reservation, driver approval, coverage, charge or vehicle release is asserted. Action registry export is usable. Extended custom dates and locations are allowed as inquiries, never automatically reserved or priced."
+  },
+  {
+    "name": "Catalog failure is visible and does not invent rates",
+    "viewport": "desktop",
+    "covers": [
+      "GET /api/market/catalog failure handling",
+      "retry affordance",
+      "no fabricated fallback price or account status"
+    ],
+    "description": "A backend catalog error is visible without showing invented inventory or elevated account access.",
+    "qa_faults": [
+      {
+        "method": "GET",
+        "path": "/api/market/catalog",
+        "status": 503,
+        "body_json": {
+          "error": "Catalog temporarily unavailable"
+        }
+      }
+    ],
+    "steps": [
+      "Open Vehicles with the catalog API fault active.",
+      "Verify a visible error and Retry catalog control.",
+      "Attempt Retry catalog while the fault remains active."
+    ],
+    "expected": "The catalog error remains visible, no successful price result or account permission is fabricated, and the retry control remains usable."
+  },
+  {
+    "name": "Operations routing and anonymous access boundaries",
+    "viewport": "mobile",
+    "covers": [
+      "GET /api/ops/bootstrap",
+      "public operations map and policies",
+      "registered page paths",
+      "anonymous employee and renter record denial",
+      "entry route aliases and reload",
+      "requirements and input traceability",
+      "policy library source export",
+      "event trigger map",
+      "public page focus and title",
+      "registered public directory page inventory",
+      "agreement signing procedure guide",
+      "pickup and return inspection guides",
+      "official Enterprise public-topic references marked reference-only"
+    ],
+    "description": "A visitor reaches help and mapping without receiving private operational records.",
+    "steps": [
+      "Open #service/directory; inspect all registered employee, renter and public routes plus the Enterprise public-topic directory, confirming its reference-only disclaimer.",
+      "Open #service/map, inspect route and action mappings, and export the registry.",
+      "Open #service/policies and review the paper-execution and charge-dispute distinctions.",
+      "Attempt #ops/dashboard and #renter/trips while signed out; verify account access is required.",
+      "Open #service/signing and #service/inspections; review version-bound signature steps, separate renter/company signatures, pickup/return checks and explicit evidence-configuration status.",
+      "Open an unregistered #ops path and verify an explicit unavailable or not-found state, never an employee dashboard.",
+      "Open #service/requirements, search paper.review and verify the required fields, permission and independent reviewer mandate.",
+      "Open #service/library, expand Routing and interface standard and download that exact Markdown policy.",
+      "Open #service/automation and verify that portal notices are distinct from external email and no background scheduler is claimed.",
+      "Reload #/service/map and use browser Back/Forward between the reference pages. Verify the correct page title and no unexpected privileged fallback.",
+      "Open #employee while signed out and verify an access gate rather than operational records."
+    ],
+    "expected": "The public directory, signing and inspection guidance, and reference pages are available. Operational data remains protected, Enterprise topics are clearly reference-only, and missing production secrets or evidence adapters produce an explicit setup state."
+  },
+  {
+    "name": "Operations API anonymous denial and missing configuration",
+    "viewport": "desktop",
+    "covers": [
+      "GET/POST /api/ops/trips",
+      "GET /api/ops/trips/:id",
+      "POST /api/ops/trips/:id/commands",
+      "GET /api/ops/trips/:id/audit",
+      "GET /api/ops/notifications",
+      "POST /api/ops/notifications/:id/read",
+      "GET/POST /api/ops/support",
+      "GET /api/ops/support/:id",
+      "POST /api/ops/support/:id/reply",
+      "GET /api/ops/connections",
+      "POST /api/ops/connections/:id/probe",
+      "GET /api/ops/connections/evidence",
+      "activation setup requirement display",
+      "owner-only readiness page gate"
+    ],
+    "description": "Protected route families reject anonymous access before private reads or writes.",
+    "steps": [
+      "While signed out, invoke each protected route family without an Authorization token, using a synthetic UUID for parameterized record paths.",
+      "Verify every call is denied without a returned customer record, command receipt or provider credential.",
+      "Return to public help and confirm the interface remains usable after the denied requests.",
+      "Open #ops/readiness without signing in and verify the owner permission boundary."
+    ],
+    "expected": "Protected endpoint access is denied. This negative test does not certify successful OAuth, private document storage, a real payment or role provisioning."
+  },
+  {
+    "name": "Support knowledge and production setup messages",
+    "viewport": "desktop",
+    "covers": [
+      "POST /api/ops/support/answer",
+      "approved knowledge display",
+      "no autonomous execution claims",
+      "host integration dependency messages"
+    ],
+    "description": "Public support distinguishes approved guidance from account actions and live verification.",
+    "steps": [
+      "Open #service/help and expand the question about an already-signed printed agreement.",
+      "Ask the public answer endpoint how to dispute an additional charge.",
+      "Verify the response cites approved source IDs and says no action was performed.",
+      "Review integration limitations in the supplied operating documentation before attempting production configuration."
+    ],
+    "expected": "Help does not invent a signature, confirmed booking, processed refund, assessed fine or human resolution. Paid model generation is not available to anonymous users."
+  },
+  {
+    "name": "Authenticated drawn signature, existing-rental amendment and protection guardrail",
+    "viewport": "desktop",
+    "covers": [
+      "active rental amendment owner form",
+      "independent renter/company signing",
+      "drawn canvas capture",
+      "signature image evidence",
+      "server signature PNG validation",
+      "authenticated renter email matching",
+      "optional unverified insurance not charged",
+      "protected agreement deep link",
+      "delegated executive manager company countersignature",
+      "representative title evidence"
+    ],
+    "description": "Active rental amendments require owner preparation, authenticated electronic signing and protection verification rather than an anonymous or prefilled signature.",
+    "steps": [
+      "While signed out open Agreements and New agreement; confirm private forms are inaccessible and existing customer details are not exposed.",
+      "Sign in with an authorized owner test account; choose existing rental amendment and verify original reference, mileage, condition, proposed protection and admin fields are available and the amount not included in total.",
+      "On an issued synthetic agreement, as the correctly authenticated renter draw a stroke in the pad, clear it and confirm signing is disabled, then redraw and confirm a signed record preserves the drawn signature image.",
+      "Use an authenticated account with a different email and confirm the specific existing-rental amendment is denied.",
+      "Verify owner countersignature requires authenticated identity plus verification gates, and the signed record is printable with visual signature and hash.",
+      "As verified admin@rosstaxsoftware.com, review the signed synthetic agreement and confirm company signer is Condre Ross with the executive office manager title rather than a forged CEO signature."
+    ],
+    "expected": "The amendment remains linked to its original rental and cannot silently activate protection, apply unaccepted fees, bypass identity checks or record a typed-only drawn signature. Existing signatures remain intact."
+  },
+  {
+    "name": "R-RENT rental counter selection, condition, agreement and release gates",
+    "viewport": "desktop",
+    "covers": ["GET /api/rental/counter", "POST /api/rental/counter", "GET /api/rental/counter/:id", "POST /api/rental/counter/:id/inspection", "GET /api/rental/counter/:id/photo", "GET /api/rental/counter/:id/readiness", "private agreement assignment", "evidence integrity", "Stripe payment gate", "operations dispatch gate"],
+    "description": "A manager assigns one existing rental agreement and inspects damage without creating duplicate active trips or fake payments.",
+    "steps": ["Signed-out clients cannot use any counter endpoint or view private inspection photographs.", "A manager selects a synthetic agreement and reopening it returns the same counter case.", "Record physical VIN, mileage, fuel, condition areas, notes and a small photo; confirm SHA256 report and authenticated temporary photo URL.", "Reject invalid VIN, reused inspection ID with changed contents, and oversized image.", "Review both signatures and payment evidence; missing live Stripe and operations secrets prevent activation.", "An existing active rental amendment retains the original active rental."],
+    "expected": "Only company users can review the case, photographed damage is securely retained, and live operations dispatch remains the sole release authority."
+  }
+]
