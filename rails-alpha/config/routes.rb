@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root "public_pages#home"
   get "programs", to: "public_pages#programs"
+  get "site-map", to: "site_maps#show", as: :site_map
   get "health", to: "public_pages#health"
   get "ready", to: "public_pages#ready"
   get "bookings/new", to: "bookings#new", as: :new_booking

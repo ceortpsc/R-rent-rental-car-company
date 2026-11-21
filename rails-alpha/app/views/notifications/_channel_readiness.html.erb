@@ -1,0 +1,22 @@
+<% if current_staff&.role == "admin" %>
+  <section class="form-card" aria-labelledby="channel-readiness-title">
+    <h2 id="channel-readiness-title">Notification channel readiness</h2>
+    <p>Read-only status. No external transport or provider connection is implemented.</p>
+    <dl>
+      <% NotificationChannelReadiness.catalog.each do |channel| %>
+        <dt><strong><%= channel.fetch(:label) %></strong></dt>
+        <dd>
+          <% case channel.fetch(:mode) %>
+          <% when :internal_only %>
+            Internal operations only. No external delivery.
+          <% when :synthetic_only %>
+            Simulation only. No real recipient or delivery.
+          <% else %>
+            Disabled. External transport not implemented. Required evidence unverified:
+            <%= channel.fetch(:unmet_requirements).join("; ") %>.
+          <% end %>
+        </dd>
+      <% end %>
+    </dl>
+  </section>
+<% end %>

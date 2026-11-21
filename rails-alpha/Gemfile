@@ -8,3 +8,5 @@ gem "bcrypt", "~> 3.1"
 gem "minitest", "~> 5.25", group: :test
 
 gem "csv", "~> 3.3"
+
+gem "pg", "~> 1.7"

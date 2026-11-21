@@ -1,7 +1,7 @@
 <% content_for :title, "Operations" %>
 <div class="frame section page">
   <div class="section-head"><div><p class="eyebrow">Staff workspace · <%= current_staff.role.to_s.humanize %></p><h1>Rental operations.</h1><p class="lead">Review requests, fleet records and maintenance tasks. These status changes do not send payments, messages or rental agreements.</p></div><div class="actions"><a href="/work-queue" class="button outline">Open work queue</a><% if current_staff.role == "admin" %><a href="/ops/maintenance/new" class="button gold">Add maintenance task</a><% end %></div></div>
-  <nav class="jump-nav" aria-label="Operations sections"><a href="#bookings">Rental requests</a><a href="#fleet">Fleet records</a><a href="/ops/fleet">Fleet register</a><a href="/ops/reports">Operations reports</a><a href="#maintenance">Maintenance</a></nav>
+  <nav class="jump-nav" aria-label="Operations sections"><a href="#bookings">Rental requests</a><a href="#fleet">Fleet records</a><a href="/ops/fleet">Fleet register</a><a href="/ops/reports">Operations reports</a><a href="#maintenance">Maintenance</a><a href="#channel-readiness-title">Notification readiness</a></nav>
   <section class="section tight" id="bookings"><h2>Rental requests</h2>
     <% if @bookings.blank? %><p class="empty">No rental requests recorded.</p><% else %>
     <div class="table-wrap" tabindex="0" role="region" aria-label="Rental requests table"><table><thead><tr><th scope="col">Reference / renter</th><th scope="col">Vehicle</th><th scope="col">Requested period</th><th scope="col">Status</th><th scope="col">Available actions</th></tr></thead><tbody>
@@ -23,4 +23,5 @@
     <% elsif current_staff.role == "admin" && task.status == "in_progress" %><%= button_to "Mark resolved", "/ops/maintenance/#{task.id}/status", method: :post, params: { status: "resolved" }, class: "button outline" %>
     <% else %><span class="muted">No actions available</span><% end %></td></tr><% end %></tbody></table></div><% end %>
   </section>
+  <%= render "notifications/channel_readiness" %>
 </div>

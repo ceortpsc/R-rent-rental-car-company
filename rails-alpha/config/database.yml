@@ -1,3 +1,8 @@
+<%
+require "json"
+require Rails.root.join("config", "staging", "persistence").to_s
+StagingPersistence.validate!(Rails.env)
+%>
 default: &default
   adapter: sqlite3
   pool: 5
@@ -8,6 +13,10 @@ development:
 test:
   <<: *default
   database: storage/test.sqlite3
+<% if Rails.env.staging? && ENV["RR_STAGING_DB"] == "postgresql" %>
+staging: <%= JSON.generate(StagingPersistence.postgresql_config!) %>
+<% else %>
 staging:
   <<: *default
   database: storage/staging.sqlite3
+<% end %>

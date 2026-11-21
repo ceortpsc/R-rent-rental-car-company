@@ -31,7 +31,7 @@ Sign in as the queue operator at `/login` and open `/work-queue`. Marking the wo
 
 | Screen or action | Route | Access and result |
 |---|---|---|
-| Home, fleet preview, programs | `GET /`, `GET /programs` | Public-facing local preview; not an offer or guarantee |
+| Home, fleet preview, programs and site map | `GET /`, `GET /programs`, `GET /site-map` | Public-facing local preview; not an offer or guarantee |
 | Rental estimate and inquiry | `GET /bookings/new`, `POST /bookings` | CSRF-protected; pricing estimate creates no record; submit records an inquiry and queues internal review |
 | Inquiry receipt | `GET /receipt` | Same browser session only; no PII, payment, or reservation confirmation |
 | Sign in/out | `GET /login`, `POST /session`, `POST /logout` | Local staff accounts; rotation and revalidation; no public signup |
@@ -69,10 +69,13 @@ The live AppDeploy app and domain are separate from this code. The Rails branch 
 
 - `RR_SYNTHETIC_STAGING=1` and the service's Render-assigned `RENDER_EXTERNAL_HOSTNAME`.
 - `RR_REVIEW_SHA256`: SHA-256 digest of an independently generated high-entropy preview password (at least 192 random bits). The HTTP review user is `rrent-review`.
-- `RR_PREVIEW_STAFF_BCRYPT`: bcrypt digest with cost 10–15 of a different randomly generated staff password, scoped to `review-admin@example.com`.
+- `RR_PREVIEW_STAFF_BCRYPT`: bcrypt digest with cost 10–15 of a different randomly generated staff password, scoped to the synthetic preview administrator.
+- Optional `RR_PREVIEW_STAFF_USERNAME`: set a username for that same synthetic administrator without storing a real email address. When set, the preview expects this username instead of the default synthetic email. The outer review gate has a separate secret.
 - A per-boot Rails signing key is generated if no independent 128-character hex `SECRET_KEY_BASE` is supplied. Do not reuse production secrets.
 - No live feature flags, `DATABASE_URL`, real users, payment providers, or external dispatch. Do not attach a custom domain or enable production routing.
 
 All app pages, assets and inboxes require the review gate. Public `/health` returns only the app environment and health status. Staff pages additionally require the synthetic staff login. Free preview storage is disposable on service restart or idle spin-down. The preview is not evidence of database migration, scale, disaster recovery, or production readiness.
 
 [Notifications architecture and acceptance checklist](docs/NOTIFICATIONS.md)
+
+[Staging persistence and rollback](docs/STAGING_PERSISTENCE.md) · [Outbound notification readiness](docs/NOTIFICATION-READINESS.md)

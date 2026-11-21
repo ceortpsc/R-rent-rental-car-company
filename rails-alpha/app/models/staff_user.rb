@@ -1,6 +1,7 @@
 require "uri"
 
 class StaffUser < ApplicationRecord
+  SYNTHETIC_PREVIEW_ADMIN_EMAIL = "review-admin@example.com".freeze
   RENTAL_COMPANY_KEY = "r_rent".freeze
   ROLES = %w[admin workflow_operator].freeze
   normalizes :email, with: ->(email) { email.strip.downcase }

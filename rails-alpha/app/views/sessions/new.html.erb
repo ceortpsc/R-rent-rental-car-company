@@ -1,7 +1,11 @@
 <% content_for :title, "Staff Sign In" %>
 <div class="frame section page narrow"><p class="eyebrow">Staff access</p><h1>Sign in to R-Rent.</h1><p class="lead">For authorized staff only. To request a rental, use the public inquiry form.</p>
 <%= form_with url: "/session", local: true, class: "form-card" do |f| %>
-  <label>Staff email <%= f.email_field :email, autocomplete: "username", required: true %></label>
+  <% if preview_username_signin? %>
+    <label>Staff username <%= f.text_field :email, autocomplete: "username", autocapitalize: "none", spellcheck: false, maxlength: 40, required: true %></label>
+  <% else %>
+    <label>Staff email <%= f.email_field :email, autocomplete: "username", required: true %></label>
+  <% end %>
   <label>Password <%= f.password_field :password, autocomplete: "current-password", required: true %></label>
   <button type="submit" class="button gold">Sign in</button>
 <% end %>
