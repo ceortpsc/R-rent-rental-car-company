@@ -1,0 +1,36 @@
+<% content_for :title, @receipt_inbox ? "Inquiry inbox" : "Staff inbox" %>
+<div class="frame section page">
+  <p class="eyebrow"><%= @receipt_inbox ? "Rental inquiry" : "R-Rent operations" %></p>
+  <h1><%= @receipt_inbox ? "Inquiry inbox" : "Staff inbox" %></h1>
+  <p class="lead">These notices appear here only. No email or text message is sent. Notices are not approvals or receipts for payments.</p>
+  <nav class="jump-nav" aria-label="Inbox filter">
+    <%= link_to "All notices", @inbox_path, aria: {current: @unread_only ? nil : "page"} %>
+    <%= link_to "Unread only", "#{@inbox_path}?filter=unread", aria: {current: @unread_only ? "page" : nil} %>
+    <%= link_to(@receipt_inbox ? "Back to request receipt" : "Open work queue", @receipt_inbox ? receipt_path : "/work-queue") %>
+  </nav>
+  <% if @notifications.empty? %>
+    <p class="empty"><%= @unread_only ? "No unread notices on this page." : "No notices on this page." %> Notices appear after workflow processing.</p>
+  <% else %>
+    <ul class="notification-list">
+      <% @notifications.each do |item| %>
+        <% title, body = item.message %>
+        <% read = @read_ids.include?(item.id) %>
+        <li class="card notification-item">
+          <div>
+            <p class="eyebrow"><%= read ? "Read" : "Unread" %> · <%= content_tag(:time, l(item.created_at, format: :short) + " CT", datetime: item.created_at.iso8601) %></p>
+            <h2><%= title %></h2>
+            <p><%= body %></p>
+          </div>
+          <% unless read %>
+            <% path = @receipt_inbox ? read_receipt_notification_path(item.public_id) : read_staff_notification_path(item.public_id) %>
+            <%= button_to "Mark as read", path, method: :post, class: "button outline", aria: {label: "Mark as read: #{title}"} %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+    <% if @next_cursor %>
+      <% older_url = @receipt_inbox ? receipt_notifications_path(before: @next_cursor, filter: (@unread_only ? "unread" : nil)) : staff_notifications_path(before: @next_cursor, filter: (@unread_only ? "unread" : nil)) %>
+      <%= link_to "Older notices", older_url, class: "text-link" %>
+    <% end %>
+  <% end %>
+</div>

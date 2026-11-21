@@ -1,0 +1,19 @@
+<% content_for :title, "Sitemap & Action Index" %>
+<section class="hero"><div class="frame hero-grid map-hero"><div><p class="eyebrow">R-Rent · Stage navigation</p><h1>Find the right next step.</h1><p class="lead">See how public inquiries, rental receipts, and staff workflows connect. The map shows the routes available to your current session.</p><div class="actions"><a class="button gold" href="#modules">Browse modules</a><a class="button on-dark" href="#route-index">Read the action index</a></div></div>
+<aside class="hero-note"><p class="eyebrow">Current access</p><strong><%= current_staff ? current_staff.role.humanize : (@audiences.include?(:receipt) ? "Receipt session" : "Public visitor") %></strong><p>The map never grants permissions or performs actions. Each destination checks access independently.</p></aside></div></section>
+<div class="frame section">
+  <section id="modules" aria-labelledby="module-heading"><p class="eyebrow">Visual sitemap</p><h2 id="module-heading">Browse by area.</h2><div class="cards">
+  <% @modules.each do |key, (title, description)| %><article class="card"><h3><%= title %></h3><p class="muted"><%= description %></p><ul class="map-links"><% @entries.select { |item| item[0] == key && item[5] && item[2] != site_map_path }.each do |item| %><li><%= link_to item[3], item[5] %></li><% end %></ul><a class="text-link" href="#index-<%= key %>">View indexed actions →</a></article><% end %>
+  </div></section>
+  <section class="section" id="route-index" aria-labelledby="index-heading"><p class="eyebrow">Indexed routes and actions</p><h2 id="index-heading">Understand what each action does.</h2><p class="notice">GET pages read or open forms. POST operations are listed for reference and must be performed from their original, authorized forms. <code>:id</code> represents a specific record; this map never exposes record identifiers or their details.</p>
+  <%= form_with url: site_map_path(anchor: "route-index"), method: :get, local: true, class: "actions" do |f| %>
+    <label>Filter routes <%= f.search_field :q, value: @query, maxlength: 80, placeholder: "e.g. booking, inbox, GET" %></label>
+    <%= f.submit "Filter index", class: "button outline" %>
+    <% if @query.present? %><%= link_to "Clear filter", site_map_path(anchor: "route-index"), class: "text-link" %><% end %>
+  <% end %>
+  <% if @indexed_entries.empty? %><p>No matching routes for your current access.</p><% end %>
+  <% @modules.each do |key, (title, _description)| %><% next if @indexed_entries.none? { |row| row[0] == key } %><section class="map-index" id="index-<%= key %>"><h3><%= title %></h3>
+  <table class="map-table"><caption class="map-sr-only"><%= title %> indexed routes</caption><thead><tr><th scope="col">Route</th><th scope="col">Action</th><th scope="col">Result and limits</th></tr></thead><tbody>
+  <% @indexed_entries.select { |item| item[0] == key }.each do |_, verb, route, label, result, link| %><tr><th scope="row"><span class="pill map-method"><%= verb %></span> <code><%= route %></code></th><td><%= link && link != site_map_path ? link_to(label, link) : label %></td><td><%= result %></td></tr><% end %>
+  </tbody></table></section><% end %></section>
+</div>

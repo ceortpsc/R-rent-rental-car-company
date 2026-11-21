@@ -1,0 +1,27 @@
+<% content_for :title, "Operations" %>
+<div class="frame section page">
+  <div class="section-head"><div><p class="eyebrow">Staff workspace · <%= current_staff.role.to_s.humanize %></p><h1>Rental operations.</h1><p class="lead">Review requests, fleet records and maintenance tasks. These status changes do not send payments, messages or rental agreements.</p></div><div class="actions"><a href="/work-queue" class="button outline">Open work queue</a><% if current_staff.role == "admin" %><a href="/ops/maintenance/new" class="button gold">Add maintenance task</a><% end %></div></div>
+  <nav class="jump-nav" aria-label="Operations sections"><a href="#bookings">Rental requests</a><a href="#fleet">Fleet records</a><a href="/ops/fleet">Fleet register</a><a href="/ops/reports">Operations reports</a><a href="#maintenance">Maintenance</a><a href="#channel-readiness-title">Notification readiness</a></nav>
+  <section class="section tight" id="bookings"><h2>Rental requests</h2>
+    <% if @bookings.blank? %><p class="empty">No rental requests recorded.</p><% else %>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Rental requests table"><table><thead><tr><th scope="col">Reference / renter</th><th scope="col">Vehicle</th><th scope="col">Requested period</th><th scope="col">Status</th><th scope="col">Available actions</th></tr></thead><tbody>
+    <% @bookings.each do |booking| %><tr><th scope="row"><%= booking.reference %><small><%= booking.renter_name %></small></th><td><%= booking.vehicle&.label || "Vehicle unavailable" %></td><td><%= booking.pickup_at&.strftime("%b %-d, %Y %l:%M %p") %><small>to <%= booking.return_at&.strftime("%b %-d, %Y %l:%M %p") %></small></td><td><span class="pill"><%= booking.status.to_s.humanize %></span></td><td>
+    <% allowed = { "requested" => [["Start review", "review"], ["Cancel request", "canceled"]], "review" => [["Approve internally", "approved"], ["Cancel request", "canceled"]], "approved" => [["Cancel request", "canceled"]] }.fetch(booking.status, []) %>
+    <% if current_staff.role == "admin" && allowed.any? %>
+      <div class="actions"><% allowed.each do |label, status| %><%= button_to label, "/ops/bookings/#{booking.id}/status", method: :post, params: { status: status }, class: "button outline" %><% end %></div>
+    <% else %><span class="muted">No actions available</span><% end %>
+    <% if %w[review approved].include?(booking.status) %><a href="/ops/bookings/<%= booking.id %>/inspection">Pre-trip attestation</a><% end %>
+    </td></tr><% end %></tbody></table></div><% end %>
+  </section>
+  <section class="section tight" id="fleet"><h2>Fleet records</h2><% if @vehicles.blank? %><p class="empty">No fleet records.</p><% else %><div class="cards">
+    <% @vehicles.each do |vehicle| %><article class="card"><h3><%= vehicle.label %></h3><p><span class="pill"><%= vehicle.status.to_s.humanize %></span></p><p class="muted"><%= number_to_currency(vehicle.daily_rate_cents.to_i / 100.0) %> / listed day</p></article><% end %>
+  </div><% end %></section>
+  <section class="section tight" id="maintenance"><h2>Maintenance tasks</h2><% if @tasks.blank? %><p class="empty">No maintenance tasks recorded.</p><% else %>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Maintenance tasks table"><table><thead><tr><th scope="col">Vehicle / issue</th><th scope="col">Priority</th><th scope="col">Status</th><th scope="col">Available actions</th></tr></thead><tbody>
+    <% @tasks.each do |task| %><tr><th scope="row"><%= task.vehicle&.label || "Vehicle unavailable" %><small><%= task.description %></small></th><td><%= task.priority.to_s.humanize %></td><td><span class="pill"><%= task.status.to_s.humanize %></span></td><td>
+    <% if current_staff.role == "admin" && task.status == "open" %><%= button_to "Start maintenance", "/ops/maintenance/#{task.id}/status", method: :post, params: { status: "in_progress" }, class: "button outline" %>
+    <% elsif current_staff.role == "admin" && task.status == "in_progress" %><%= button_to "Mark resolved", "/ops/maintenance/#{task.id}/status", method: :post, params: { status: "resolved" }, class: "button outline" %>
+    <% else %><span class="muted">No actions available</span><% end %></td></tr><% end %></tbody></table></div><% end %>
+  </section>
+  <%= render "notifications/channel_readiness" %>
+</div>

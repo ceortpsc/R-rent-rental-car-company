@@ -1,0 +1,28 @@
+<% content_for :title, "Fleet Register" %>
+<div class="frame section page">
+<p class="eyebrow">Administrator · Fleet</p>
+<h1>Fleet register</h1>
+<p class="lead">New records are synthetic and start on maintenance hold. Availability does not authorize dispatch or vehicle release.</p>
+<% if @errors.present? %><div role="alert" class="warning"><ul><% @errors.each do |error| %><li><%= error %></li><% end %></ul></div><% end %>
+<%= form_with model: @vehicle, url: "/ops/fleet", local: true, class: "form-card" do |f| %>
+  <%= f.label :label, "Synthetic vehicle label" %>
+  <%= f.text_field :label, required: true, maxlength: 160 %>
+  <%= f.label :daily_rate_cents, "Daily rate (cents)" %>
+  <%= f.number_field :daily_rate_cents, required: true, min: 100, max: 1_000_000, step: 1 %>
+  <button class="button gold" type="submit">Add synthetic vehicle</button>
+<% end %>
+<% if @vehicles.empty? %><p>No vehicle records yet.</p><% end %>
+<% @vehicles.each do |vehicle| %>
+  <section class="form-card">
+    <h2><%= vehicle.label %> <%= "(Synthetic)" if vehicle.is_demo %></h2>
+    <p>Current state: <%= vehicle.status.humanize %></p>
+    <%= form_with url: "/ops/fleet/#{vehicle.id}/status", local: true do %>
+      <label>Set fleet status for <%= vehicle.label %>
+        <%= select_tag :status, options_for_select(Vehicle::STATUSES.map { |item| [item.humanize, item] }, vehicle.status), id: "fleet-status-#{vehicle.id}" %>
+      </label>
+      <button class="button outline" type="submit">Save fleet status</button>
+    <% end %>
+  </section>
+<% end %>
+<a class="button outline" href="/ops">Back to operations</a>
+</div>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1729">
+  <title><%= content_for?(:title) ? "#{yield(:title)} | R-Rent" : "R-Rent | Central Texas rental inquiries" %></title>
+  <%= csrf_meta_tags %>
+  <link rel="stylesheet" href="/rrent.css">
+</head>
+<body>
+  <a href="#main" class="skip">Skip to main content</a>
+  <header class="masthead">
+    <div class="frame top">
+      <a href="/" class="brand" aria-label="R-Rent home"><span aria-hidden="true" class="monogram">R</span><span>R-RENT<small>CENTRAL TEXAS</small></span></a>
+      <nav aria-label="Main navigation">
+        <a href="/#fleet">Vehicles</a><a href="/programs">Programs &amp; process</a><a href="/bookings/new">Request a rental</a>
+        <% if current_staff %>
+          <% if current_staff.role == "admin" %><a href="/ops">Operations</a><% end %><a href="/work-queue">Work queue</a><%= link_to "Staff inbox", staff_notifications_path %>
+          <%= button_to "Sign out", "/logout", method: :post, class: "button outline" %>
+        <% else %>
+          <a href="/login" class="button outline">Staff sign in</a>
+        <% end %>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <% flash.each do |type, message| %>
+      <div class="frame flash <%= type == 'alert' ? 'warning' : 'notice' %>" role="<%= type == 'alert' ? 'alert' : 'status' %>"><%= message %></div>
+    <% end %>
+    <%= yield %>
+  </main>
+  <footer class="footer"><div class="frame footer-grid">
+    <div><strong>R-RENT</strong><p>Rental inquiries and staff review.</p></div>
+    <nav aria-label="Footer navigation"><a href="/#fleet">Vehicle listings</a><a href="/programs">Rental process</a><%= link_to "Sitemap & action index", site_map_path %><a href="/bookings/new">Start an inquiry</a></nav>
+    <p class="fine">Alpha preview. A listing, estimate or inquiry does not guarantee availability, coverage, a reservation, or vehicle release.</p>
+  </div></footer>
+</body>
+</html>
