@@ -51,6 +51,7 @@ class Workflow
           raise ArgumentError, "Stored workflow action conflicts with its source event"
         end
         InAppNotification.deliver_from!(event)
+        RequestResponseIntent.plan_from!(event, cutoff: RequestResponseIntent.configured_cutoff)
         event.update!(processed_at: Time.current)
       end
       rows.length

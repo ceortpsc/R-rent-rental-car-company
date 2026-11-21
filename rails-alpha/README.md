@@ -79,3 +79,5 @@ All app pages, assets and inboxes require the review gate. Public `/health` retu
 [Notifications architecture and acceptance checklist](docs/NOTIFICATIONS.md)
 
 [Staging persistence and rollback](docs/STAGING_PERSISTENCE.md) · [Outbound notification readiness](docs/NOTIFICATION-READINESS.md)
+
+[Production cutover and rollback](docs/PRODUCTION_CUTOVER.md) · [Historical migration](docs/HISTORICAL_MIGRATION.md) · [Request and quote templates](docs/REQUEST-RESPONSES.md)

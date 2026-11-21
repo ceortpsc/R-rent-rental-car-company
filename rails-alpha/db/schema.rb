@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_21_000300) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_21_000500) do
   create_table "audit_entries", force: :cascade do |t|
     t.string "actor", limit: 120, null: false
     t.string "action", limit: 100, null: false
@@ -40,6 +40,27 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_000300) do
     t.check_constraint "return_at > pickup_at", name: "booking_return_after_pickup"
     t.check_constraint "status IN ('requested','review','approved','canceled')", name: "booking_status_allowed"
     t.check_constraint "total_cents >= 0 AND deposit_cents >= 0", name: "booking_nonnegative_cents"
+  end
+
+  create_table "historical_records", force: :cascade do |t|
+    t.string "source_system", limit: 64, null: false
+    t.string "record_type", limit: 24, null: false
+    t.string "source_id", limit: 120, null: false
+    t.string "source_status", limit: 64, null: false
+    t.string "parent_source_id", limit: 120
+    t.bigint "base_revision"
+    t.datetime "source_created_at"
+    t.bigint "quoted_total_cents"
+    t.string "currency", limit: 3
+    t.string "payload_digest", limit: 64, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_type", "source_created_at"], name: "historical_records_type_date"
+    t.index ["source_system", "record_type", "source_id"], name: "historical_records_source_identity", unique: true
+    t.check_constraint "(quoted_total_cents IS NULL AND currency IS NULL) OR (quoted_total_cents IS NOT NULL AND quoted_total_cents >= 0 AND currency IS NOT NULL AND length(currency) = 3)", name: "historical_record_money_pair"
+    t.check_constraint "base_revision IS NULL OR base_revision >= 0", name: "historical_record_nonnegative_revision"
+    t.check_constraint "record_type <> 'quote' OR parent_source_id IS NOT NULL", name: "historical_quote_parent_identity"
+    t.check_constraint "record_type IN ('submission','quote','rental_request')", name: "historical_record_type_allowed"
   end
 
   create_table "in_app_notification_reads", force: :cascade do |t|
@@ -98,6 +119,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_000300) do
     t.check_constraint "status IN ('open','in_progress','resolved')", name: "maintenance_status_allowed"
   end
 
+  create_table "request_response_intents", force: :cascade do |t|
+    t.integer "workflow_event_id", null: false
+    t.string "channel", limit: 12, null: false
+    t.string "template", limit: 24, null: false
+    t.string "template_version", limit: 48, null: false
+    t.string "idempotency_key", limit: 120, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["idempotency_key"], name: "index_request_response_intents_on_idempotency_key", unique: true
+    t.index ["workflow_event_id", "channel"], name: "unique_response_intent_per_event_channel", unique: true
+    t.index ["workflow_event_id"], name: "index_request_response_intents_on_workflow_event_id"
+  end
+
   create_table "staff_users", force: :cascade do |t|
     t.string "email", limit: 254, null: false
     t.string "password_digest", null: false
@@ -154,5 +188,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_000300) do
   add_foreign_key "inspections", "bookings"
   add_foreign_key "inspections", "staff_users"
   add_foreign_key "maintenance_tasks", "vehicles"
+  add_foreign_key "request_response_intents", "workflow_events"
   add_foreign_key "workflow_actions", "workflow_events"
 end
