@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+export RAILS_ENV=staging
+if [[ -z "${SECRET_KEY_BASE:-}" ]]; then
+  export SECRET_KEY_BASE="$(ruby -rsecurerandom -e 'print SecureRandom.hex(64)')"
+fi
+bin/rails db:prepare
+bin/rails db:seed
+bin/rails runner script/provision_staging.rb
+pids=()
+stop() { if (( ${#pids[@]} )); then kill -TERM "${pids[@]}" 2>/dev/null || true; wait || true; fi; }
+trap stop EXIT
+trap 'exit 143' TERM INT
+CONTINUOUS=1 INTERVAL_SECONDS=8 bin/rails rrent:worker &
+pids+=("$!")
+bin/rails server -b 0.0.0.0 -p "${PORT:-10000}" &
+pids+=("$!")
+# A lost worker must fail the preview rather than silently stop creating alerts.
+if wait -n "${pids[@]}"; then exit 1; else exit "$?"; fi

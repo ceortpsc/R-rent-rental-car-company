@@ -1,0 +1,25 @@
+<section class="hero">
+  <div class="frame hero-grid"><div>
+    <p class="eyebrow">Independent vehicle rentals · Central Texas</p>
+    <h1>Drive more.<br>Go further.<br><em>R-Rent.</em></h1>
+    <p class="lead">Start with the dates you need and the vehicle you have in mind. Review the details with staff before relying on any rental arrangement.</p>
+    <div class="actions"><a href="/#fleet" class="button gold">Browse vehicles →</a><a href="/bookings/new" class="button on-dark">Start a rental inquiry</a></div>
+  </div><aside class="hero-note" aria-label="Rental request stages"><p class="eyebrow">Clear steps</p><strong>Request.<br>Review.<br>Confirm.</strong><p>Submission is not a booking or a payment. Staff must confirm the vehicle, dates, terms and handoff.</p></aside></div>
+</section>
+<section id="fleet" class="frame section">
+  <div class="section-head"><div><p class="eyebrow">Vehicle listings</p><h2>Explore the fleet.</h2></div><p>Listed rates are not final quotes. Dates and availability are confirmed separately.</p></div>
+  <% if @vehicles.present? %>
+    <div class="cards">
+      <% @vehicles.each do |vehicle| %>
+        <article class="card"><p class="eyebrow">Vehicle listing</p><h3><%= vehicle.label %></h3>
+          <p><span class="rate"><%= number_to_currency(vehicle.daily_rate_cents.to_i / 100.0) %></span> / listed day</p>
+          <p class="muted">Recorded status: <%= vehicle.status.to_s.humanize %>. Not a live availability confirmation.</p>
+          <a href="/bookings/new?vehicle_id=<%= vehicle.id %>" class="text-link">Continue to rental inquiry →</a>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="empty">No vehicles are listed in this environment yet.</p>
+  <% end %>
+</section>
+<section class="section frame"><div class="callout"><div><p class="eyebrow">Know what comes next</p><h2>Get the details in writing.</h2><p>Ask about the full cost, deposit, mileage and return terms for your trip.</p></div><a href="/programs" class="button outline">Read the rental process</a></div></section>

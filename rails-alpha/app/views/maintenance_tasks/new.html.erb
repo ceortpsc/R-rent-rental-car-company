@@ -1,0 +1,10 @@
+<% content_for :title, "New Maintenance Task" %>
+<div class="frame section page narrow"><p class="eyebrow">Staff workspace · Maintenance</p><h1>Log a maintenance task.</h1><p class="lead">Create an internal maintenance record. An open or resolved task does not by itself establish roadworthiness or vehicle release.</p>
+<% if @errors.present? %><section class="warning" role="alert"><h2>Please review the task.</h2><ul><% Array(@errors.respond_to?(:full_messages) ? @errors.full_messages : @errors).each do |error| %><li><%= error %></li><% end %></ul></section><% end %>
+<% task = @task || @maintenance_task %>
+<%= form_with url: "/ops/maintenance", scope: :maintenance_task, local: true, class: "form-card" do |f| %>
+<label>Vehicle <%= f.select :vehicle_id, options_for_select(@vehicles.map { |vehicle| [vehicle.label, vehicle.id] }, task&.vehicle_id), { include_blank: "Choose a vehicle" }, required: true %></label>
+<label>Priority <%= f.select :priority, options_for_select(MaintenanceTask::PRIORITIES.map { |priority| [priority.humanize, priority] }, task&.priority || "normal"), {}, required: true %></label>
+<label>Description <%= f.text_area :description, value: task&.description, rows: 5, maxlength: 2000, required: true %></label>
+<div class="actions"><button type="submit" class="button gold">Create task</button><a class="button outline" href="/ops#maintenance">Back to maintenance</a></div>
+<% end %></div>

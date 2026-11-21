@@ -1,0 +1,16 @@
+<% content_for :title, "Rental Inquiry" %>
+<div class="frame section page"><p class="eyebrow">Rental inquiry</p><h1>Tell us about your trip.</h1><p class="lead">Review an estimate or submit an inquiry for staff review. Neither action books a vehicle or charges you.</p>
+<% if @errors.present? %><section class="warning" role="alert"><h2>Please review your request.</h2><ul><% Array(@errors.respond_to?(:full_messages) ? @errors.full_messages : @errors).each do |error| %><li><%= error %></li><% end %></ul></section><% end %>
+<% if @quote.present? %>
+  <section class="notice" role="status"><h2>Estimate only</h2><p><strong><%= pluralize(@quote[:days], "day") %></strong> · Estimated rental total <strong><%= number_to_currency(@quote[:total_cents].to_i / 100.0) %></strong> · Listed deposit <strong><%= number_to_currency(@quote[:deposit_cents].to_i / 100.0) %></strong></p><p>No payment or reservation was made. Staff must confirm the final vehicle and terms.</p></section>
+<% end %>
+<%= form_with url: "/bookings", scope: :booking, local: true, class: "form-card" do |f| %>
+<%= hidden_field_tag :request_token, @request_token %>
+<% vehicle_options = @vehicles.map { |vehicle| [vehicle.label, vehicle.id] } %>
+<label>Vehicle <%= f.select :vehicle_id, options_for_select(vehicle_options, @booking&.vehicle_id), { include_blank: "Choose a vehicle" }, required: true %></label>
+<div class="fields"><label>Full name <%= f.text_field :renter_name, value: @booking&.renter_name, autocomplete: "name", required: true %></label><label>Email <%= f.email_field :renter_email, value: @booking&.renter_email, autocomplete: "email", required: true %></label>
+<label>Pickup location <%= f.select :pickup_location, options_for_select(@locations, @booking&.pickup_location), { include_blank: "Choose pickup location" }, required: true %></label><label>Return location <%= f.select :return_location, options_for_select(@locations, @booking&.return_location), { include_blank: "Choose return location" }, required: true %></label>
+<label>Pickup date and time (Central Time) <%= f.datetime_local_field :pickup_at, value: @pickup_input, required: true %></label><label>Return date and time (Central Time) <%= f.datetime_local_field :return_at, value: @return_input, required: true %></label></div>
+<p class="fine">Use test details only, with an email at example.com, example.org, or example.net. Do not enter payment credentials or government IDs. Requested locations and times require verification.</p>
+<div class="actions"><button type="submit" name="intent" value="quote" formnovalidate class="button outline">Review estimate</button><button type="submit" name="intent" value="request" class="button gold">Submit rental inquiry</button></div>
+<% end %></div>

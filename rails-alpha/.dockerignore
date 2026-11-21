@@ -1,0 +1,10 @@
+.git
+.bundle
+.env*
+log/*
+tmp/*
+storage/*
+!storage/.keep
+vendor/bundle
+*.sqlite3*
+config/master.key

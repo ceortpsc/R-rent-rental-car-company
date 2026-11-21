@@ -1,0 +1,21 @@
+<% content_for :title, "Pre-trip Attestation" %>
+<div class="frame section page narrow">
+<p class="eyebrow">Administrator · Inspection</p>
+<h1>Pre-trip attestation</h1>
+<p>Booking <strong><%= @booking.reference %></strong>. The record does not authorize vehicle release. Return inspections and uploads are not supported.</p>
+<% if @errors.present? %><div role="alert" class="warning"><ul><% @errors.each do |error| %><li><%= error %></li><% end %></ul></div><% end %>
+<% if @inspection.persisted? %>
+  <dl><dt>Odometer</dt><dd><%= @inspection.odometer %></dd><dt>Condition</dt><dd><%= @inspection.condition.humanize %></dd><dt>Notes</dt><dd><%= @inspection.notes.presence || "None" %></dd></dl>
+<% else %>
+  <%= form_with model: @inspection, url: "/ops/bookings/#{@booking.id}/inspection", local: true, class: "form-card" do |f| %>
+    <%= f.label :odometer, "Odometer reading (whole miles)" %>
+    <%= f.number_field :odometer, min: 0, max: 2_000_000, step: 1, required: true %>
+    <%= f.label :condition %>
+    <%= f.select :condition, Inspection::CONDITIONS.map { |value| [value.humanize, value] }, { include_blank: "Choose a condition" }, required: true %>
+    <%= f.label :notes, "Condition notes (required if concerns or unsafe)" %>
+    <%= f.text_area :notes, maxlength: 1000, rows: 4 %>
+    <button class="button gold" type="submit">Save pre-trip attestation</button>
+  <% end %>
+<% end %>
+<a class="button outline" href="/ops">Back to operations</a>
+</div>
